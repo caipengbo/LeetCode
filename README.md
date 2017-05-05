@@ -27,4 +27,6 @@ Shunting-yard Algorithm
 2. 递归版本
 
 ----------
+[C串与C++ String的比较以及一些输入技巧](./algorithms/c-string-and-c++string "串")
 
+> 内含一些笔记与源码
