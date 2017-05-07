@@ -30,3 +30,13 @@ Shunting-yard Algorithm
 [C串与C++ String的比较以及一些输入技巧](./algorithms/c-string-and-c++string "串")
 
 > 内含一些笔记与源码
+
+----------
+[排序算法](./algorithms/sort "sort")
+
+1. 选择排序
+2. 冒泡排序
+3. 快速排序
+
+>其他排序不进行实现,做成笔记
+ 
