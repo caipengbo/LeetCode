@@ -1,10 +1,10 @@
 /**
- * ���������㷨��ʵ��
+ * 基本排序算法的实现
  *
- * ѡ������ð�����򡢲�������
- * ϣ�����򡢹鲢���򡢿������򡢶�����
+ * 选择排序、冒泡排序、插入排序
+ * 希尔排序、归并排序、快速排序、堆排序
  *
- * ��С�������� n > 1
+ * 从小到大排序 n > 1
  */
 
 #include<iostream>
@@ -12,22 +12,22 @@ using namespace std;
 
 const int MAX_LARGE = 100;
 
-// ѡ������
+// 选择排序
 void SelectSort(int data[MAX_LARGE], int n);
-// ð������
+// 冒泡排序
 void BubbleSort(int data[MAX_LARGE], int n);
-// ��������
+// 插入排序
 void InsertSort(int data[MAX_LARGE], int n);
-// ϣ������
-void ShellSort(int data[MAX_LARGE]);
-// �鲢����
-void MergeSort(int data[MAX_LARGE]);
-// ��������
-void QuikSort(int data[MAX_LARGE]);
-// ������
-void HeapSort(int data[MAX_LARGE]);
+// 希尔排序（基于插入排序）
+void ShellSort(int data[MAX_LARGE], int n);
+// 归并排序
+void MergeSort(int data[MAX_LARGE], int low, int high);
+// 快速排序
+void QuikSort(int data[MAX_LARGE], int n);
+// 堆排序
+void HeapSort(int data[MAX_LARGE], int n);
 
-// ��������
+// 辅助函数
 void Exchange(int& a, int& b)
 {
     int temp = a;
@@ -44,8 +44,8 @@ void Print(int data[MAX_LARGE], int n)
 
 void SelectSort(int data[MAX_LARGE], int n)
 {
-     // ����˼�룺�Ӻ��棨��������ѡ����С��Ԫ�طŵ�ǰ��(��������β��)
-     // i ��¼�ź����λ�ã�j ��������ѡ����СԪ�ص�index
+     // 基本思想：从后面（无序区）选择最小的元素放到前方(有序区的尾部)
+     // i 记录排好序的位置，j 从左往右选择最小元素的index
      int min_index;
 
      for(int i = 0; i < n; i++) {
@@ -61,8 +61,8 @@ void SelectSort(int data[MAX_LARGE], int n)
 
 void BubbleSort(int data[MAX_LARGE], int n)
 {
-    // һ����һ��Ľ�������Ԫ�أ�ֱ������
-    int flag = true; // �Ƿ񽻻���Ԫ�أ��Ƿ�ð�ݣ�
+    // 一遍又一遍的交换相邻元素，直到有序
+    int flag = true; // 是否交换了元素（是否冒泡）
     int i;
 
     while(flag) {
@@ -78,26 +78,113 @@ void BubbleSort(int data[MAX_LARGE], int n)
 
 void InsertSort(int data[MAX_LARGE], int n)
 {
-    // ����˼�룺�����Ϊ�����������Ҳ���������Ԫ�ز��뵽��ࣨ��Ƶ�λ�õ����κ��ƣ�
-    // i �������߽� �� j ���������ƶ�������������Ԫ��
+    // 基本思想：左侧认为是有序区，右侧无序区的元素插入到左侧（设计到位置的依次后移）
+    // i 有序区边界 ， j 在有序区移动（从后向前）找到合适的位置，插入无序区的元素
+    // 还有一种实现方法，就是从后往前依次有序的交换
     int i, j;
     int temp;
+
     for(i = 0; i < n - 1; i++) {
         j = i;
         temp = data[i+1];
-        while(j > 0 && data[j] > temp) {
-            data[j+1] = data[j]; //����
+        while(j >= 0 && data[j] > temp) {          // 注意此处j的取值
+            data[j+1] = data[j]; //后移
             j--;
         }
         data[j+1] = temp;
     }
+
+}
+
+void ShellSort(int data[MAX_LARGE], int n)
+{
+    // 基本思想：对不相邻的元素（有间隔h）进行插入排序，然后缩短间隔至1
+    // 如何缩短间隔序列（递增序列，希尔排序又叫缩小递增序列排序）：有专门的研究，不需要自己设计，选择某些常用的即可
+    int h = 1;
+    int temp;
+    int i, j;
+
+    // 设置h的初始值
+    while(h < n/3) h = h * 3 + 1;  // 递增序列 1, 4, 13, 40, 121, 364 .....
+
+    while(h >= 1) {
+        // 将插入排序的每次移动1，改为移动h
+        for(i = 0; i < n - h; i++) {
+            j = i;
+            temp = data[i + h];
+            while(j >= 0 && data[j] > temp) {
+                data[j+h] = data[j];
+                j -= h;
+            }
+            data[j+h] = temp;
+        }
+        h /= 3;
+    }
+}
+// low索引下界，high索引上界
+void Merge(int data[MAX_LARGE], int low, int mid, int high)
+{
+    // 原地归并，对于一个数组，将其前后半部分（均有序小到大），归并成一个有序数组
+    int i = low, j = mid+1;  // j 必须是mid+1，因为 mid有可能和low相等
+    int *aux = new int[high+1];  // 辅助数组
+
+    for(int k = low; k <= high; k++)
+        aux[k] = data[k];
+
+    // 将归并的结果放到原数组中
+    for(int k = low; k <= high; k++) {
+        if(i > mid) // 前半部分归并完毕
+            data[k] = aux[j++];
+        else if(j > high) // 后半部分归并完毕
+            data[k] = aux[i++];
+        else if(aux[i] < aux[j]) // 注意是比较辅助数组，不可比较原数组（因为原数组已经变化了）
+            data[k] = aux[i++];
+        else
+            data[k] = aux[j++];
+    }
+}
+
+void MergeSort(int data[MAX_LARGE], int low, int high)
+{
+    // 自上而下（分治思想）
+    if(low >= high) return;
+    int mid = (low + high) / 2;
+
+    // MergeSort(data, low, mid-1); // 若mid==0
+    // MergeSort(data, mid, high); // 此种情况下会导致 MergeSort(data, 0, 1)一直出现
+
+    MergeSort(data, low, mid);
+    MergeSort(data, mid+1, high);
+    Merge(data, low, mid, high);
+}
+
+void QuikSort(int data[MAX_LARGE], int n)
+{
+
+}
+
+void test()
+{
+
+    int init = 1;
+    for(int i = 0; i < 8; i++) {
+
+        cout << init << " " << init + 29 << endl;
+        init += 32;
+    }
+
 }
 
 int main()
 {
-    int data[10] = {2, 8, 3, 7, 9, 0, 12, 33, 4, 1};
-    // SelectSort(data, 10);
-    // BubbleSort(data, 10);
-    InsertSort(data, 10);
-    Print(data, 10);
+    int data[30] = {121, 18, 3, 7, 9, 11, 612, 133, 4, 1, 6, 8, 13, 7, 39, 0, 162, 33, 4, 5, 2, 8, 55, 63, 49, 0, 12, 33, 4, 14};
+    // SelectSort(data, 30);
+    // BubbleSort(data, 30);
+    // InsertSort(data, 30);
+    // ShellSort(data, 30);
+    // Print(data, 30);
+    int merge_data[] = {110, 37};
+    MergeSort(data, 0, 30-1);
+    Print(data, 30);
 }
+
