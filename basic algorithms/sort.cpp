@@ -158,21 +158,38 @@ void MergeSort(int data[MAX_LARGE], int low, int high)
     Merge(data, low, mid, high);
 }
 
-void QuikSort(int data[MAX_LARGE], int n)
+// 切分(对于边界的判断是个难点)
+int Partition(int data[MAX_LARGE], int low, int high)
 {
-
+	// high > low 
+	int i = low, j = high;
+	while (true) {
+		while (data[++i] < data[low]) {// 找到比中轴元素data[low] 大的元素data[i]
+			if (i == high) break;  // 避免越界
+		}
+		while (data[j] > data[low]) { // 找到比中轴元素data[low] 小的元素data[j]
+			j--; // 不可在while中 data[j--] ，因为这样即使data[j] 不大于data[low]依然会自减
+			if (j == low) break;  // 避免越界
+		}
+		if (i >= j) break;  // 结束条件
+		Exchange(data[i], data[j]);
+	}
+	Exchange(data[low], data[j]);
+	return j;
 }
 
-void test()
+
+void QuikSort(int data[MAX_LARGE], int low, int high)
 {
-
-    int init = 1;
-    for(int i = 0; i < 8; i++) {
-
-        cout << init << " " << init + 29 << endl;
-        init += 32;
-    }
-
+	cout << "low: " << low << " high: " << high << endl;
+	if (low >= high) return;
+	// 切分
+	int pivot = Partition(data, low, high);
+	cout << " pivot:" << pivot << endl;
+	// 排序中轴 前部分j--;
+	QuikSort(data, low, pivot - 1);
+	// 排序中轴 后部分
+	QuikSort(data, pivot + 1, high);
 }
 
 int main()
