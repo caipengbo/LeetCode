@@ -33,7 +33,7 @@ public:
 			}
 			for (k = 0; k < min; k++) {
 				string s;
-				s.assign(1, 'a' + i);
+				s.assign(1, 'a' + i);  // 还可以改进
 				result.push_back(s);
 			}
 		}
@@ -42,7 +42,6 @@ public:
 	bool isValid(string& S) {
 		int len = S.size();
 		if (len % 3 != 0) return false;
-		// if (len == 3) return (S == "abc");
 		string::iterator it;
 		bool is_erased = true;
 		while (is_erased) {
@@ -50,6 +49,7 @@ public:
 			for (it = S.begin(); it + 2 < S.end(); it++) {
 				if (*it == 'a' && *(it + 1) == 'b' && *(it + 2) == 'c') {
 					it = S.erase(it, it + 3);
+					// 一定要加此判断语句，防止下标越界
 					if (S.size() < 3) break;
 					is_erased = true;
 				}
@@ -70,5 +70,4 @@ int main()
 	cout << s.isValid(S);
 	// it = S.erase(S.begin(), S.begin() + 2);
 	// cout << *it;
-
 }
