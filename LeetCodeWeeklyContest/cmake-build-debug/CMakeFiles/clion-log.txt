@@ -1,0 +1,4 @@
+"E:\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" "E:\Folder Storing Codes\AlgoEx\LeetCodeWeeklyContest"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: E:/Folder Storing Codes/AlgoEx/LeetCodeWeeklyContest/cmake-build-debug
