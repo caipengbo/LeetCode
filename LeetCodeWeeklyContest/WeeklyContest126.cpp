@@ -59,6 +59,8 @@ public:
 		return S.size() == 0;
 	}
 };
+/*
+
 int main()
 {
 	vector<string> A = { "bella", "label", "roller" };
@@ -71,3 +73,4 @@ int main()
 	// it = S.erase(S.begin(), S.begin() + 2);
 	// cout << *it;
 }
+*/
