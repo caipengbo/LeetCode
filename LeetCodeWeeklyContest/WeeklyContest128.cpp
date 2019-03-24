@@ -171,13 +171,13 @@ public:
 	
 };
 
-int main() {
-	int x = 10;
-	Solution s;
-	vector<int> time = { 147, 73, 265, 305, 191, 152, 192, 293, 309, 292, 182, 157, 381, 287, 73, 162, 313, 366, 346, 47 };
-	// cout << s.numPairsDivisibleBy60(time) << endl;
-	cout << s.shipWithinDays(time, 10) << endl;
-	// s.huafen(time, 10);
-	// cout << "==========" << endl;
-	// s.huafen2(time, 10);
-}
+//int main() {
+//	int x = 10;
+//	Solution s;
+//	vector<int> time = { 147, 73, 265, 305, 191, 152, 192, 293, 309, 292, 182, 157, 381, 287, 73, 162, 313, 366, 346, 47 };
+//	// cout << s.numPairsDivisibleBy60(time) << endl;
+//	cout << s.shipWithinDays(time, 10) << endl;
+//	// s.huafen(time, 10);
+//	// cout << "==========" << endl;
+//	// s.huafen2(time, 10);
+//}
