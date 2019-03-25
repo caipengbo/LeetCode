@@ -15,25 +15,44 @@ public:
 		}
 		if (sum % 3 != 0) return false;
 		int part_sum = sum / 3;
-		int part1 = 0;
+		int part = 0;
 		
 		int count = 0;
 		for (auto ele : A) {
-			part1 += ele;
-			if (part1 == part_sum) {
+			part += ele;
+			if (part == part_sum) {
 				count++;
-				part1 = 0;
+				part = 0;
 			}
 		}
 		return count == 3;
 	}
+	// 模拟 111...111 除法的运算的过程
 	int smallestRepunitDivByK(int K) {
-		if (K % 2 == 0 || K % 5 == 0) return -1;
-		
-		return -1;
+		// 已经计算出来的余数（如果重复出现的话，那么将会导致计算出来的商，无限循环）
+		vector<bool> visit(K);
+		int x = 1 % K; // 注意边界条件
+		int result = 1;
+		while (x) {
+			x = (x * 10 + 1) % K;
+			if (visit[x]) return -1; // 重复出现
+			visit[x] = true;
+			result++;
+		}
+		return result;
 	}
+	// A.size >= 2
 	int maxScoreSightseeingPair(vector<int>& A) {
-		return 0;
+		int front = A[0] + 0;
+		int sum = A[0] + 0 + A[1] - 1;
+		int cur;
+		for (int i = 1; i < A.size(); i++) {
+			cur = A[i] - i + front;
+			sum = max(sum, cur);
+			front = max(front, A[i] + i);
+		}
+		
+		return sum;
 	}
 
 };
