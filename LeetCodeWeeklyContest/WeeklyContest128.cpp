@@ -24,10 +24,10 @@ public:
 			}
 		}
 		/*
-		// ·½·¨2
+		// æ–¹æ³•2
 		reverse(bin_vec.begin(), bin_vec.end());
 		for (auto it : bin_vec) {
-			it = 1 - it; // È¡·´
+			it = 1 - it; // å–å
 			sum = sum * 2 + it;
 		}
 		*/
@@ -52,8 +52,8 @@ public:
 		count += ((fre[0] * (fre[0]-1)) + fre[30] * (fre[30]-1))/2;
 		return count;
 	}
-	// ÕÒÒ»¸ö»®·ÖÖµ =¡·ÔÚÒ»¶Î·¶Î§ÖĞÑ°ÕÒÒ»¸öºÏÊÊµÄÖµ -> ¶ş·Ö²éÕÒ
-	// Ïê½â£ºhttp://t.cn/ExixHrG
+	// æ‰¾ä¸€ä¸ªåˆ’åˆ†å€¼ =ã€‹åœ¨ä¸€æ®µèŒƒå›´ä¸­å¯»æ‰¾ä¸€ä¸ªåˆé€‚çš„å€¼ -> äºŒåˆ†æŸ¥æ‰¾
+	// è¯¦è§£ï¼šhttp://t.cn/ExixHrG
 	int shipWithinDays(vector<int>& weights, int D) {
 		int low = 0, hight = 0;
 		for (auto it : weights ) {
@@ -64,7 +64,7 @@ public:
 		while (low < hight) {
 			int cnt = 0, sum = 0;
 			int mid = (low + hight) / 2;
-			// ´Ë´¦ÇóËùÓÃµÄÌìÊı£¬ºÄ·ÑÁËºÜ¶àµÄÊ±¼ä
+			// æ­¤å¤„æ±‚æ‰€ç”¨çš„å¤©æ•°ï¼Œè€—è´¹äº†å¾ˆå¤šçš„æ—¶é—´
 			for (auto it : weights) {
 				if (sum + it > mid) {
 					cnt++;
@@ -80,7 +80,7 @@ public:
 		}
 		return low;
 	}
-	// µ÷ÊÔ»®·Ö
+	// è°ƒè¯•åˆ’åˆ†
 	void huafen(vector<int>& weights, int D) {
 		int cnt = 0, sum = 0;
 		int mid = 602;
@@ -97,7 +97,7 @@ public:
 			
 		}
 	}
-	// »®·Ö·½·¨¶ş£ºÊ¹ÓÃÁËÁ½¸öÑ­»·£¨Ñ­»·µÄÌõ¼şºÜÇÉÃî£¬Êµ¼ÊÉÏÊÇ½«Ò»¸öÑ­»·²ğ¿ªÁË£©
+	// åˆ’åˆ†æ–¹æ³•äºŒï¼šä½¿ç”¨äº†ä¸¤ä¸ªå¾ªç¯ï¼ˆå¾ªç¯çš„æ¡ä»¶å¾ˆå·§å¦™ï¼Œå®é™…ä¸Šæ˜¯å°†ä¸€ä¸ªå¾ªç¯æ‹†å¼€äº†ï¼‰
 	void huafen2(vector<int>& weights, int D) {
 		int cnt = 0;
 		int mid = 602;
@@ -148,9 +148,9 @@ public:
 	//		return 0;
 	//	}
 	//	int count = 0;
-	//	// ×î¸ßÎ» Ğ¡ÓÚ×î¸ßÎ»Êı×Ö Ê±
+	//	// æœ€é«˜ä½ å°äºæœ€é«˜ä½æ•°å­— æ—¶
 	//	count += (v[len-1]) * ((len - 1) * (len - 2) / 2 * 10);
-	//	// µÈÓÚ×î¸ßÎ»Êı×ÖÊ±
+	//	// ç­‰äºæœ€é«˜ä½æ•°å­—æ—¶
 	//	vector<int> v_sub(v.begin(), v.end() - 1);
 	//	count += countVec(v_sub);
 	//	cout << "--Print sub count: " << count << endl;
