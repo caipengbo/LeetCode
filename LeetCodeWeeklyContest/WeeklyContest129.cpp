@@ -57,10 +57,10 @@ public:
 
 };
 
-int main() {
-	Solution s;
-	vector<int> vec= { 1, 2 };
-	//cout << s.canThreePartsEqualSum(vec);
-	cout << s.smallestRepunitDivByK(19927);
-	// cout << s.maxScoreSightseeingPair(vec);
-}
+//int main() {
+//	Solution s;
+//	vector<int> vec= { 1, 2 };
+//	//cout << s.canThreePartsEqualSum(vec);
+//	cout << s.smallestRepunitDivByK(19927);
+//	// cout << s.maxScoreSightseeingPair(vec);
+//}
