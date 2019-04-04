@@ -1,16 +1,10 @@
-#include<iostream>
-using namespace std;
-#include<string>
-#include<vector>
-#include<stack>
-#include<map>
-#include<algorithm>
+#include "pch.h"
 
-struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode(int x) : val(x), next(NULL) {}
-};
+//struct ListNode {
+//	int val;
+//	ListNode *next;
+//	ListNode(int x) : val(x), next(NULL) {}
+//};
 class Solution {
 public:
 	// error!!! too long!!!
@@ -21,11 +15,7 @@ public:
 			for (int j = 0; j <= i; j++) {
 				sum = sum * 2 + j;
 			}
-			if (sum % 5 == 0) {
-				ret.push_back(true);
-			} else {
-				ret.push_back(false);
-			}
+            ret.push_back(sum % 5 == 0);
 			sum = 0;
 		}
 		return ret;
@@ -33,15 +23,12 @@ public:
 	vector<bool> prefixesDivBy5(vector<int>& A) {
 		vector<bool> ret;
 		int mod = 0;
-		for (int i = 0; i < A.size(); i++) {
-			if (A[i]) mod = (mod * 2 + 1) % 5;
+		for (int i : A) {
+		    // 使用余数
+			if (i) mod = (mod * 2 + 1) % 5;
 			else mod = (mod * 2) % 5;
-			
-			if (mod == 0) {
-				ret.push_back(true);
-			} else {
-				ret.push_back(false);
-			}
+
+            ret.push_back(mod == 0);
 			
 		}
 		return ret;
@@ -61,7 +48,7 @@ public:
 			}
 			num++;
 		}
-		for (vector<int>::reverse_iterator it = ans.rbegin(); it != ans.rend(); it++) {
+		for (auto it = ans.rbegin(); it != ans.rend(); it++) {
 			if (*it) {
 				ret.push_back('1');
 			} else {
@@ -75,8 +62,8 @@ public:
 	vector<int> nextLargerNodes(ListNode* head) {
 		stack<int> positionStack;
 		vector<int> ret;
-		for (ListNode* p = head; p != NULL; p = p->next) {
-			while (positionStack.size() && ret[positionStack.top()] < p->val) {
+		for (ListNode* p = head; p != nullptr; p = p->next) {
+			while (!positionStack.empty() && ret[positionStack.top()] < p->val) {
 				ret[positionStack.top()] = p->val;
 				positionStack.pop();
 			}
@@ -89,6 +76,7 @@ public:
 		}
 		return ret;
 	}
+
 };
 int main() {
 	Solution s;
