@@ -22,9 +22,23 @@ public:
                 stk.pop();
             }
         }
-
         return ret;
     }
+    string removeOuterParentheses2(string S) {
+        int sum = 0, n = S.size();
+        int last = 0;
+        string ret;
+        for (int i = 0; i < n; ++i) {
+            sum += (S[i] == '(' ? 1 : -1); // 成对儿，sum = 0
+            if (sum == 0) {
+                string cur = S.substr(last+1, i-last-1);
+                ret += cur;
+                last = i + 1;
+            }
+        }
+        return ret;
+    }
+
     /**
     * Definition for a binary tree node.
     * struct TreeNode {
@@ -36,26 +50,23 @@ public:
     */
     int sumRootToLeaf(TreeNode*& root) {
         int sum = 0;
-        if (root != NULL) {
-            sum += getSum(root);
-            sum += sumRootToLeaf(root->left);
-            sum += sumRootToLeaf(root->right);
-            cout << "--" << sum << endl;
-        }
+        solve(root, sum);
         return sum;
 
     }
-    int getSum(TreeNode*& node) {
+    void solve(TreeNode*& node, int& sum) {
+        if (node == NULL) return;
         if (node->left == NULL && node ->right == NULL) {
-            return (node->val) % (10^9 + 7);
+            sum = (sum + node->val) % (10^9 + 7);
         }
         if (node->left != NULL) {
-            node->left->val = node->val * 2 + node->left->val;
+            node->left->val = (node->val * 2) % (10^9 + 7) + node->left->val;
+            solve(node->left, sum);
         }
         if (node->right != NULL ) {
-            node->right->val = node->val * 2 + node->right->val;
+            node->right->val = (node->val * 2) % (10^9 + 7) + node->right->val;
+            solve(node->right, sum);
         }
-        return 0;
     }
 
     /**
