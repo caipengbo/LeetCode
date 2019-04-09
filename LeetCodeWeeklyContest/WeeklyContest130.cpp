@@ -76,6 +76,23 @@ public:
 		}
 		return ret;
 	}
+	// repeat(Point: record the position)
+    vector<int> nextLargerNodes2(ListNode* head) {
+        stack<int> pos_stack;
+        vector<int> ret;
+	    for (ListNode* p = head;  p ; p = p->next) {
+            while (!pos_stack.empty() && ret[pos_stack.top()] < p->val)  {
+                ret[pos_stack.top()] = p->val;
+                pos_stack.pop();
+            }
+            pos_stack.push(ret.size());
+            ret.push_back(p->val);
+        }
+	    while ( !pos_stack.empty() ) {
+	        ret[ele] = 0;
+	        pos_stack.pop();
+	    }
+	}
 
 };
 int main() {
