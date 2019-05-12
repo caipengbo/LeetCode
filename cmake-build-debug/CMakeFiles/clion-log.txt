@@ -1,4 +1,0 @@
-"D:\CLion 2019.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=E:/mingw64/bin/mingw32-make.exe -DCMAKE_C_COMPILER=E:/mingw64/bin/gcc.exe -DCMAKE_CXX_COMPILER=E:/mingw64/bin/g++.exe -G "CodeBlocks - MinGW Makefiles" "E:\Folder Storing Codes\CLionProjects\AlgoEx"
--- Configuring done
--- Generating done
--- Build files have been written to: E:/Folder Storing Codes/CLionProjects/AlgoEx/cmake-build-debug
