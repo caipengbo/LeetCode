@@ -41,6 +41,7 @@ public class WeeklyContest138 {
                 break;
             }
         }
+
         //  在left的右边，找到第一个小于A[left]的（重复的话，选择最left的）m ,看下面的别人的解法很简介！！！
         int right = len-1;
         for (int i = len-1; i > left; i--) {
@@ -56,7 +57,26 @@ public class WeeklyContest138 {
         A[right] = temp;
         return A;
     }
-    public int[] prevPermOpt2(int[] A) {
+
+    public static int[] prevPermOpt1Again(int[] A) {
+        int len =  A.length;
+        // if (len < 2) return A;
+        int left = len - 2;
+        int right = len - 1;
+        while (left >= 0 && A[left] <= A[left+1]) left--;
+        // 没有找到要交换的元素时
+        if (left < 0) return A;
+        // System.out.println(left + ", " + right);
+        while (right >= left && A[right] >= A[left]) right--;
+        while (right-1 >= 0 && A[right] == A[right-1]) right--;
+        // System.out.println(left + ", " + right);
+        int tmp = A[left];
+        A[left] = A[right];
+        A[right] = tmp;
+        return A;
+    }
+
+    public static int[] prevPermOpt2(int[] A) {
         int n = A.length, left = n - 2, right = n - 1, tmp;
         while (left >= 0 && A[left] <= A[left + 1]) left--;
         if (left < 0) return A;
@@ -79,8 +99,11 @@ public class WeeklyContest138 {
         int[] grumpy2 = {1,1,1,1,1,1,1,1};
         int X2 = 2;
         // System.out.println(WeeklyContest138.maxSatisfied(customers2, grumpy2, X2));
-        int[] A = {39,90,11,27,36,57,87};
-        A = WeeklyContest138.prevPermOpt1(A);
+        int[] A = {1, 1, 5};
+        int[] B = {3,1,1,3};
+        A = WeeklyContest138.prevPermOpt2(A);
+        System.out.println(Arrays.toString(A));
+        B = WeeklyContest138.prevPermOpt1Again(A);
         System.out.println(Arrays.toString(A));
     }
 }
