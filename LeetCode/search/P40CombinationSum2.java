@@ -43,7 +43,7 @@ public class P40CombinationSum2 {
         P40CombinationSum2 p40 = new P40CombinationSum2();
         int[] can = {10,1,2,7,6,1,5};
         int tar = 8;
-        System.out.println(p40.combinationSum2(can, tar));
+        System.out.println(p40.combinationSum2(can, tar)); // [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]
 
     }
 

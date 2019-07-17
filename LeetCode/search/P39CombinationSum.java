@@ -12,7 +12,7 @@ import java.util.List;
  *      所有数字（包括 target）都是正整数
  *      解集不能包含重复的组合
  * 和 17题的区别：17题没有约束条件（DFS列举出所有的情况），39题有约束条件（可以剪枝、回溯）
- * 相关题目：
+ * 相关题目：40、216
  * Created by Myth on 7/16/2019
  */
 public class P39CombinationSum {
