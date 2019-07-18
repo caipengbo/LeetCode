@@ -13,7 +13,7 @@ public class P90Subsets2 {
     private void backtracking(int[] nums, int start, List<Integer> cur, List<List<Integer>> ans) {
         ans.add(new ArrayList<>(cur));
         for (int i = start; i < nums.length; i++) {
-            // 和上一个数字相等就跳过去
+            // 和上一个数字相等就跳过去, 注意 i > start
             if (i > start && nums[i] == nums[i-1]) continue;
             cur.add(nums[i]);
             backtracking(nums, i+1, cur, ans);
