@@ -10,6 +10,8 @@ import java.util.List;
  * Created by Myth on 7/23/2019
  */
 public class P301RemoveInvalidParentheses {
+    // 标准的回溯写法（简单写法，效率比较低）：统计不合法的左括号和右括号的数目，先删除右括号，再删除左括号，查看串是否valid
+
     // 如何判断有效： 统计左右括号的数目，右括号多的时候，就是出错的时候
     private void backtracking(String s, int iStart, int jStart, char openChar, char closeChar, List<String> ans) {
         int openNum = 0, closeNum = 0;
@@ -20,7 +22,7 @@ public class P301RemoveInvalidParentheses {
             if (closeNum > openNum) {
                 // 找出错的位置
                 for (int j = jStart; j <=i ; j++) {
-                    // 该判断条件是避免重复，()())
+                    // 该判断条件是避免重复，()()), 有连续的括号，只删除第一个
                     if (s.charAt(j) == closeChar && (j == jStart || s.charAt(j-1) != closeChar)) {
                         // 删除出错的位置
                         String removed = s.substring(0, j) + s.substring(j + 1);
