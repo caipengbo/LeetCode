@@ -19,7 +19,7 @@ package search;
  * Created by Myth on 7/26/2019
  */
 public class P79WordSearch {
-    // 类似于迷宫问题，如何保证不重复使用
+    // 类似于迷宫问题，如何保证不重复使用(两周写法，一个是使用used数组，另一个是使用标记字符)
     private boolean backtracking(char[][] board, boolean[][] used, int i, int j, String word, int charPos) {
         if (charPos == word.length()-1) {  // 对应于测试例3
             return board[i][j] == word.charAt(charPos);
@@ -38,6 +38,20 @@ public class P79WordSearch {
     private boolean inArea(char[][] board, int i, int j) {
         return (i >= 0 && j >= 0 && i < board.length && j < board[i].length);
     }
+    // 解法2 （简洁）
+    private boolean backtracking(char[][] board, int i, int j, String word, int charPos) {
+        char c = board[i][j];
+        if (charPos == word.length() - 1) return c == word.charAt(charPos);
+        if (c == '#' || c != word.charAt(charPos)) return false;
+        board[i][j] = '#';
+        if (i > 0 && backtracking(board, i-1, j, word, charPos+1)) return true;
+        if (j > 0 && backtracking(board, i, j-1, word, charPos+1)) return true;
+        if (i < board.length - 1 && backtracking(board, i+1, j, word, charPos+1)) return true;
+        if (j < board[0].length - 1 && backtracking(board, i, j+1, word, charPos+1)) return true;
+        board[i][j] = c;
+        return false;
+    }
+
     public boolean exist(char[][] board, String word) {
         if (board == null || board.length == 0 || word == null || word.length() == 0) return false;
         int m = board.length, n = board[0].length;
