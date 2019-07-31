@@ -6,12 +6,23 @@
 
 ## Category
 
+- 搜索 (Search)
+
+    - 回溯：37、51、79、93、212、301
+    - BFS：127、433、542、675、752、934
+    - 组合：17、22、39、40、77、216
+    - 分割：131、698
+    - 排列：46、47、784、996
+    - 子集：78、90、842
+   
+   > 总结：https://github.com/caipengbo/AlgoEx/issues/10
+   
+- 二分搜索(Binary Search)
+    
 - 字符串 (String)
 - 链表 (Linked List)
-- 搜索 (Search)
 - 设计/数据结构 (Design/Data Structure) 
 - 哈希表 (HashTable)
-- 二分搜索(Binary Search)
 - 分治 (Divide and Conquer)
 - 贪心 (Greedy)
 - 递归 (Recursion)
