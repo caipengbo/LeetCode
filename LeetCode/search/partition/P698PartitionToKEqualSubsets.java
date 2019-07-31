@@ -1,4 +1,4 @@
-package search;
+package search.partition;
 
 /**
  * Title: 698. 划分K(k >=1 )个相等的子集

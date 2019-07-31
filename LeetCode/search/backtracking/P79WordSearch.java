@@ -1,4 +1,4 @@
-package search;
+package search.backtracking;
 
 /**
  * Title: 79. 单词搜索

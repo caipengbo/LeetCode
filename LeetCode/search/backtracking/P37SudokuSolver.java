@@ -1,4 +1,4 @@
-package search;
+package search.backtracking;
 
 /**
  * Title: 37. 解数独

@@ -1,4 +1,4 @@
-package search;
+package search.bfs;
 
 import java.util.*;
 
