@@ -1,4 +1,4 @@
-import search.P40CombinationSum2;
+import search.combination.P40CombinationSum2;
 import util.Input;
 
 import java.io.BufferedReader;
