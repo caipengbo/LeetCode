@@ -9,7 +9,7 @@ import java.util.Arrays;
  *      其中如何统计距离对，就涉及到如何 设计 g(x) 函数
  * Created by Myth on 8/26/2019
  */
-public class P719FindKthSmallestPairDistance {
+public class P719KthSmallestPairDistance {
     // 思路： 距离对肯定 小于 maxDis = max(nums) - min(nums), 所以在 [0, maxDis]内进行 二分查找
     // 对于当前距离 cur, 统计 <= countPairs(cur)的数目, 等于k时满足条件
     // 重点就是：如何统计距离对
@@ -61,7 +61,7 @@ public class P719FindKthSmallestPairDistance {
     }
 
     public static void main(String[] args) {
-        P719FindKthSmallestPairDistance p719 = new P719FindKthSmallestPairDistance();
+        P719KthSmallestPairDistance p719 = new P719KthSmallestPairDistance();
         int[] nums1 = {1, 3, 1};
         System.out.println(p719.smallestDistancePair(nums1, 2));
     }

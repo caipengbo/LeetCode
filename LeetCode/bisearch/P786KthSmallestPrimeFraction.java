@@ -15,7 +15,7 @@ import java.util.Arrays;
  *      - K 取值范围为 1 —A.length * (A.length - 1) / 2
  * Created by Myth on 8/29/2019
  */
-public class P786KthSmallestPrimeFraction_Bug {
+public class P786KthSmallestPrimeFraction {
     // 将此类问题转换成 2D 有序矩阵寻找 K th 问题
     // 如何记录 坐标  p q
     public int[] kthSmallestPrimeFraction(int[] A, int K) {
@@ -26,17 +26,17 @@ public class P786KthSmallestPrimeFraction_Bug {
         while (true) {
             mid = (lo + hi) / 2;
             count = 0;
+            p = 0;  // 此处忘记 p 置为 0 调试了很久
             for (i = 0; i < A.length; i++) {
                 j = 0;
-                while (j < A.length-1-i && mid > (double) A[i]/A[A.length-1-j]) {
+                while (j < A.length-1-i && mid >= (double) A[i]/A[A.length-1-j]) {
                     j++;
                 }
                 count += j;
-                // 重点：p/q是比 mid小的数的最大值
-                if (j >0 && j < A.length  && ((double)p/q) < ((double)A[i]/A[A.length-j])) {
+                // 重点：p/q是比 mid小的数的最大值(所有行)
+                if (j > 0 && ((double)p/q) < ((double)A[i]/A[A.length-j])) {
                     p = A[i];
                     q = A[A.length-j];
-                    System.out.println("--[" + p + ", " + q + "]--");
                 }
             }
             // System.out.println(count);
@@ -56,14 +56,14 @@ public class P786KthSmallestPrimeFraction_Bug {
             for (int i = 0, j = n - 1; i < n; i++) {
                 while (j >= 0 && A[i] > m * A[n - 1 - j]) j--;
                 cnt += (j + 1);
-
+                System.out.println("j = " + j);
                 if (j >= 0 && p * A[n - 1 - j] < q * A[i]) {
                     p = A[i];
                     q = A[n - 1 - j];
                     System.out.println("--[" + p + ", " + q + "]--");
                 }
             }
-            // System.out.println(cnt);
+            System.out.println(cnt);
             if (cnt < K) {
                 l = m;
             } else if (cnt > K) {
@@ -75,13 +75,15 @@ public class P786KthSmallestPrimeFraction_Bug {
     }
 
     public static void main(String[] args) {
-        P786KthSmallestPrimeFraction_Bug p786 = new P786KthSmallestPrimeFraction_Bug();
+        P786KthSmallestPrimeFraction p786 = new P786KthSmallestPrimeFraction();
         int[] arr1 = {1, 2, 3, 5};
         int[] arr2 = {1, 7};
         for (int i = 1; i <= 6; i++) {
-            System.out.println(Arrays.toString(p786.kthSmallestPrimeFraction(arr1, i)));
-//            System.out.println(Arrays.toString(p786.kthSmallestPrimeFraction2(arr1, i)));
+            System.out.println(Arrays.toString(p786.kthSmallestPrimeFraction2(arr1, i)));
         }
-
+        System.out.println("===");
+        for (int i = 1; i <= 6; i++) {
+            System.out.println(Arrays.toString(p786.kthSmallestPrimeFraction(arr1, i)));
+        }
     }
 }
