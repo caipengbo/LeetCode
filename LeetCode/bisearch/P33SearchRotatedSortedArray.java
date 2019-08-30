@@ -1,0 +1,58 @@
+package bisearch;
+
+/**
+ * Title: 33. 搜索旋转排序数组
+ * Desc: 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+ *
+ * ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
+ *
+ * 搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。
+ *
+ * 你可以假设数组中不存在重复的元素。
+ *
+ * 你的算法时间复杂度必须是 O(log n) 级别。
+ * Created by Myth on 8/30/2019
+ */
+public class P33SearchRotatedSortedArray {
+    // 找旋转的点
+    public int search(int[] nums, int target) {
+        int left = -1, right = -1;
+        int rotatedPoint = findRotatedPoint(nums);
+        if (rotatedPoint != 0) left = biSearch(nums, 0, rotatedPoint-1, target);
+        right = biSearch(nums, rotatedPoint, nums.length-1, target);
+        if (left != -1) return left;
+        return right;
+    }
+    public int findRotatedPoint(int[] nums) {
+        int lo = 0, hi = nums.length - 1;
+        int mid;
+        while (lo < hi) {
+            mid = lo + (hi - lo) / 2;
+            if (nums[mid] < nums[hi]) hi = mid;
+            else lo = mid + 1;
+        }
+        return lo;  // 得到的是 分界点 p, 左侧是有序的(0, p-1)有序, 右侧(p, len-1)也是有序的
+    }
+    public int biSearch(int[] nums, int l, int r, int target) {
+        int lo = l, hi = r+1, mid;
+        while (lo < hi) {
+            mid = lo + (hi - lo) / 2;
+            if (nums[mid] >= target) hi = mid;
+            else lo = mid + 1;
+        }
+        if (lo <= r && nums[lo] == target) return lo;
+        return -1;
+    }
+    public static void main(String[] args) {
+        P33SearchRotatedSortedArray p33 = new P33SearchRotatedSortedArray();
+        int[] nums1 = {4,5,6,7,0,1,2};
+        int[] nums2 = {5,6,7,0,1,2,4};
+        int[] nums3 = {3,4,5,1,2};
+        int[] nums4 = {1,2,3,4,5};
+        System.out.println(p33.search(nums1, 5));
+        System.out.println(p33.search(nums2, 4));
+        System.out.println(p33.search(nums3, 8));
+        System.out.println(p33.search(nums4, 5));
+//        System.out.println(p33.findRotatedPoint(nums4));
+    }
+}
