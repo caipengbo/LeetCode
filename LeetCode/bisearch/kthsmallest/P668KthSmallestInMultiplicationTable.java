@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.kthsmallest;
 
 /**
  * Title: 668. 乘法表中第k小的数

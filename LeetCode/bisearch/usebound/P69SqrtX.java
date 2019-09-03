@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.usebound;
 
 /**
  * Title: 69. x 的平方根

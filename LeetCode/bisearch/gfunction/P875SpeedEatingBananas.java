@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.gfunction;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.kthsmallest;
 
 import java.util.Arrays;
 

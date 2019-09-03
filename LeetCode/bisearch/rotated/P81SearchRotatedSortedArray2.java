@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.rotated;
 
 /**
  * Title: 81. 搜索旋转排序数组 II

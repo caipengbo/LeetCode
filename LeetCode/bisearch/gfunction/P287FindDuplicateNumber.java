@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.gfunction;
 
 /**
  * Title: 287. 寻找重复数

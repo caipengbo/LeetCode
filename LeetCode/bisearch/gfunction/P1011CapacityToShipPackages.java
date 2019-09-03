@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.gfunction;
 
 /**
  * Title: 1011. 在 D 天内送达包裹的能力

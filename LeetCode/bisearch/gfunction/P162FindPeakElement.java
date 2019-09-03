@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.gfunction;
 
 /**
  * Title: 162. 寻找峰值（找局部最大值和852题一模一样）

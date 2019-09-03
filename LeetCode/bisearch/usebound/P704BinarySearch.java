@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.usebound;
 
 /**
  * Title: 704. 二分查找
