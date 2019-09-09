@@ -21,16 +21,10 @@ public class P21MergeTwoSortedLists {
             }
             p = p.next;
         }
-        while (l1 != null) {
-            p.next = l1;
-            l1 = l1.next;
-            p = p.next;
-        }
-        while (l2 != null) {
-            p.next = l2;
-            l2 = l2.next;
-            p = p.next;
-        }
+        // 直接接到 剩余的链表即可
+        if (l1 != null) p.next = l1;
+        if (l2 != null) p.next = l2;
+
         return head.next;
     }
     public ListNode mergeTwoListsRecursive(ListNode l1, ListNode l2) {
