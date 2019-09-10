@@ -1,4 +1,4 @@
-package bisearch;
+package bisearch.usebound;
 
 import java.util.*;
 
