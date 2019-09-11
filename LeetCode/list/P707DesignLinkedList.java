@@ -3,6 +3,9 @@ package list;
 /**
  * Title: 707. 设计链表
  * Desc:
+ * addAtIndex(index,val)：在链表中的第 index 个节点之前添加值为 val  的节点。
+ * 如果 index 等于链表的长度，则该节点将附加到链表的末尾。如果 index 大于链表长度，则不会插入节点。如果index小于0，则在头部插入节点。
+ *
  * Created by Myth-PC on 2019-09-10
  */
 class Node{
@@ -53,7 +56,8 @@ class MyLinkedList {
 
     /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
     public void addAtIndex(int index, int val) {
-        if (index >= length) {
+        if (index > length) return;
+        if (index == length) {
             addAtTail(val);
             return;
         }
@@ -98,12 +102,12 @@ class MyLinkedList {
 public class P707DesignLinkedList {
     public static void main(String[] args) {
         MyLinkedList linkedList = new MyLinkedList();
-        System.out.println(linkedList.get(1));  // -1
-        linkedList.addAtIndex(1,2);
         System.out.println(linkedList.get(0));  // -1
-        System.out.println(linkedList.get(1));  // -1
-        linkedList.addAtIndex(0,1);
+        linkedList.addAtIndex(1, 2);
         System.out.println(linkedList.get(0)); // 1
         System.out.println(linkedList.get(1)); // -1
+        linkedList.addAtIndex(0, 1);
+        System.out.println(linkedList.get(0));
+        System.out.println(linkedList.get(1));
     }
 }
