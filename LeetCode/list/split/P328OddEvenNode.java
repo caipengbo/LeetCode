@@ -1,4 +1,4 @@
-package list;
+package list.split;
 
 import util.ListNode;
 import util.ListUtil;

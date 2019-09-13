@@ -1,4 +1,4 @@
-package list;
+package list.fastslow;
 
 import util.ListNode;
 

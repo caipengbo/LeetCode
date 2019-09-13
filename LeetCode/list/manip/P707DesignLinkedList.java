@@ -1,4 +1,4 @@
-package list;
+package list.manip;
 
 /**
  * Title: 707. 设计链表

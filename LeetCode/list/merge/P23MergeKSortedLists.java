@@ -1,4 +1,4 @@
-package list;
+package list.merge;
 
 import util.ListNode;
 import util.ListUtil;
