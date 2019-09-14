@@ -1,11 +1,9 @@
 package tree;
 
 import util.TreeNode;
+import util.TreeUtil;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Title: 二叉树的前序遍历
@@ -25,15 +23,58 @@ public class P144BinaryTreePreorderTraversal {
         preorder(root, ret);
         return ret;
     }
-    // 非递归（队列）
-    public List<Integer> preorderTraversal2(TreeNode root) {
+    // 迭代 1
+    public List<Integer> preorderIterative(TreeNode root) {
         List<Integer> ret = new ArrayList<>();
-
-        Queue<TreeNode> queue = new LinkedList<>();
-        while (root != null || !queue.isEmpty()) {
-
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        while (cur != null) {
+            ret.add(cur.val);
+            if (cur.right != null) stack.add(cur.right);
+            cur = cur.left;
+            if (cur == null && !stack.isEmpty()) {
+                cur = stack.pop();
+            }
         }
-
         return ret;
+    }
+    // 迭代 2(√)
+    public List<Integer> preorderIterative2(TreeNode root) {
+        List<Integer> ret = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        stack.add(cur);
+        while (!stack.isEmpty()) {
+            cur = stack.pop();
+            if (cur != null) {
+                ret.add(cur.val);
+                stack.add(cur.right);
+                stack.add(cur.left);
+            }
+        }
+        return ret;
+    }
+    // 迭代 3
+    public List<Integer> preorderIterative3(TreeNode root) {
+        List<Integer> ret = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
+                ret.add(cur.val);
+                stack.add(cur.right);
+                cur = cur.left;
+            } else {
+                cur = stack.pop();
+            }
+        }
+        return ret;
+    }
+
+    public static void main(String[] args) {
+        P144BinaryTreePreorderTraversal p144 = new P144BinaryTreePreorderTraversal();
+        TreeNode root = TreeUtil.stringToTreeNode("[1,2,3]");
+        p144.preorderIterative2(root);
+
     }
 }
