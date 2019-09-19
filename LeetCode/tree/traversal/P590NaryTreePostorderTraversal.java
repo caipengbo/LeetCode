@@ -1,4 +1,4 @@
-package tree;
+package tree.traversal;
 
 import java.util.LinkedList;
 import java.util.List;
