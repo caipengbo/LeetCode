@@ -18,15 +18,11 @@ public class MainClass {
         BufferedReader in = Input.getBufferReader();
         String line;
         while ((line = in.readLine()) != null) {
+            System.out.println("Hello");
             int[] candidates = stringToIntegerArray(line);
             line = in.readLine();
             int target = Integer.parseInt(line);
-
-            List<List<Integer>> ret = new P40CombinationSum2().combinationSum2(candidates, target);
-
-            String out = int2dListToString(ret);
-
-            System.out.print(out);
+            System.out.print(target);
         }
     }
 }
