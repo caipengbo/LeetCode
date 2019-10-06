@@ -41,7 +41,7 @@ public class P450DeleteNodeInBST {
             }
 
         }
-
+        return null;
         // rightMin赋值给node，删除rightMin位置
     }
 }
