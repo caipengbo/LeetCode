@@ -11,7 +11,7 @@ import util.ListUtil;
  * Created by Myth on 9/6/2019
  */
 public class P24SwapNodesinPairs {
-    // 节点的移动
+    // 节点的移动（三个节点）
     public ListNode swapPairs(ListNode head) {
         if (head == null || head.next == null) return head;
         ListNode dummy = new ListNode(-1);
@@ -26,6 +26,14 @@ public class P24SwapNodesinPairs {
             cur = swap1;
         }
         return dummy.next;
+    }
+    // 递归写法(考虑两个节点)
+    public ListNode swapPairsRecursive(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode nextNode = head.next;
+        head.next = swapPairs(nextNode.next);
+        nextNode.next = head;
+        return nextNode;
     }
 
     public static void main(String[] args) {
