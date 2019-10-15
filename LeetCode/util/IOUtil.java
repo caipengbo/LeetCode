@@ -8,7 +8,7 @@ import java.util.List;
  * Desc: [1, 2, 3]
  * Created by Myth on 5/15/2019
  */
-public class Input {
+public class IOUtil {
     public static BufferedReader getBufferReader() {
         File file = new File("input.txt");
         InputStreamReader inputStreamReader = null;
@@ -62,5 +62,12 @@ public class Input {
 
         sb.setCharAt(sb.length() - 1, ']');
         return sb.toString();
+    }
+    public static int[] list2IntArray(List<Integer> list) {
+        int[] ret = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            ret[i] = list.get(i);
+        }
+        return ret;
     }
 }

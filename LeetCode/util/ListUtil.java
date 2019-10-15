@@ -42,7 +42,6 @@ public class ListUtil {
             System.out.print(node.val + "->");
             node = node.next;
         }
-
         if (node != null) {
             System.out.println(node.val);
         } else {

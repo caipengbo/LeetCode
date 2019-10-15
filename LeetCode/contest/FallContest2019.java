@@ -130,11 +130,11 @@ public class FallContest2019 {
         }
     }
 
+
     public static void main(String[] args) {
         FallContest2019 p = new FallContest2019();
         int n = 2, m = 3;
         int[][] broken = {{1,0}, {1,1}};
         int[][] broken2 = {};
-        System.out.println(p.domino(8,8,broken));
     }
 }
