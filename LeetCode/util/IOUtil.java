@@ -70,4 +70,14 @@ public class IOUtil {
         }
         return ret;
     }
+    public static void print2dArray(int[][] array) {
+        if (array == null) return;
+        for (int i = 0; i < array.length; i++) {
+            int j = 0;
+            for (j = 0; j < array[0].length-1; j++) {
+                System.out.print(array[i][j] + ", ");
+            }
+            System.out.println(array[i][j]);
+        }
+    }
 }
