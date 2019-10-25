@@ -1,12 +1,9 @@
-import search.combination.P40CombinationSum2;
-import util.Input;
+import util.IOUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.List;
 
-import static util.Input.int2dListToString;
-import static util.Input.stringToIntegerArray;
+import static util.IOUtil.stringToIntegerArray;
 
 /**
  * Title:
@@ -15,7 +12,7 @@ import static util.Input.stringToIntegerArray;
  */
 public class MainClass {
     public static void main(String[] args) throws IOException {
-        BufferedReader in = Input.getBufferReader();
+        BufferedReader in = IOUtil.getBufferReader();
         String line;
         while ((line = in.readLine()) != null) {
             System.out.println("Hello");
