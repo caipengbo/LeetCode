@@ -6,7 +6,7 @@ package graph;
  * Created by Myth-Lab on 10/26/2019
  */
 public class DisjointSet {
-     // 并查集的初始化
+    // 并查集的初始化
     private final int N = 100;  // 假设100个点
     private int[] parent = new int[N];
     private int[] rank = new int[N];
@@ -17,6 +17,7 @@ public class DisjointSet {
             rank[i] = 0;  // 秩为 0
         }
     }
+    // 不使用路径压缩
     public int find(int i) {
         while (parent[i] != i) {
             i = parent[i];
@@ -26,8 +27,15 @@ public class DisjointSet {
     // 带路径压缩的find(每一个节点指向他的祖先节点)
     // 使用递归，容易栈溢出
     public int find2(int i) {
+        if (parent[i] == i) return i;
+        parent[i] = find2(parent[i]);  // 路径压缩
+        return parent[i];
+    }
+    // 不使用递归，路径压缩
+    public int find3(int i) {
         while (parent[i] != i) {
-            parent[i] = find(parent[i]);
+            parent[i] = parent[parent[i]];  // 路径压缩
+            i = parent[i];
         }
         return i;
     }

@@ -11,6 +11,7 @@ import java.util.Queue;
  * Created by Myth-Lab on 10/22/2019
  */
 public class P200NumberOfIslands {
+    // 并查集的写法见 第547题
     // Flood Fill问题
     // 遍历数组，找到为1 的地方，然后进行DFS，将Flood过的地方置为0，查看能找到几个独立的块儿
     public int numIslands(char[][] grid) {
@@ -37,7 +38,7 @@ public class P200NumberOfIslands {
         dfs(grid, i, j-1);
         dfs(grid, i, j+1);
     }
-    // BFS, 难点，下标的转换
+    // BFS, 难点，下标的转换(可以直接使用数组，不使用坐标的转换)
     private void bfs(char[][] grid, int i, int j) {
         int rowNum = grid.length, colNum = grid[0].length;
         grid[i][j] = '0';
