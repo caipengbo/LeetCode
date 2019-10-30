@@ -1,11 +1,11 @@
 package math;
 
 /**
- * Title: 最大公约数
+ * Title: 最大公约数Greatest Common Divisor与最小公倍数Least Common Multiple
  * Desc: 常用算法：短除法、辗转相除法，更相减损法
  * Created by Myth-Lab on 10/29/2019
  */
-public class GreatestCommonDivisor {
+public class GCD_LCM {
     // 暴力算法，从最小的数开始递减，直到找到最大公约数
     // 短除法每次使用公约数，直到所有公约数互为质数
     // 辗转相除法, 欧几里得算法 gcd(m,n) = gcd(n, m%n)
@@ -35,11 +35,17 @@ public class GreatestCommonDivisor {
             }
         }
         return min*twoCnt;
+    }
 
+    // 最小公倍数
+    // 两个数的乘积等于这两个数的最大公约数与最小公倍数的积 (m/gcd)*(n/gcd)=lcm
+    private int lcm(int m, int n) {
+        return (m*n)/(euclid(m, n));
     }
 
     public static void main(String[] args) {
-        GreatestCommonDivisor gcd = new GreatestCommonDivisor();
-        System.out.println(gcd.chineseGCD(221, 221));  // 13
+        GCD_LCM gcdLcm = new GCD_LCM();
+        System.out.println(gcdLcm.chineseGCD(221, 221));  // 13
+        System.out.println(gcdLcm.lcm(5,7));
     }
 }

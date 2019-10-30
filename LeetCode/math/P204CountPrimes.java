@@ -1,7 +1,7 @@
 package math;
 
 /**
- * Title: 204. 计数质数
+ * Title: 204. 计数质数(筛选法)
  * Desc: 统计所有小于非负整数 n 的质数的数量。
  * Created by Myth-Lab on 10/29/2019
  */
