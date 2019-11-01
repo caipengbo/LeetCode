@@ -45,9 +45,4 @@ public class P50Pow {
         return ret;
     }
 
-
-    public static void main(String[] args) {
-        System.out.println(());
-    }
-
 }

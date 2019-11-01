@@ -8,12 +8,21 @@ package math;
 public class GCD_LCM {
     // 暴力算法，从最小的数开始递减，直到找到最大公约数
     // 短除法每次使用公约数，直到所有公约数互为质数
-    // 辗转相除法, 欧几里得算法 gcd(m,n) = gcd(n, m%n)
+    // 辗转相除法, 欧几里得算法 gcd(m,n) = gcd(n, m%n) 注意  m 和 n 没有大小要求哦（m > n 和 m < n 都可以）
     public int euclid(int m, int n) {
         int mod = m % n;
         if (mod == 0) return n;
         else return euclid(n, mod);
     }
+    public int euclid2(int m, int n) {
+        System.out.println("m = " + m + ", n = " + n);
+        if (n == 0) return m;
+        return euclid2(n, m%n);
+    }
+    public int euclid3(int m, int n) {
+        return n != 0 ? euclid2(n, m%n) : m;
+    }
+
     public int chineseGCD(int m, int n) {
         if (m == n) return m;
         int twoCnt = 1;
@@ -45,7 +54,9 @@ public class GCD_LCM {
 
     public static void main(String[] args) {
         GCD_LCM gcdLcm = new GCD_LCM();
-        System.out.println(gcdLcm.chineseGCD(221, 221));  // 13
-        System.out.println(gcdLcm.lcm(5,7));
+        // 252和105的最大公约数是21
+        System.out.println(gcdLcm.euclid2(-135, -210));  // 15
+        // System.out.println(gcdLcm.euclid2(135, -1));
+        // System.out.println(gcdLcm.lcm(5,7));
     }
 }
