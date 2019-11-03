@@ -10,35 +10,37 @@ import java.util.HashMap;
  */
 public class P166FractionToRecurringDecimal {
     // 思路：模拟除法，如果出现和以前出现过的数字一致的，就出现循环了
-    // 难点：流程、顺序
+    // 难点：流程、顺序, 溢出
     public String fractionToDecimal(int numerator, int denominator) {
+        long divided = (long) numerator;
+        long divisor = (long) denominator;
         // quo 存放出现过的商， map存放每一个除数对应的商在quo中的下标
         StringBuilder quos  = new StringBuilder();
-        HashMap<Integer, Integer> map = new HashMap<>();
+        HashMap<Long, Integer> map = new HashMap<>();
         // p 整数部分， m 中间部分   q: 循环部分
         String p, m = "", q = "";
         int index = -1;  // 循环部分在quos中的下标
         // 判断符号
         String symbol = "";
-        if ((numerator < 0 && denominator > 0) || (numerator > 0 && denominator < 0)) {
+        if ((divided < 0 && divisor > 0) || (divided > 0 && divisor < 0)) {
             symbol = "-";
-            numerator = Math.abs(numerator);
-            denominator = Math.abs(denominator);
+            divided = Math.abs(divided);
+            divisor = Math.abs(divisor);
         }
-        int quo = numerator / denominator;
+        long quo = divided / divisor;
         p = String.valueOf(quo);  // 整数部分
-        map.put(numerator, quos.length());
+        map.put(divided, quos.length());
         quos.append(quo);
-        numerator = numerator % denominator * 10;
-        while (numerator != 0) {
-            if (map.containsKey(numerator)) {
-                index = map.get(numerator);
+        divided = divided % divisor * 10;
+        while (divided != 0) {
+            if (map.containsKey(divided)) {
+                index = map.get(divided);
                 break;
             }
-            quo = numerator / denominator;
-            map.put(numerator, quos.length());
+            quo = divided / divisor;
+            map.put(divided, quos.length());
             quos.append(quo);
-            numerator = numerator % denominator * 10;
+            divided = divided % divisor * 10;
         }
         if (index != -1) {  // 说明存在循环
             q = quos.substring(index);  // 循环部分是从当前重复的地方开始一直到最后
@@ -58,18 +60,38 @@ public class P166FractionToRecurringDecimal {
 
         return p;
     }
+    // 精简代码
+    public String fractionToDecimal2(int numerator, int denominator) {
+        if (numerator == 0) return "0";
+        StringBuilder ret  = new StringBuilder();
+        HashMap<Long, Integer> map = new HashMap<>();
+        if ((numerator < 0 ) ^ (denominator < 0)) ret.append("-");  // 使用异或判断异号
+        long n = Math.abs((long) numerator);
+        long d = Math.abs((long) denominator);
+        ret.append(n/d);
+        n = n % d;
+        if (n == 0) return ret.toString();  // 可以整除
+        ret.append(".");
+        while (!map.containsKey(n)) {
+            map.put(n, ret.length());  // 注意此处
+            n = n * 10;
+            ret.append(n/d);
+            n = n % d;
+            if (n == 0) return ret.toString();
+        }
+        // 存在循环部分(找到出现循环的位置，添加括号)
+        ret = ret.insert(map.get(n), "(").append(")");
+        return ret.toString();
+    }
 
     public static void main(String[] args) {
         P166FractionToRecurringDecimal p166 = new P166FractionToRecurringDecimal();
-//        System.out.println(p166.fractionToDecimal(-4, -333));
-//        System.out.println(p166.fractionToDecimal(-0, 333));
-//        System.out.println(p166.fractionToDecimal(-2, 33));
-//        System.out.println(p166.fractionToDecimal(1, -3));
-//        System.out.println(p166.fractionToDecimal(-2, 1));
-//        System.out.println(p166.fractionToDecimal(7, 12));
-        int a = -1;
-        int b = -2147483648;
-        System.out.println(Math.abs(b));
-
+        System.out.println(p166.fractionToDecimal(-4, -333));
+        System.out.println(p166.fractionToDecimal(-0, 333));
+        System.out.println(p166.fractionToDecimal(-2, 33));
+        System.out.println(p166.fractionToDecimal(1, -3));
+        System.out.println(p166.fractionToDecimal(-2, 1));
+        System.out.println(p166.fractionToDecimal(7, 12));
+        System.out.println(p166.fractionToDecimal(-1, -2147483648));
     }
 }
