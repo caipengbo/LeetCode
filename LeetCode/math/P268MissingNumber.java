@@ -16,9 +16,11 @@ public class P268MissingNumber {
         }
         return 0;
     }
-    // 下标 11对应，说明异或的时候会等于0，落单的那个会等于最后返回
+    // 下标 1和1对应，说明异或的时候会等于0，落单的那个会等于最后返回
+    // 3 0 1        0 1 3
+    //            3 0 1 2
     public int missingNumber2(int[] nums) {
-        int ret = nums.length;
+        int ret = nums.length;  //
 
         for (int i = 0; i < nums.length; i++) {
             ret = (nums[i] ^ i ^ ret);
