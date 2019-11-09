@@ -1,4 +1,4 @@
-package math.reservoir;
+package math.sampling;
 
 import java.util.Random;
 
