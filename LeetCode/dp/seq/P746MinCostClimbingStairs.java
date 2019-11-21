@@ -1,4 +1,4 @@
-package dp;
+package dp.seq;
 
 /**
  * Title: 746. 使用最小花费爬楼梯（70题的进阶版）

@@ -1,4 +1,4 @@
-package dp;
+package dp.seq;
 
 /**
  * Title: 121.买卖股票的最佳时机

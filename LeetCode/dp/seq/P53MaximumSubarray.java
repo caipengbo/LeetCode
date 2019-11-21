@@ -1,4 +1,4 @@
-package dp;
+package dp.seq;
 
 /**
  * Title: 53. 最大子序和
