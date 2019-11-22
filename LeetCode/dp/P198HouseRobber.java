@@ -2,7 +2,7 @@ package dp;
 
 /**
  * Title: 198. 打家劫舍
- * Desc:
+ * Desc: 740题  可以转化成 该题，进行一个计数排序（下标统计每个点数出现的次数），就和该题一模一样了
  * Created by Myth-Lab on 11/21/2019
  */
 public class P198HouseRobber {
@@ -23,7 +23,7 @@ public class P198HouseRobber {
         }
         return max;
     }
-    // 使用滚动数组优化：dp[n] = MAX(dp[n-1], dp[n-2] + num )
+    // 上面的思路转化而来：dp[n] = MAX(dp[n-1], dp[n-2] + num )
     // 理解为：是 n-1 房屋可盗窃的最大值（0），要么就是 n-2 房屋可盗窃的最大值加上当前房屋的值（1），二者之间取最大值
     public int rob2(int[] nums) {
         if (nums.length == 0) return 0;
@@ -35,6 +35,8 @@ public class P198HouseRobber {
         }
         return dp[nums.length];
     }
+    // 使用滚动数组优化
+    // 只和前两个元素有关
 
     public static void main(String[] args) {
         P198HouseRobber p198 = new P198HouseRobber();

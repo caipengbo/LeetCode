@@ -1,4 +1,4 @@
-package dp.seq;
+package dp.seq.stock;
 
 /**
  * Title: 121.买卖股票的最佳时机
@@ -14,5 +14,9 @@ public class P121BestTimeToBuyAndSellStock {
             else profit = Math.max(profit, prices[i]-minVal);
         }
         return profit;
+    }
+    // TODO 多状态类的转移方程
+    public int maxProfit2(int[] prices) {
+        return 0;
     }
 }
