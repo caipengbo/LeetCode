@@ -14,7 +14,7 @@ public class P139WordBreak {
         for (String word : wordDict) {
             map.put(word, true);
         }
-        return memSearch(s, map);
+        return memSearch3(s, map);
     }
     // 记忆化搜索(5%时间)
     public Boolean memSearch(String s, Map<String, Boolean> map) {
@@ -24,6 +24,37 @@ public class P139WordBreak {
             String split2 = s.substring(i);
             if (split1.length() != 0 && split2.length() != 0) {
                 if (memSearch(split1, map) && memSearch(split2, map)) {
+                    map.put(s, true);
+                    return true;
+                }
+            }
+        }
+        map.put(s, false);
+        return false;
+    }
+    // 修改版的记忆化搜索
+    public Boolean memSearch2(String s, Map<String, Boolean> map) {
+        if (map.containsKey(s)) return map.get(s);
+        for (int i = 0; i < s.length(); i++) {
+            String split1 = s.substring(0, i);
+            String split2 = s.substring(i);
+            if (split1.length() != 0 && split2.length() != 0) {
+                if (memSearch2(split1, map) && map.containsKey(split2)) {
+                    map.put(s, true);
+                    return true;
+                }
+            }
+        }
+        map.put(s, false);
+        return false;
+    }
+    public Boolean memSearch3(String s, Map<String, Boolean> map) {
+        if (map.containsKey(s)) return map.get(s);
+        for (int i = 0; i < s.length(); i++) {
+            String split1 = s.substring(0, i);
+            String split2 = s.substring(i);
+            if (split1.length() != 0 && split2.length() != 0) {
+                if (map.containsKey(split1) && memSearch3(split2, map)) {
                     map.put(s, true);
                     return true;
                 }
@@ -51,8 +82,8 @@ public class P139WordBreak {
     public static void main(String[] args) {
         List<String> wordDict = Arrays.asList("leet", "code");
         String s = "catsandog";
-        List<String> wordDict2 = Arrays.asList("cats", "dog", "sand", "and", "cat");
-        String s2 = "applepenapple";
+        List<String> wordDict2 = Arrays.asList("cats", "dog", "san", "and", "cat");
+        String s2 = "catsandog";
         P139WordBreak p139 = new P139WordBreak();
         System.out.println(p139.wordBreak(s2, wordDict2));
     }
