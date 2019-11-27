@@ -14,7 +14,6 @@ public class P673NumberOfLongestIncreasingSubsequence {
         int[] dp = new int[n];  // 以nums[i]结尾的序列长度
         int[] counts = new int[n];  // 对应该长度的数目
         Arrays.fill(counts, 1);
-
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) {
