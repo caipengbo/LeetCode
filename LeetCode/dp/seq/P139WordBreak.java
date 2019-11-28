@@ -1,4 +1,4 @@
-package dp;
+package dp.seq;
 
 import java.util.*;
 

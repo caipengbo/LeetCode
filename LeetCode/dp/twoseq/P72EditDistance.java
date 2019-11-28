@@ -1,8 +1,8 @@
-package dp;
+package dp.twoseq;
 
 /**
  * Title: 72. 编辑距离
- * Desc:
+ * Desc: 画出二维表格更便于理解
  * Created by Myth-Lab on 11/27/2019
  */
 public class P72EditDistance {

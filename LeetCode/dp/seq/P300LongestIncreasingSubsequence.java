@@ -1,4 +1,4 @@
-package dp;
+package dp.seq;
 
 /**
  * Title: 300. 最长上升子序列

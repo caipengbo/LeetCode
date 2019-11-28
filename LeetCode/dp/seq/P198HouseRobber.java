@@ -1,4 +1,4 @@
-package dp;
+package dp.seq;
 
 /**
  * Title: 198. 打家劫舍
