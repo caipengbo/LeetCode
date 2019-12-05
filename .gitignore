@@ -1,9 +1,5 @@
-.idea/
-LeetCode/.idea/
-LeetCode/LeetCode.iml
-LeetCodeWeeklyContest/out/
-LeetCodeWeeklyContest/.idea/
-LeetCodeWeeklyContest/cpp
-LeetCodeWeeklyContest/LeetCodeWeeklyContest.iml
-LeetCodeWeeklyContest/out
-LeetCodeWeeklyContest/production
+.vscode/
+.classpath
+.project
+.settings/
+bin/
