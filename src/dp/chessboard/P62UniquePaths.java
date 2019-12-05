@@ -1,4 +1,4 @@
-package dp.twoseq;
+package dp.chessboard;
 
 /**
 * Title:  62. 不同路径(二维动态规划)

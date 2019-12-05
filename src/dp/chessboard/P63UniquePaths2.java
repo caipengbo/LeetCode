@@ -1,4 +1,4 @@
-package dp.twoseq;
+package dp.chessboard;
 
 /**
 * Title: 63. 不同路径 II
