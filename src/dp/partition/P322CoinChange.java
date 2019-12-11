@@ -1,5 +1,7 @@
 package dp.partition;
 
+import java.util.Arrays;
+
 /**
 * Title: 322. 零钱兑换
 * Desc: 
@@ -24,21 +26,18 @@ public class P322CoinChange {
         return dp[amount] == 0 ? -1 : dp[amount];
     }
 
-    public int coinChange(int[] coins, int amount) {
-        if (amount == 0) return 0;
+    public int coinChange2(int[] coins, int amount) {
         int[] dp = new int[amount+1];
-
-        for (int i = 0; i < coins.length; i++) {
-            if (coins[i] <= amount) dp[coins[i]] = 1;
-        }
-        for (int i = 0; i < amount; i++) {
+        Arrays.fill(dp, amount+1);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
             for (int j = 0; j < coins.length; j++) {
                 if (coins[j] <= i) {
                     dp[i] = Math.min(dp[i], dp[i-coins[j]] + 1);
                 } 
             }
         }
-        return dp[amount] == 0 ? -1 : dp[amount];
+        return dp[amount] > amount ? -1 : dp[amount];
     }
 
     public static void main(String[] args) {
