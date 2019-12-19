@@ -3,7 +3,7 @@ package dp.knapsack;
 import java.util.Arrays;
 
 /**
-* Title: 322. 零钱兑换
+* Title: 322. 零钱兑换（完全背包问题）
 * Desc: 
 * Created by Myth on 12/11/2019 in VSCode
 */
