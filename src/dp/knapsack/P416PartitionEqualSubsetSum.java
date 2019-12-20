@@ -37,7 +37,7 @@ public class P416PartitionEqualSubsetSum {
         boolean[] dp = new boolean[sum+1];
         dp[0] = true;
         for (int num : nums) {
-            for (int i = sum; i >= num; i--) {
+            for (int i = sum; i >= num; i--) {    // 要搞清楚数组里面存的是什么
                 dp[i] = dp[i] || dp[i-num];
             }
         }
