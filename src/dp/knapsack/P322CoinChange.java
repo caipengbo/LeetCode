@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
 * Title: 322. 零钱兑换（完全背包问题）
-* Desc: 
+* Desc: 每种硬币可以用无限次
 * Created by Myth on 12/11/2019 in VSCode
 */
 
@@ -39,12 +39,25 @@ public class P322CoinChange {
         }
         return dp[amount] > amount ? -1 : dp[amount];
     }
+    // 最终写法
+    public int coinChange3(int[] coins, int amount) {
+        int len = coins.length;
+        int[] dp = new int[amount+1];
+        Arrays.fill(dp, amount+1);
+        dp[0] = 0;
+        for (int coin : coins) {
+            for (int i = 0; i <= amount; i++) {
+                if (coin <= i) dp[i] = Math.min(dp[i], dp[i-coin]+1);
+            }
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
 
     public static void main(String[] args) {
         P322CoinChange p322 = new P322CoinChange();
         int[] coins = {1, 2, 5};
-        int[] coins2 = {2};
-        System.out.println(p322.coinChange(coins, 12));
-        System.out.println(p322.coinChange(coins2, 3));
+        int[] coins2 = {1};
+        System.out.println(p322.coinChange3(coins, 11));  // 3
+        System.out.println(p322.coinChange3(coins2, 2));  // -1
     }
 }
