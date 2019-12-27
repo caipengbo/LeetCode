@@ -48,4 +48,22 @@ public class P3LongestSubstringWithoutRepeatingCharacters {
         }
         return ret;
     }
+    // 练习DP的时候写的解法
+    public int lengthOfLongestSubstring3(String s) {
+        int[] dic = new int[256];
+        int p = 0, q = 0, n = s.length();
+        int max = 0;
+        while (p <= q && p < n) {
+            if (q < n && dic[s.charAt(q)] == 0) {
+                dic[s.charAt(q)]++;
+                q++;
+            } else {
+                dic[s.charAt(p)]--;
+                p++;
+            }
+            max = Math.max(max, q-p);
+        }
+        return max;
+    }
+
 }
