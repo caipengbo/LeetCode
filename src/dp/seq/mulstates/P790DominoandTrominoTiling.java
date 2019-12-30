@@ -1,4 +1,4 @@
-package dp.seq;
+package dp.seq.mulstates;
 
 /**
 * Title: 790. 多米诺和托米诺平铺（经典题）

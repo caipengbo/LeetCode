@@ -1,4 +1,4 @@
-package dp.seq;
+package dp.seq.mulstates;
 
 /**
 * Title: 740. 删除与获得点数(难点：如何变成打家劫舍问题)

@@ -1,4 +1,4 @@
-package dp.seq;
+package dp.seq.mulstates;
 
 /**
  * Title: 198. 打家劫舍

@@ -1,4 +1,4 @@
-package dp.seq;
+package dp.seq.mulstates;
 
 import java.util.Arrays;
 
