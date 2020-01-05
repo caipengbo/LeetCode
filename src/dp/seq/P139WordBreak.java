@@ -3,8 +3,8 @@ package dp.seq;
 import java.util.*;
 
 /**
- * Title:
- * Desc:
+ * Title: 139.单词拆分
+ * Desc: 一个字符串是否可以拆分成单词字典中包含的单词（单词可以重复使用）
  * Created by Myth-Lab on 11/25/2019
  */
 public class P139WordBreak {
