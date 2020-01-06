@@ -1,6 +1,5 @@
 package twopointer;
 
-import java.util.Stack;
 
 /**
 * Title: 32. 最长有效括号(使用栈的解法package datastructure.stack)
