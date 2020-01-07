@@ -29,10 +29,7 @@ public class P32LongestValidParentheses {
         }
         return max;
     }
-    // 解法2
-    public int longestValidParentheses2(String s) {
-        
-    }
+
 
     public static void main(String[] args) {
         P32LongestValidParentheses p32 = new P32LongestValidParentheses();

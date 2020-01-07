@@ -6,7 +6,7 @@ package dp.game;
 * Created by Myth on 01/02/2020 in VSCode
 */
 
-public class P877 {
+public class P877StoneGame {
     public boolean stoneGame(int[] piles) {
         int n = piles.length;
         if (n == 0) return true;
