@@ -54,6 +54,24 @@ public class P496NextGreaterElement1 {
         }
         return ret;
     }
+    // 理清楚之后的版本(pop求后)
+    public int[] nextGreaterElement3(int[] nums1, int[] nums2) {
+        Stack<Integer> stack = new Stack<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        int n = nums2.length;
+        int[] ret = new int[nums1.length];
+        for (int i = 0; i < n; i++) {
+            while (!stack.empty() && stack.peek() < nums2[i]) {  // 递减栈
+                map.put(stack.pop(), nums2[i]);
+            }
+            stack.push(nums2[i]);
+        }
+        for (int j = 0; j < nums1.length; j++) {
+            ret[j] = map.getOrDefault(nums1[j], -1);
+        }
+        return ret;
+    }
+    
     public static void main(String[] args) {
         P496NextGreaterElement1 p496 = new P496NextGreaterElement1();
         int[] nums1 = {4, 1, 2};
