@@ -21,7 +21,7 @@ The following question can be solved by monotonic queue:
 
 In general, the following "prototype" problems can be solved by monotonic queue:
 
-Sliding Max
+**Sliding Max**
 ---
 
 Any DP problem where `A[i] = max(A[j:k]) + C` where `j < k <= i` and `C` is a constant.
