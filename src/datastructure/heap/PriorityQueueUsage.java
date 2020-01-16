@@ -1,4 +1,4 @@
-package datastructure;
+package datastructure.heap;
 
 import java.util.LinkedList;
 import java.util.PriorityQueue;

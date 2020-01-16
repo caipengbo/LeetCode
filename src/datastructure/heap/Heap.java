@@ -1,4 +1,4 @@
-package hash_heap;
+package datastructure.heap;
 
 import java.util.Arrays;
 

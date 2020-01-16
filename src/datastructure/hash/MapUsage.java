@@ -1,4 +1,4 @@
-package datastructure;
+package datastructure.hash;
 
 
 import java.util.HashSet;

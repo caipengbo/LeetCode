@@ -1,4 +1,4 @@
-package hash_heap;
+package datastructure.hash;
 
 import java.util.HashMap;
 import java.util.Map;
