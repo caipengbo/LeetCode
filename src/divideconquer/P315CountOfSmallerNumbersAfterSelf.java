@@ -17,8 +17,7 @@ public class P315CountOfSmallerNumbersAfterSelf {
         if (l1 > r1 || l2 > r2) return;
         int[] copy = Arrays.copyOf(indexs, nums.length);
         int i = l1;
-        int s1 = l1, s2 = l2;
-        int count = 0;  // Key!!!
+        int count = 0;  // Key!!! 计数(计算右侧的数目)
         while (l1 <= r1 && l2 <= r2) {
             if (nums[copy[l1]] <= nums[copy[l2]]) {
                 counts[copy[l1]] += count; 
