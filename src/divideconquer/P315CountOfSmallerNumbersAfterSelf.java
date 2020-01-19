@@ -34,13 +34,40 @@ public class P315CountOfSmallerNumbersAfterSelf {
         }
         while (l2 <= r2) indexs[i++] = copy[l2++];
     }
+    // 减少copy数组的长度
+    public void merge2(int[] nums, int[] indexs, int l1, int r1, int l2, int r2, int[] counts) {
+        if (l1 > r1 || l2 > r2) return;
+        // r2 - r1 + 1
+        int n = r2 - l1 + 1;
+        int[] copy = new int[n];
+        for (int i = 0; i < n; i++) {
+            copy[i] = indexs[l1+i];
+        }
+        int i = l1, s = l1;
+        int count = 0;  // Key!!! 计数(计算右侧的数目)
+        while (l1 <= r1 && l2 <= r2) {
+            if (nums[copy[l1-s]] <= nums[copy[l2-s]]) {
+                counts[copy[l1-s]] += count; 
+                indexs[i++] = copy[(l1++)-s];
+            } else {
+                count++;
+                indexs[i++] = copy[(l2++)-s];
+            }
+        }
+        while (l1 <= r1) {
+            // counts[copy[l1]]++;
+            counts[copy[l1-s]] += count;
+            indexs[i++] = copy[(l1++)-s];
+        }
+        while (l2 <= r2) indexs[i++] = copy[(l2++)-s];
+    }
     // small -> big
     public void mergeSort(int[]  nums, int[] indexs, int l, int r, int[] counts) {
         if (l >= r) return;
         int m = (l + r) / 2;
         mergeSort(nums, indexs, l, m, counts);
         mergeSort(nums, indexs, m+1, r, counts);
-        merge(nums, indexs, l, m, m+1, r, counts);
+        merge2(nums, indexs, l, m, m+1, r, counts);
     }
     public List<Integer> countSmaller(int[] nums) {
         int n = nums.length;
