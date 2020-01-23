@@ -3,9 +3,10 @@ package datastructure.monotonicqueue;
 import java.util.Arrays;
 
 /**
- * Title: 跳台阶 Desc: A Frog jumps K steps at most. It costs `A[i]` to stays at
- * `i`. Return the min cost to get to `N-1` from `0` Created by Myth on
- * 01/14/2020 in VSCode
+ * Title: 跳台阶 
+ * Desc: A Frog jumps K steps at most. It costs `A[i]` to stays at `i`. 
+ * Return the min cost to get to `N-1` from `0` 
+ * Created by Myth on 01/14/2020 in VSCode
  */
 
 public class FrogJump2 {
