@@ -1,4 +1,4 @@
-package advanced;
+package datastructure;
 
 /**
  * Title: 208. 实现 Trie (前缀树、字典树)
