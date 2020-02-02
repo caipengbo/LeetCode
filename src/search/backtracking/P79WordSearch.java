@@ -39,7 +39,7 @@ public class P79WordSearch {
         return (i >= 0 && j >= 0 && i < board.length && j < board[i].length);
     }
     // 解法2 （简洁）
-    private boolean backtracking(char[][] board, int i, int j, String word, int charPos) {
+    private boolean backtrackingOld(char[][] board, int i, int j, String word, int charPos) {
         char c = board[i][j];
         if (charPos == word.length() - 1) return c == word.charAt(charPos);
         if (c == '#' || c != word.charAt(charPos)) return false;
@@ -48,6 +48,21 @@ public class P79WordSearch {
         if (j > 0 && backtracking(board, i, j-1, word, charPos+1)) return true;
         if (i < board.length - 1 && backtracking(board, i+1, j, word, charPos+1)) return true;
         if (j < board[0].length - 1 && backtracking(board, i, j+1, word, charPos+1)) return true;
+        board[i][j] = c;
+        return false;
+    }
+    // 最好的写法
+    private boolean backtracking(char[][] board, int i, int j, String word, int charPos) {
+        if (charPos == word.length()) return true;
+        // 将判断移到此处来
+        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length) return false;
+        char c = board[i][j];
+        if (c == '#' || c != word.charAt(charPos)) return false;
+        board[i][j] = '#';
+        if (backtracking(board, i-1, j, word, charPos+1)) return true;
+        if (backtracking(board, i, j-1, word, charPos+1)) return true;
+        if (backtracking(board, i+1, j, word, charPos+1)) return true;
+        if (backtracking(board, i, j+1, word, charPos+1)) return true;
         board[i][j] = c;
         return false;
     }
