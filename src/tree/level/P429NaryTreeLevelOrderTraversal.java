@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * Title:
- * Desc:
+ * Title: 429. N叉树的层序遍历
+ * Desc: 给定一个 N 叉树，返回其节点值的层序遍历。 (即从左到右，逐层遍历)。
  * Created by Myth on 9/20/2019
  */
 public class P429NaryTreeLevelOrderTraversal {
