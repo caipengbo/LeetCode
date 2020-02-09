@@ -35,6 +35,28 @@ public class P24SwapNodesinPairs {
         nextNode.next = head;
         return nextNode;
     }
+    // 第二遍
+    public ListNode swapPairs2(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode before = dummy, cur = head, after;
+        
+        while (cur != null) {
+            if (cur.next == null) {
+                before.next = cur;
+                before = cur;
+                break;
+            } else {
+                after = cur.next.next;
+                before.next = cur.next;
+                cur.next.next = cur;
+                before = cur;
+                cur = after;
+            }
+        }
+        before.next = null;
+        return dummy.next;
+    }
 
     public static void main(String[] args) {
         ListNode head = ListUtil.stringToListNode("[1,2,3,4]");
