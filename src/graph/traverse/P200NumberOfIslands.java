@@ -1,12 +1,4 @@
-/*
- * @Author: your name
- * @Date: 2019-12-05 16:40:28
- * @LastEditTime: 2019-12-05 16:47:47
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /LeetCode/src/graph/P200NumberOfIslands.java
- */
-package graph;
+package graph.traverse;
 
 import java.util.LinkedList;
 import java.util.Queue;

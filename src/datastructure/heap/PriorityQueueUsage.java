@@ -11,6 +11,10 @@ import java.util.PriorityQueue;
 public class PriorityQueueUsage {
     public void useHeap() {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(10, (o1, o2) -> o2.compareTo(o1));
+        // 有初始容量，lambda表达式
+        PriorityQueue<Integer> maxHeap2 = new PriorityQueue<Integer>(10, (o1, o2) -> o2 - o1);
+        // 无初始容量
+        PriorityQueue<Integer> maxHeap3 = new PriorityQueue<Integer>((o1, o2) -> o2 - o1);
         PriorityQueue<Integer> minHeap = new PriorityQueue<>(2);
         int[] arr = {8,2,3,6,5,1,7,9};
         for (int value : arr) {

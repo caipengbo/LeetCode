@@ -1,4 +1,4 @@
-package graph;
+package graph.traverse;
 
 import java.util.*;
 

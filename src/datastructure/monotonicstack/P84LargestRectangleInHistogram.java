@@ -30,7 +30,7 @@ public class P84LargestRectangleInHistogram {
         return max;
     }
     // Again 1/13/2020
-    public int largestRectangleArea(int[] heights) {
+    public int largestRectangleArea3(int[] heights) {
         int n = heights.length, max = 0;
         Stack<Integer> increaseStack = new Stack<>();
         // 递增栈，While peek > cur, loop pop, update max
@@ -49,6 +49,23 @@ public class P84LargestRectangleInHistogram {
         }
         return max;
     }
+    // 第三遍：单调递增栈
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length, i = 0;
+        Stack<Integer> stack = new Stack<>();
+        int max = 0, cur, h, w;
+        while (i <= n) {
+            cur = (i == n) ? 0 : heights[i];
+            while (!stack.empty() && heights[stack.peek()] > cur) {
+                h = stack.pop();
+                w = stack.empty() ? i : (i-stack.peek()-1); 
+                max = Math.max(max, heights[h]*(i-h));
+            }
+            stack.push(i++);
+        }
+        return max;
+    }
+
 
     public static void main(String[] args) {
         P84LargestRectangleInHistogram p84 = new P84LargestRectangleInHistogram();
