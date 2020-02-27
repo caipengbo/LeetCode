@@ -33,6 +33,7 @@ public class Heap {
         }
     }
     // 调整堆  i: 当前节点序号 len: 当前堆的长度
+    // sift down
     private void heapify(int[] array, int i, int len) {
         int left = 2 * i + 1;
         int right = 2 * i + 2;
@@ -45,6 +46,26 @@ public class Heap {
             heapify(array, largest, len);
         }
     }
+    // 迭代版:priorityqueue源码
+    private void siftDown(int[] array, int k) {
+        int len = array.length;
+        int half = len >>> 1;
+        int val = array[k];
+        while (k < half) {
+            int child = k << 1 + 1;
+            int right = child + 1;
+            int largest = array[child];
+            if (array[right] > val) {
+                largest = array[right];
+                child = right;
+            }
+            if (val >= largest) break;
+            array[k] = largest;
+            k = child;
+        }
+        array[k] = val;
+    }
+
     private void testHeapSort(int[] array) {
         heapSort(array);
         System.out.println(Arrays.toString(array));

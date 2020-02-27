@@ -1,6 +1,7 @@
 package search.backtracking;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -31,15 +32,41 @@ public class P93RestoreIPAddresses {
             cur.remove(cur.size()-1);
         }
     }
-    public List<String> restoreIpAddresses(String s) {
+    public List<String> restoreIpAddresses1(String s) {
         List<String> ans = new ArrayList<>();
         backtracking(s, 0, new ArrayList<>(), ans);
+        return ans; 
+    }
+    // 
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ans = new LinkedList<>();
+        LinkedList<String> cur = new LinkedList<>();
+        restoreIpAddresses(s, ans, cur, 0);
         return ans;
+    }
+    private void  restoreIpAddresses(String s, List<String> ans, LinkedList<String> cur, int pos) {
+        if (cur.size() == 4) {
+            if (pos == s.length()) {
+                ans.add(String.join(".", cur));
+            }
+            return;
+        }
+        for (int i = 1; i <= 3; i++) {
+            if (pos+i > s.length()) break;
+            String seg = s.substring(pos, pos+i);
+            if ((i > 1 && seg.startsWith("0")) || Integer.valueOf(seg) > 255) break;
+            cur.addLast(seg);
+            restoreIpAddresses(s, ans, cur, pos+i);
+            cur.removeLast();
+        }
     }
 
     public static void main(String[] args) {
         P93RestoreIPAddresses p93 = new P93RestoreIPAddresses();
         String s = "25525511135";
-        System.out.println(p93.restoreIpAddresses(s));
+        String s1 = "0000";
+        String s2 = "010010";
+        String s3 = "010010";
+        System.out.println(p93.restoreIpAddresses(s2));
     }
 }
