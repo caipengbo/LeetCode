@@ -18,7 +18,7 @@ public class P239SlidingWindowMaximum {
         Deque<Integer> deque = new ArrayDeque<>();  // index
         int[] ret = new int[n-k+1];
         for (int i = 0; i < n; i++) {
-            if (!deque.isEmpty() && i - deque.peekFirst() >= k) deque.removeFirst();  // 去头
+            while (!deque.isEmpty() && i - deque.peekFirst() >= k) deque.removeFirst();  // 去头
             while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) deque.removeLast();  // 循环去尾
             deque.addLast(i); 
             if (i >= k-1) ret[i-k+1] = nums[deque.peekFirst()];

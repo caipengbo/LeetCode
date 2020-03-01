@@ -5,6 +5,17 @@
 
 滑动窗口的最值问题
 
+```java
+// 模板
+Deque deque = new LinkedList()
+for (int i = 0; i < n; i++>) {
+    while (!deque.isEmpty() && peek ? i) deque.removeFirst();  // 去头
+    while (!deque.isEmpty() && nums[last] ? nums[i]) deque.removeLast();  // 去尾
+    deque.add(i);
+    // Some operation
+}
+
+```
 
 -------
 
