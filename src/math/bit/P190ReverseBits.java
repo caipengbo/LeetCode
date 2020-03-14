@@ -1,4 +1,4 @@
-package math;
+package math.bit;
 
 /**
  * Title: 190. 颠倒二进制位

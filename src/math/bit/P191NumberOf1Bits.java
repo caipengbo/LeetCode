@@ -1,4 +1,4 @@
-package math;
+package math.bit;
 
 /**
  * Title: 191. 位1的个数

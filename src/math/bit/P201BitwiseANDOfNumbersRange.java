@@ -1,4 +1,4 @@
-package math;
+package math.bit;
 
 /**
  * Title: 201. 数字范围按位与

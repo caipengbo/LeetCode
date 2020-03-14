@@ -1,4 +1,4 @@
-package math;
+package math.convert;
 
 /**
  * Title: 8. 字符串转换整数 (atoi)

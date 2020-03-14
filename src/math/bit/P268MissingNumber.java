@@ -1,7 +1,7 @@
-package math;
+package math.bit;
 
 /**
- * Title:
+ * Title: 268. 缺失的数字
  * Desc:
  * Created by Myth-Lab on 10/30/2019
  */

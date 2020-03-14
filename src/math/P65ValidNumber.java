@@ -1,8 +1,8 @@
 package math;
 
 /**
-* Title: 
-* Desc: 
+* Title: 65. 有效数字
+* Desc: 数字 0-9    指数 - "e"     正/负号 - "+"/"-"         小数点 - "."
 * Created by Myth-PC on 02/02/2020 in VSCode
 */
 public class P65ValidNumber {
