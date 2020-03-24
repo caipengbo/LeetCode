@@ -1,5 +1,7 @@
 package dp.seq.mulstates;
 
+import javax.sound.sampled.SourceDataLine;
+
 /**
  * Title: 198. 打家劫舍
  * Desc: 740题  可以转化成 该题，进行一个计数排序（下标统计每个点数出现的次数），就和该题一模一样了
@@ -38,10 +40,29 @@ public class P198HouseRobber {
     // 使用滚动数组优化
     // 只和前两个元素有关
 
+    // 面试题 17.16. 按摩师（和本题一样） 两种状态
+    public int massage(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int n = nums.length;
+        int[][] dp = new int[n][2];
+        dp[0][0] = 0;
+        dp[0][1] = nums[0];
+        // max = Math.max(nums[0], nums[1]);
+        for (int i = 1; i < n; i++) {
+            dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1]);  // 本次不选，那么前一次可以选也可以不选
+            dp[i][1] = dp[i-1][0] + nums[i];  // 本次选，那么前一次不能选
+        }
+        // for (int[] ele : dp) {
+        //     System.out.println(ele[0] + " " + ele[1]);
+        // }
+        return Math.max(dp[n-1][0], dp[n-1][1]);
+    }
+
+
     public static void main(String[] args) {
         P198HouseRobber p198 = new P198HouseRobber();
         int[] nums = {2,7,9,3,1};
         int[] nums2 = {1,9,1,9,1};
-        System.out.println(p198.rob(nums2));
+        System.out.println(p198.massage(nums2));
     }
 }
