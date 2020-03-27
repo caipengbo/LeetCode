@@ -1,4 +1,4 @@
-package math;
+package math.numbertheory;
 
 class P1071GCDString {
     public String gcdOfStrings(String str1, String str2) {

@@ -1,7 +1,7 @@
-package math;
+package math.numbertheory;
 
 /**
- * Title: 最大公约数Greatest Common Divisor与最小公倍数Least Common Multiple
+ * Title: 最大公约数Greatest Common Divisor与最小公倍数Least Common Multiple(两个数的)
  * Desc: 常用算法：短除法、辗转相除法，更相减损法
  * Created by Myth-Lab on 10/29/2019
  */
@@ -20,7 +20,8 @@ public class GCD_LCM {
         return euclid2(n, m%n);
     }
     public int euclid3(int m, int n) {
-        return n != 0 ? euclid2(n, m%n) : m;
+        return n == 0 ? m : euclid2(n, m%n);
+        // return n != 0 ? euclid2(n, m%n) : m;
     }
 
     public int chineseGCD(int m, int n) {
