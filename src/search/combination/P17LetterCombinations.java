@@ -27,7 +27,7 @@ public class P17LetterCombinations {
             // Error: cur = cur + letters.charAt(i);
             String newCur = cur + letters.charAt(i);
             dfs(digits, pos+1, newCur, ans);
-            // 这个地方没有作 + remove 操作，因为 new 了一个新的cur出来
+            // 这个地方没有做 remove 操作，因为 new 了一个新的cur出来（便于add到List中）,以前的cur没有改变
         }
     }
 
