@@ -1,5 +1,4 @@
-package graph.unionfind;
-
+package graph.dfs;
 import java.util.LinkedList;
 import java.util.Queue;
 

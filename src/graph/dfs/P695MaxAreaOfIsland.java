@@ -1,4 +1,4 @@
-package graph.unionfind;
+package graph.dfs;
 
 /**
  * Title: 695. 岛屿的最大面积
