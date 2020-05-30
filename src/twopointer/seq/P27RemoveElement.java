@@ -1,4 +1,4 @@
-package twopointer;
+package twopointer.seq;
 
 /**
 * Title: 27. 移除元素

@@ -1,4 +1,4 @@
-package twopointer;
+package twopointer.slidewindow;
 
 /**
 * Title: 209. 长度最小的子数组（双指针滑动窗口）

@@ -1,4 +1,4 @@
-package twopointer;
+package twopointer.seq;
 
 /**
 * Title: 240. 搜索二维矩阵 II
