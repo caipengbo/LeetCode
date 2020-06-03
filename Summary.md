@@ -7,18 +7,25 @@
 	- 2. BFS：矩阵、单词变换
 	- 3. 排列、组合、分割、子集：四大类问题，常用回溯、DFS解决
 	- 4. 图的搜索：DFS、BFS、并查集、Flood
-	- 5. 并查集
+	- 5. 并查集（TODO）
 - 二分查找：
+  - g 函数，利用边界
+  - K th 问题
+  - 旋转数组
 - 双指针：
-  - 左右指针：数组（或字符串）问题，二分查找也算是双指针
-  - 快慢指针： 链表中环的问题
-  - 滑动窗口
+  - 左右指针：数组（或字符串）问题，二分查找也算是双指针，三数之和，Sunday算法
+  - 快慢指针：链表中环的问题
+  - 滑动窗口：更新窗口
 - 链表：
+  - 链表的基本操作
+  - 旋转（K组旋转，奇偶旋转）、拆分
+  - 归并
+  - 判断环（快慢指针）
 - 二叉树：
 - 数学：
   - 位运算
   - 数论
-  - 概率：洗牌算法、蓄水池抽样
+  - 概率：洗牌算法、蓄水池抽样、蒙特卡洛
   - 
 - 动态规划
 - 排序
@@ -1766,3 +1773,513 @@ public int minSubArrayLen(int s, int[] nums) {
 书店老板有一家店打算试营业 customers.length 分钟。每分钟都有一些顾客（customers[i]）会进入书店，所有这些顾客都会在那一分钟结束后离开。在某些时候，书店老板会生气。 如果书店老板在第 i 分钟生气，那么 grumpy[i] = 1，否则 grumpy[i] = 0。 当书店老板生气时，那一分钟的顾客就会不满意，不生气则他们是满意的。书店老板知道一个秘密技巧，能抑制自己的情绪，可以让自己连续 X 分钟不生气，但却只能使用一次。请你返回这一天营业下来，最多有多少客户能够感到满意的数量。
 TODO
 https://leetcode-cn.com/problems/grumpy-bookstore-owner/
+
+# 链表
+
+链表主要是：一些基本操作（遍历），比较重要的 判断链表中是否有环（**见上方快慢指针章节**），比较难得就是链表的旋转（K个一组旋转，奇偶旋转）、拆分、归并（K路归并）
+
+## 基本操作
+2. 两数相加
+给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+```Java
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    ListNode head = new ListNode(-1);  // 初始创建一个头指针，就可以避免判断当前指针是否为空
+    ListNode cur = head;
+    int sum = 0;  // 余数、和使用一个变量来表示
+    while (l1 != null || l2 != null || sum != 0) {
+        if (l1 != null) {
+            sum += l1.val;
+            l1 = l1.next;
+        }
+        if (l2 != null) {
+            sum += l2.val;
+            l2 = l2.next;
+        }
+        cur.next = new ListNode(sum % 10);  // 使用取余和取整
+        cur = cur.next;
+        sum = sum / 10;
+    }
+    return head.next;
+}
+```
+147. 对链表进行插入操作
+```Java
+// 优化
+public ListNode insertionSortListOpt(ListNode head) {
+    ListNode dummy = new ListNode(Integer.MIN_VALUE);
+    ListNode cur = head, p = null, next;
+    while (cur != null) {
+        // p = dummy; 每次都把 p 置在了头部位置
+        if (p == null || p.val >= cur.val) p = dummy;  // 优化： 有时候不必将 p 移动至 头部位置
+        next = cur.next;
+        while (p.next != null && cur.val > p.next.val) {
+            p = p.next;
+        }
+        // 注意以下两行代码
+        cur.next = p.next;
+        p.next = cur;
+        cur = next;
+    }
+    return dummy.next;
+}
+```
+445. 两数相加2
+链表不是逆序方式存储的，该如何去做。
+```Java
+// 不修改输入链表
+// 难点：1. 预先不只是位数 2. 进位不清楚  3. 计算顺序是从后往前的
+// 使用栈 时间和空间复杂度 O(m+n)
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    Stack<Integer> stack1 = new Stack<>();
+    Stack<Integer> stack2 = new Stack<>();
+    while (l1 != null) {
+        stack1.push(l1.val);
+        l1 = l1.next;
+    }
+    while (l2 != null) {
+        stack2.push(l2.val);
+        l2 = l2.next;
+    }
+
+    ListNode head= null, cur;
+    int sum = 0;
+    while (!stack1.empty() || !stack2.empty() || sum != 0) {
+        if (!stack1.empty()) sum += stack1.pop();
+        if (!stack2.empty()) sum += stack2.pop();
+        cur = new ListNode(sum % 10);
+        cur.next = head;
+        head = cur;
+        sum = sum / 10;
+    }
+    return head;
+}
+```
+## 删除
+
+19. 删除链表的倒数第N个节点
+给定一个链表，删除链表的倒数第 n 个节点（n保证有效, 不会等于0 哦），并且返回链表的头结点。使用一趟扫描。
+```Java
+// 简化：使用dummy，不用pre指针，直接slow指向要删除的节点的前面位置,使用 n 递减计数
+public ListNode removeNthFromEnd2(ListNode head, int n) {
+    if (head == null) return null;
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode fast = dummy, slow = dummy;
+    while (fast.next != null) {
+        if (n <= 0) slow = slow.next;
+        fast = fast.next;
+        n--;
+    }
+    slow.next = slow.next.next;
+    return dummy.next;
+}
+```
+82. 删除排序链表中的重复元素
+给定一个排序链表，删除所有含有重复数字的节点，只保留原始链表中 **没有重复出现** 的数字。
+```Java
+public ListNode deleteDuplicates(ListNode head) {
+    if(head == null) return null;
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode pre = dummy, p = head;
+    while (p != null) {
+        if (p.next == null || p.next.val != p.val) {
+            if (pre.next == p) pre = p;
+            else pre.next = p.next;
+        }
+        p = p.next;
+    }
+    return dummy.next;
+}
+```
+83. 删除排序链表中的重复元素 II
+给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。
+```Java
+public ListNode deleteDuplicates(ListNode head) {
+    if(head == null) return null;
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode p = head;
+    while(p != null && p.next != null) {
+        if(p.val == p.next.val) {
+            p.next = p.next.next;
+        } else {
+            p = p.next;
+        }
+    }
+    return dummy.next;
+}
+```
+203. 移除链表元素
+删除链表中等于给定值 val 的所有节点。
+```Java
+public ListNode removeElements(ListNode head, int val) {
+    if(head == null) return null;
+    int temp = (val == -1) ? -2 : -1;
+    ListNode dummy = new ListNode(temp);
+    dummy.next = head;
+    ListNode p = dummy;
+    while(p.next != null) {
+        if(p.next.val == val) {
+            p.next = p.next.next;
+        } else {
+            p = p.next;
+        }
+    }
+    return dummy.next;
+}
+```
+## 旋转
+24. 两两交换链表中的节点
+给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。给定 1->2->3->4, 你应该返回 2->1->4->3.
+```Java
+// 节点的移动（三个节点）
+public ListNode swapPairs(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode cur = dummy, swap1, swap2;
+    while (cur.next != null && cur.next.next != null) {
+        swap1 = cur.next;
+        swap2 = cur.next.next;
+        cur.next = swap2;
+        swap1.next = swap2.next;
+        swap2.next = swap1;
+        cur = swap1;
+    }
+    return dummy.next;
+}
+// 递归写法(考虑两个节点)
+public ListNode swapPairsRecursive(ListNode head) {
+    if(head == null || head.next == null) return head;
+    ListNode nextNode = head.next;
+    head.next = swapPairsRecursive(nextNode.next);
+    nextNode.next = head;
+    return nextNode;
+}
+```
+25. K个一组反转链表
+给你一个链表，每 k 个节点一组进行翻转，请你返回翻转后的链表。 k 是一个正整数，它的值小于或等于链表的长度。 如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。 
+```Java
+public ListNode reverseKGroup(ListNode head, int k) {
+    ListNode p = head, q = head;
+    // 找到 第 k-1个结点p
+    for (int i = 0; i < k; i++) {
+        if (p == null) return head;
+        q = p;
+        p = p.next;
+    }
+    q.next = null;
+    ListNode newHead = reverse(head);
+    head.next = reverseKGroup(p, k);
+    return newHead;
+}
+private ListNode reverse(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode ret = reverse(head.next);
+    head.next.next = head;
+    head.next = null;
+    return ret;
+}
+```
+
+61. 旋转链表
+给定一个链表，旋转链表，将链表每个节点向右移动 k 个位置，其中 k 是非负数。
+```Java
+// 快指针先走k-1步， 若快指针先为null说明链表长度小于k, 则快指针走 k%n
+// 最终慢指针为新头结点，快指针.next = head
+public ListNode rotateRight(ListNode head, int k) {
+    if (head == null) return null;
+    ListNode slow = head, fast = head, ret = null;
+    int i = 0;
+    for (i = 0; i < k; i++) {
+        if (fast == null) break;
+        fast = fast.next;
+    }
+    // k== 链表长度
+    if (i == k && fast == null) return head;
+    if (i < k) {
+        k = k % i;
+        fast = head;
+        for (i = 0; i < k; i++) {
+            fast = fast.next;
+        }    
+    }
+    while (fast.next != null) {
+        slow = slow.next;
+        fast = fast.next;
+    }
+    fast.next = head;
+    ret = slow.next;
+    slow.next = null;
+    return ret;
+}
+```
+92. 反转链表2
+反转从位置 m 到 n 的链表。请使用一趟扫描完成反转。
+```Java
+// 设置DummyNode
+public ListNode reverseBetween2(ListNode head, int m, int n) {
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode oldLast = dummy, before = null, cur, after;
+    
+    for (int i = 1; i < m; i++) {
+        oldLast = oldLast.next;
+    }
+    ListNode reverseLast = oldLast.next;
+    cur = reverseLast;
+    for (int i = m; i <= n; i++) {
+        after = cur.next;
+        cur.next = before;
+        before = cur;
+        cur = after;
+    }
+    reverseLast.next = cur;
+    oldLast.next = before;
+    return dummy.next;
+}
+```
+206. 反转链表（使用迭代 和 递归）
+反转一个单链表。
+```Java
+// 迭代（循环版本）
+public ListNode reverseList(ListNode head) {
+    ListNode front = null, cur = head, back;
+    while (cur != null) {
+        back = cur.next;
+        cur.next = front;
+        front = cur;
+        cur = back;
+    }
+    return front;
+}
+// 递归版本
+public ListNode reverseList2(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode p = reverseList(head.next);
+    head.next.next = head;
+    head.next = null;
+    return p;
+}
+```
+## 拆分
+138. 复制带随机指针的链表
+给定一个链表，每个节点包含一个额外增加的随机指针，该指针可以指向链表中的任何节点或空节点。要求返回这个链表的深拷贝。你必须返回给定头的拷贝作为对克隆列表的引用。
+难点：如何拷贝 随机节点？
+思路1：使用 HashMap: 需要额外的空间   2. 旧节点和新节点 交错排列，然后复制 random，再拆开 next.
+```Java
+private class Node {
+    public int val;
+    public Node next;
+    public Node random;
+
+    public Node() {}
+
+    public Node(int _val, Node _next, Node _random) {
+        val = _val;
+        next = _next;
+        random = _random;
+    }
+}
+// 拆开链表的地方有点不一样
+public Node copyRandomList(Node head) {
+    if (head == null) return null;
+    Node p = head, newNode, q;
+    // 交叉排列
+    while (p != null) {
+        newNode = new Node(p.val, null, null);
+        newNode.next = p.next;
+        p.next = newNode;
+        p = newNode.next;
+    }
+    // 赋值新节点的 random
+    p = head;
+    while (p != null) {
+        p.next.random = (p.random != null ? p.random.next : null);
+        p = p.next.next;
+    }
+    // 拆开链表（拆解方法 2）
+    p = head;
+    q = head.next;
+    newNode = p.next;
+    while (p.next != null && p.next.next != null) {
+        p.next = p.next.next;
+        q.next = q.next.next;
+        p = p.next;
+        q = q.next;
+    }
+    p.next = null;  // 注意封尾操作，详细的拆分 参见 328题
+    return newNode;
+}
+```
+328. 奇偶链表（链表的拆分）
+给定一个单链表，把所有的奇数节点和偶数节点分别排在一起。请注意，这里的奇数节点和偶数节点指的是节点编号的奇偶性，而不是节点的值的奇偶性。
+请尝试使用原地算法完成。你的算法的空间复杂度应为 O(1)，时间复杂度应为 O(nodes)，nodes 为节点总数。应当保持奇数节点和偶数节点的相对顺序。链表的第一个节点视为奇数节点，第二个节点视为偶数节点，以此类推。
+```Java
+public static ListNode oddEvenList(ListNode head) {
+    if (head == null || head.next == null || head.next.next == null) return head;
+    ListNode p = head, q = head.next;
+    ListNode evenHead = head.next;
+    while (p.next != null && p.next.next != null) {  // 判断条件是 p.next,也就是说，是 到 链表的最后一个元素，这个时候需要进行封尾操作
+        p.next = p.next.next;
+        q.next = q.next.next;
+        p = p.next;
+        q = p.next;
+    }
+    p.next = evenHead;  // 封尾操作(该题比较特殊，如果是单纯的将一个链表拆成一个，需要进行封尾)
+    // 因为 p.next == null 跳出循环， p
+    return head;
+}
+```
+## 归并
+21. 合并两个有序链表(循环写法和递归写法)
+将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
+```Java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode head = new ListNode(-1);
+    ListNode p = head;
+    while(l1 != null && l2 != null) {
+        if (l1.val <= l2.val) {
+            p.next = l1;
+            l1 = l1.next;
+        } else {
+            p.next = l2;
+            l2 = l2.next;
+        }
+        p = p.next;
+    }
+    // 直接接到 剩余的链表即可
+    if (l1 != null) p.next = l1;
+    if (l2 != null) p.next = l2;
+
+    return head.next;
+}
+public ListNode mergeTwoListsRecursive(ListNode l1, ListNode l2) {
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    if (l1.val <= l2.val) {
+        l1.next = mergeTwoListsRecursive(l1.next, l2);
+        return l1;
+    } else {
+        l2.next = mergeTwoListsRecursive(l1, l2.next);
+        return l2;
+    }
+}
+```
+23. 合并K个排序链表(使用堆和不使用堆)
+合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。
+```Java
+// 使用堆
+public ListNode mergeKLists(ListNode[] lists) {
+    int k = lists.length;
+    if (k == 0) return null;
+    PriorityQueue<ListNode> priorityQueue = new PriorityQueue<ListNode>(k, new Comparator<ListNode>() {
+        @Override
+        public int compare(ListNode o1, ListNode o2) {
+            return o1.val - o2.val;
+        }
+    });
+    ListNode head = new ListNode(-1);
+    ListNode p = head, temp;
+    boolean hasNode = true;
+    while (hasNode) {
+        hasNode = false;
+        for (int i = 0; i < k; i++) {
+            if (lists[i] != null) {
+                //  这里也要注意
+                temp = lists[i];
+                lists[i] = lists[i].next;
+                priorityQueue.add(temp);
+                hasNode = true;
+            }
+        }
+    }
+    while (!priorityQueue.isEmpty()) {
+        p.next = priorityQueue.poll();
+        p = p.next;
+    }
+    p.next = null;  // 必须加这个封尾操作，有可能会出现环
+    return head.next;
+}
+// 不使用堆
+public ListNode mergeKLists2(ListNode[] lists) {
+    return mergeKLists2(lists, 0, lists.length - 1);
+}
+public ListNode mergeKLists2(ListNode[] lists, int start, int end) {
+    if (start == end) return lists[start];
+    else if (start < end) {
+        int mid = start + (end - start) / 2;
+        ListNode left = mergeKLists2(lists, start, mid);
+        ListNode right = mergeKLists2(lists, mid+1, end);
+        return mergeTwoListsRecursive(left, right);
+    } else return null;
+}
+public ListNode mergeTwoListsRecursive(ListNode l1, ListNode l2) {
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    if (l1.val <= l2.val) {
+        l1.next = mergeTwoListsRecursive(l1.next, l2);
+        return l1;
+    } else {
+        l2.next = mergeTwoListsRecursive(l1, l2.next);
+        return l2;
+    }
+}
+```
+148. 排序链表（归并排序）
+在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
+注意：递归版本使用到了 系统栈，所以空间复杂度不是是lg(n)；链表的归并需要移动指针找到链表的中点。
+```Java
+// 递归版本 （自顶向下）
+public ListNode sortList(ListNode head) {
+    if (head == null || head.next == null) return head;
+    // 将链表分为两段
+    ListNode p = head, q = head, pre = head;
+    while (q != null && q.next != null) {
+        pre = p;
+        p = p.next;
+        q = q.next.next;
+    }
+
+    pre.next = null;  // 截断链表
+    ListNode left = sortList(head);
+    ListNode right = sortList(p);
+    return mergeTwoListsRecursive(left, right);
+}
+public ListNode mergeTwoListsRecursive(ListNode l1, ListNode l2) {
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+
+    if (l1.val <= l2.val) {
+        l1.next = mergeTwoListsRecursive(l1.next, l2);
+        return l1;
+    } else {
+        l2.next = mergeTwoListsRecursive(l1, l2.next);
+        return l2;
+    }
+}
+// 非递归版本（迭代）
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    ListNode dummy = new ListNode(-1), cur = dummy;
+
+    while (l1 != null && l2 != null) {
+        if (l1.val < l2.val) {
+            cur.next = l1;
+            l1 = l1.next;
+        } else {
+            cur.next = l2;
+            l2 = l2.next;
+        }
+        cur = cur.next;
+    }
+    if (l1 == null) {
+        cur.next = l2;
+    } else {
+        cur.next = l1;
+    } 
+    return dummy.next;
+}
+```

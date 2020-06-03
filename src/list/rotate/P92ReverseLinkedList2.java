@@ -1,4 +1,4 @@
-package list.manip;
+package list.rotate;
 
 import util.ListNode;
 import util.ListUtil;
