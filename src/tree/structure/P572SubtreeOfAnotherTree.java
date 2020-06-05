@@ -42,4 +42,23 @@ public class P572SubtreeOfAnotherTree {
         if (!same) same = isSubtree(s.right, t);
         return same;
     }
+    // 2020/6/5
+    public boolean isSubtree3(TreeNode s, TreeNode t) {
+        if (t == null) {
+            return true;
+        }
+        if (s == null) {
+            return false;
+        }
+        if (s.val == t.val && isSame(s, t)) {
+            return true;
+        }
+        return isSubtree3(s.left, t) || isSubtree3(s.right, t);
+    }
+    private boolean isSame(TreeNode tree1, TreeNode tree2) {
+        if (tree1 == null || tree2 == null) {
+            return tree1 == tree2;
+        }
+        return tree1.val == tree2.val && isSame(tree1.left, tree2.left) && isSame(tree1.right, tree2.right);
+    }
 }

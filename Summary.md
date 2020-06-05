@@ -2283,3 +2283,319 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     return dummy.next;
 }
 ```
+# 树
+树就是练习递归的地方，递归重点：边界值（提前退出），缩小范围（进入递归），返回值（以及充分利用返回值）
+
+## 遍历
+**三种遍历方法**
+94. 144. 145. 题前中后序遍历
+
+递归写法（中序遍历为例）：
+```Java
+public void inorder(TreeNode root, List<Integer> ret) {
+    if (root == null) return;
+    inorder(root.left, ret);
+    ret.add(root.val);
+    inorder(root.right, ret);
+}
+```
+迭代写法：
+**前序**
+```java
+List<Integer> ret = new ArrayList<>();
+Stack<TreeNode> stack = new Stack<>();
+TreeNode cur = root;
+stack.add(cur);
+while (!stack.isEmpty()) {
+    cur = stack.pop();
+    if (cur != null) {
+        ret.add(cur.val);
+        stack.add(cur.right);
+        stack.add(cur.left);
+    }
+}
+return ret;
+```
+**中序**
+```java
+List<Integer> ret = new ArrayList<>();
+Stack<TreeNode> stack = new Stack<>();
+TreeNode cur = root;
+while (cur != null || !stack.empty()) {
+    while (cur != null) {
+        stack.add(cur);
+        cur = cur.left;
+    }
+    cur = stack.pop();
+    ret.add(cur.val);
+    cur = cur.right;
+}
+return ret;
+```
+**后序**
+前序遍历的顺序是 根-左-右，后序遍历的顺序是 左-右-根
+那么 前序稍微修改一下 变成 根-右-左，然后把结果倒序，就变成 左-右-根* 了
+```java
+// 使用LinkedList的头插，让结果倒序
+LinkedList<Integer> ret = new LinkedList<>();
+Stack<TreeNode> stack = new Stack<>();
+TreeNode cur = root;
+stack.add(cur);
+while (!stack.empty()) {
+    cur = stack.pop();
+    if (cur != null) {
+        ret.addFirst(cur.val);  // 头插法，让结果倒序
+        stack.add(cur.left);
+        stack.add(cur.right);
+    }
+}
+return ret;
+```
+**根据遍历序列构造树**
+
+105. 前中(唯一)
+假设树中没有重复的元素，根据一棵树的前序遍历与中序遍历构造二叉树。
+```Java
+// 难点：如何在数组上分区域
+// 方案：递归的在子数组上进行操作
+public TreeNode buildTree(int[] preorder, int[] inorder) {
+    return helper(0, 0, inorder.length-1, preorder, inorder);
+}
+public TreeNode helper(int preStart, int inStart, int inEnd, int[] preorder, int[] inorder) {
+    if (preStart >= preorder.length || inStart > inEnd) return null;
+    // 当前根节点
+    TreeNode root = new TreeNode(preorder[preStart]);
+    // 中序遍历中找到当前的 根节点，划分左右区域(为了加速可以使用 HashMap，O(1)时间找到inIndex)
+    int inIndex = 0;
+    for (int i = inStart; i <= inEnd; i++) {
+        if (inorder[i] == root.val) {
+            inIndex = i;
+            break;
+        }
+    }
+    // 划分区域
+    root.left = helper(preStart+1, inStart, inIndex-1, preorder, inorder);
+    root.right = helper(preStart+inIndex-inStart+1, inIndex+1, inEnd, preorder, inorder);
+    return root;
+}
+```
+106. 中后(唯一)
+
+     从中序与后序遍历序列构造二叉树
+
+```Java
+public TreeNode buildTree(int[] inorder, int[] postorder) {
+    return helper(postorder.length-1, 0, inorder.length-1, postorder, inorder);
+}
+public TreeNode helper(int postStart, int inStart, int inEnd, int[] postorder, int[] inorder) {
+    if (postStart < 0 || inStart > inEnd) return null;
+    // 当前根节点
+    TreeNode root = new TreeNode(postorder[postStart]);
+    // 后序遍历中从后往前找到当前根节点，划分左右区域(为了加速可以使用 HashMap，O(1)时间找到inIndex)
+    int inIndex = 0;
+    for (int i = inStart; i <= inEnd; i++) {
+        if (inorder[i] == root.val) {
+            inIndex = i;
+            break;
+        }
+    }
+    // 划分区域(难点)
+    root.left = helper(postStart-(inEnd-inIndex+1), inStart, inIndex-1, postorder, inorder);
+    root.right = helper(postStart-1, inIndex+1, inEnd, postorder, inorder);
+    return root;
+}
+```
+889. 前后(不唯一)
+
+426. 将二叉搜索树转化为排序的双向链表 
+剑指offer 36题， BST中序遍历是一个有序序列，使用全局变量保存前一个节点。
+```Java
+TreeNode pre = null;
+public TreeNode convert(TreeNode root) {
+    if (root == null) return null;
+    this.pre = null;
+    convertHelper(root);
+    TreeNode p = root;
+    while(p.left != null) p = p.left;
+    return p;
+}
+// 中序遍历 记录前一个访问的节点
+// 使用全局变量保存pre，在convertHelper中传pre的值不行
+public void convertHelper(TreeNode cur) {
+    if (cur == null) return;
+    convertHelper(cur.left);
+
+    cur.left = this.pre;
+    if (pre != null) this.pre.right = cur;
+    this.pre = cur;
+
+    convertHelper(cur.right);
+}
+```
+## 深度
+
+104. 二叉树的最大深度
+给定一个二叉树，找出其最大深度。二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。说明: 叶子节点是指没有子节点的节点。
+```Java
+// 递归思路：二叉树的最大深度 = max(左子树深度，右子树深度)
+public int maxDepth(TreeNode root) {
+    if (root == null) return 0;
+    int left = maxDepth(root.left);
+    int right = maxDepth(root.right);
+    return Math.max(left, right)+1;
+}
+```
+110. 判断平衡二叉树
+左右子树的高度不相差1
+```Java
+// 在104的思路基础上修改：先计算树的高度，如果发现当前的节点高度差大于1了
+// 那么就直接返回-1
+private int recursive(TreeNode root) {
+    if (root == null) return 0;
+    int left = recursive(root.left);
+    if (left == -1) return -1;
+    int right = recursive(root.right);
+    if (right == -1) return -1;
+    if (Math.abs(left-right)>1) return -1;
+    return Math.max(left, right) + 1;
+}
+
+public boolean isBalanced(TreeNode root) {
+    return recursive(root) != -1;
+}
+```
+111. 二叉树的最小深度
+```Java
+// 难点：当二叉树退化成单侧时
+public int minDepth(TreeNode root) {
+    if (root == null) return 0;
+    int left = minDepth(root.left);
+    int right = minDepth(root.right);
+    // 下面两句是和Max Depth不一样的地方
+    if (root.left == null) return right+1;
+    if (root.right == null) return left+1;
+    return Math.min(left, right)+1;
+}
+```
+## 层序
+102. 二叉树的层次遍历（广度优先遍历）
+给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地, 每一层都放到一个链表内，从左到右访问所有节点）。
+```Java
+// 使用一个队列，下一层元素数目等于当前队列中元素的数目
+public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> ret = new ArrayList<>();
+    if (root == null) return ret;
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.add(root);
+    while (!queue.isEmpty()) {
+        int nodeCount = queue.size();  // Key
+        List<Integer> level = new ArrayList<>(nodeCount);
+        for (int i = 0; i < nodeCount; i++) {
+            TreeNode node = queue.poll();
+            level.add(node.val);
+            // 锯齿形层次遍历 使用flag判断是否反转
+            // if (!flag) level.add(node.val);
+            // else level.addFirst(node.val);
+            if (node.left != null) queue.add(node.left);
+            if (node.right != null) queue.add(node.right);
+        }
+        ret.add(level);  // 107题： ret.addFirst(level);
+    }
+    return ret;
+}
+// 递归写法(深度优先遍历)，参数包括(node, level, resList)，然后将第 K 层放到第K个 List
+// 重点：什么时候初始化List
+private void helper(TreeNode root, int level, List<List<Integer>> res) {
+    if (root == null) return;
+    // Key
+    if (level >= res.size()) res.add(new LinkedList<>());
+    res.get(level).add(root.val);
+    // 103题锯齿形层次遍历：奇数时候头部插入结果List，偶数时候尾部插入
+    // if(level % 2 == 0) res.get(level).add(root.val);
+    // else ((LinkedList)res.get(level)).addFirst(root.val);
+    helper(root.left, level+1, res);
+    helper(root.right, level+1, res);
+}
+public List<List<Integer>> levelOrderRecursive(TreeNode root) {
+    List<List<Integer>> res = new LinkedList<>();
+    helper(root, 0, res);
+    return res;
+}
+```
+107. 二叉树的层次遍历 II
+给定一个二叉树，返回其节点值自底向上的层次遍历。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）和102题一模一样，只不过本题需要将（层次）结果翻转一下，使用链表的头插，实现结果的翻转。
+## 结构
+100. 相同的树
+给定两个二叉树，编写一个函数来检验它们是否相同。如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
+```Java
+public boolean isSameTree2(TreeNode p, TreeNode q) {
+//        if (p == null && q == null) return true;  // 同时为空
+//        if (p == null || q == null) return false;  // 不同时为空
+    if (p == null || q == null) return p == q;  // 更精简的写法
+    if (p.val != q.val) return false;  // 都不为空
+    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+}
+```
+101. 对称二叉树（镜像对称）
+给定一个二叉树，检查它是否是镜像对称的。例如，二叉树 [1,2,2,3,4,4,3]是对称的
+```Java
+private boolean recursive(TreeNode tree1, TreeNode tree2) {
+    if (tree1 == null || tree2 == null) return tree1 == tree2;
+    if (tree1.val != tree2.val) return false;
+    return recursive(tree1.left, tree2.right) && recursive(tree1.right, tree2.left);
+}
+public boolean isSymmetric(TreeNode root) {
+    return iterative(root, root);
+}
+```
+226. 反转二叉树
+```Java
+public TreeNode invertTree(TreeNode root) {
+    if (root == null) return null;
+    TreeNode left = invertTree(root.left);
+    TreeNode right = invertTree(root.right);
+    root.left = right;
+    root.right = left;
+    return root;
+}
+```
+572. 另一个树的子树
+给定两个非空二叉树 s 和 t，检验 s 中是否包含和 t 具有相同结构和节点值的子树。s 的一个子树包括 s 的一个节点和这个节点的所有子孙。s 也可以看做它自身的一棵子树。
+```Java
+public boolean isSubtree(TreeNode s, TreeNode t) {
+    if (t == null) {
+        return true;
+    }
+    if (s == null) {
+        return false;
+    }
+    if (s.val == t.val && isSame(s, t)) {
+        return true;
+    }
+    return isSubtree(s.left, t) || isSubtree(s.right, t);
+}
+private boolean isSame(TreeNode tree1, TreeNode tree2) {
+    if (tree1 == null || tree2 == null) {
+        return tree1 == tree2;
+    }
+    return tree1.val == tree2.val && isSame(tree1.left, tree2.left) && isSame(tree1.right, tree2.right);
+}
+```
+
+```Java
+
+```
+
+## 路径
+
+```Java
+
+```
+
+```Java
+
+```
+
+```Java
+
+```

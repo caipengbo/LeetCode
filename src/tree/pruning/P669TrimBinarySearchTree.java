@@ -2,6 +2,13 @@ package tree.pruning;
 
 import util.TreeNode;
 
+/**
+* Title: 669. 修剪二叉搜索树
+* Desc: 给定一个二叉搜索树，同时给定最小边界L 和最大边界 R。
+* 通过修剪二叉搜索树，使得所有节点的值在[L, R]中 (R>=L) 。你可能需要改变树的根节点，所以结果应当返回修剪好的二叉搜索树的新的根节点。
+* Created by Myth-MBP on 04/06/2020 in VSCode
+*/
+
 class P669TrimBinarySearchTree {
     // 重点在于如何剪枝，如何调整节点
     // 参考思路：< L , 只保留二叉树的右子树
