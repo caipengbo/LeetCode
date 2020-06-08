@@ -25,19 +25,6 @@ public class P543DiameterPathOfBinaryTree {
         maxSum = Math.max(maxSum, left+right);
         return Math.max(left, right);
     }
-    // 其他写法
-    public int diameterOfBinaryTree2(TreeNode root) {
-        maxSum = 1;
-        helper(root);
-        return maxSum-1;
-    }
-    public int helper2(TreeNode root) {
-        if (root == null) return 0;
-        int left = helper(root.left);
-        int right = helper(root.right);
-        maxSum = Math.max(maxSum, left+right+1);
-        return Math.max(left, right)+1;
-    }
 
     public static void main(String[] args) {
         P543DiameterPathOfBinaryTree p543 = new P543DiameterPathOfBinaryTree();

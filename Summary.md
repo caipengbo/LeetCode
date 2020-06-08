@@ -22,6 +22,12 @@
   - 归并
   - 判断环（快慢指针）
 - 二叉树：
+  - 遍历
+  - 深度、层次
+  - 树的结构相关
+  - 树的路径相关，递归的过程之中不断更新全局变量
+  - 剪枝
+  - 二叉搜索树
 - 数学：
   - 位运算
   - 数论
@@ -2582,20 +2588,205 @@ private boolean isSame(TreeNode tree1, TreeNode tree2) {
 }
 ```
 
-```Java
-
-```
-
 ## 路径
 
+112. 路径和
+判断树中是否存在一个路径，和为sum.
 ```Java
+public boolean hasPathSum(TreeNode root, int sum) {
+    if (root == null) return false;
+    // if (root.left == null && root.right == null && root.val == sum) return true;
+    if (root.left == null && root.right == null) return  root.val == sum;
+    return hasPathSum(root.left, sum-root.val) || hasPathSum (root.right, sum-root.val); 
+}
+```
+113. 路径和2
+```Java
+// 难点：如何保存结果，回溯法！！！
+private void findPath(TreeNode root, int sum, LinkedList<Integer> path, List<List<Integer>> res) {
+    if (root == null) return;
+    path.add(root.val);
+    if (root.left == null && root.right == null) {
+        // 注意必须new一个新的list
+        if (root.val == sum) res.add(new LinkedList<>(path));
+    }
+    findPath(root.left, sum-root.val, path, res);
+    findPath(root.right, sum-root.val, path, res);
+    path.removeLast();
+}
+public List<List<Integer>> pathSum(TreeNode root, int sum) {
+    LinkedList path = new LinkedList();
+    List<List<Integer>> res = new ArrayList<>();
+    findPath(root, sum, path, res);
+    return res;
+}
+```
+129. 求根到叶子节点数字之和
+给定一个二叉树，它的每个结点都存放一个 0-9 的数字，每条从根到叶子节点的路径都代表一个数字。例如，从根到叶子节点路径 1->2->3 代表数字 123。
+计算从根到叶子节点生成的所有数字之和。
+```Java
+private int sum;
+public int sumNumbers(TreeNode root) {
+    sum = 0;
+    helper(root, 0);
+    return sum;
+}
+private void helper(TreeNode root, int pre) {
+    if (root == null) return;
+    pre = pre * 10 + root.val;
+    if (root.left == null && root.right == null) {
+        sum += pre;
+        return;
+    }
+    helper(root.left, pre);
+    helper(root.right, pre);
+}
+```
+235. 二叉搜索树的最近公共祖先
+给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。百度百科中最近公共祖先的定义为：对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+```Java
+// 该题求BST的最近公共祖先，难度显著降低，BST有明显的特点
+// 遍历树，如果p,q都在左（右）子树，那么就从左（右）子树进行递归，否则就找到了LCA
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if (root == null) return null;
+    if (p.val < root.val && q.val < root.val) return lowestCommonAncestor(root.left, p, q);
+    if (p.val > root.val && q.val > root.val) return lowestCommonAncestor(root.right, p, q);
+    return root;
+}
+```
+236. 二叉树的最近公共祖先
+本题比235稍微难一些，235题可以通过数值的大小判断左右子树，该题不是BST不行。
+```Java
+// 递归：对每个节点对应的子树，若该子树不含有p或q，返回nullptr；
+// 否则，如果p和q分别位于当前子树根节点两侧，则返回当前节点，
+// 否则（p和q在同一侧，或者只有某一侧有p或q）返回来自左边或右边的LCA。
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if (root == null || p == root || q == root) return root;
+    // 左边存在p或者q
+    TreeNode left = lowestCommonAncestor(root.left, p, q);
+    // 右边存在p或者q
+    TreeNode right = lowestCommonAncestor(root.right, p, q);
+    // p,q分别位于两侧
+    if (left != null && right != null) return root;
+    return (left == null) ? right : left;
+}
+```
+以下三个题是 **使用全局变量，递归的时候更新，递归的返回值和最终的结果关系不大** 
+124. 二叉树中的最大路径和
+给定一个非空二叉树，返回其最大路径和。本题中，路径被定义为一条从树中任意节点出发，达到任意节点的序列。该路径至少包含一个节点，且不一定经过根节点。
+```Java
+private int maxSum;
+public int maxPathSum(TreeNode root) {
+    if (root == null) return 0;
+    maxSum = root.val;
+    arrowMaxPath(root);
+    return maxSum;
+}
+private int arrowMaxPath(TreeNode root) {
+    if (root == null) return 0;
+    int left = arrowMaxPath(root.left);
+    int right = arrowMaxPath(root.right);
+    // 如何 累加值
+    left = (left > 0 ? left + root.val : root.val);
+    right = (right > 0 ? right + root.val : root.val);
 
+    maxSum = Math.max(maxSum, left+right-root.val);
+    return Math.max(left, right);
+}
+```
+543. 二叉树的直径
+给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过根结点。注意：两结点之间的路径长度是以它们之间边的数目表示。
+```Java
+int max;
+public int diameterOfBinaryTree(TreeNode root) {
+    max = 0;
+    helper(root);
+    return max;
+}
+private int helper(TreeNode root) {
+    if (root == null) {
+        return -1;
+    }
+    if (root.left == null && root.right == null) {
+        return 0;
+    }
+    int left = helper(root.left) + 1;
+    int right = helper(root.right) + 1;
+    max = Math.max(max, left+right);
+    return Math.max(left, right);
+}
+```
+687. 最长同值路径（本题是任意两个节点的路径）
+本题和543几乎是同一个题目，给定一个二叉树，找到最长的路径，这个路径中的每个节点具有相同值。注意：这条路径可以经过也可以不经过根节点。两个节点之间的路径长度由它们之间的边数表示。
+```Java
+// 这种路径是 1.左子树最长同值路径（单箭头路径）  2. 右子树最长同值路径（单箭头路径） 的 最大值
+private int longest = 0;
+public int longestUnivaluePath(TreeNode root) {
+    longest = 0;
+    arrowPath(root);
+    return longest;
+}
+private int arrowPath(TreeNode root) {
+    if (root == null) return 0;
+    int left = arrowPath(root.left);
+    int right = arrowPath(root.right);
+    int arrowLeft = 0, arrowRight = 0;
+    if (root.left != null && root.left.val == root.val) arrowLeft = left + 1;
+    if (root.right != null && root.right.val == root.val) arrowRight = right + 1;
+    // 更新最终结果是双向的
+    longest = Math.max(longest, arrowLeft + arrowRight);
+    // 返回的是单向的
+    return Math.max(arrowLeft, arrowRight);
+}
 ```
 
+## 剪枝
+
+669. 修剪二叉搜索树
+给定一个二叉搜索树，同时给定最小边界L 和最大边界 R。通过修剪二叉搜索树，使得所有节点的值在[L, R]中 (R>=L) 。你可能需要改变树的根节点，所以结果应当返回修剪好的二叉搜索树的新的根节点。
 ```Java
-
+// 重点在于如何剪枝，如何调整节点
+// 参考思路：< L , 只保留二叉树的右子树
+// > R, 只保留二叉树的左子树
+public TreeNode trimBST(TreeNode root, int L, int R) {
+    if (root == null) return null;
+    // 调整节点(难点)
+    // < L, 只保留二叉树的右子树(结果肯定在右边)
+    if (root.val < L) return trimBST(root.right, L, R);
+    
+    // > R, 只保留二叉树的左子树(结果肯定在左边)
+    if (root.val > R) return trimBST(root.left, L, R);
+    
+    root.left = trimBST(root.left, L, R);
+    root.right = trimBST(root.right, L, R);
+    return root;
+}
 ```
-
+814. 二叉树剪枝
+给定二叉树根结点 root ，此外树的每个结点的值要么是 0，要么是 1。返回移除了所有不包含 1 的子树的原二叉树。(节点 X 的子树为 X 本身，以及所有 X 的后代。)
 ```Java
-
+// 判断是否含有1
+private boolean hasOne(TreeNode root) {
+    if (root == null) return false;
+    if (root.val == 1) return true;
+    return hasOne(root.left) || hasOne(root.right);
+}
+public TreeNode pruneTree(TreeNode root) {
+    if (!hasOne(root)) return null;
+    root.left = pruneTree(root.left);
+    root.right = pruneTree(root.right);
+    return root;
+}
+// 后续遍历写法
+public TreeNode pruneTree2(TreeNode root) {
+    if (root == null) return null;
+    root.left = pruneTree(root.left);
+    root.right = pruneTree(root.right);
+    if (root.val == 0 && root.left == null && root.right == null)
+        return null;
+    return root;
+}
 ```
+## 二叉搜索树
+
+
