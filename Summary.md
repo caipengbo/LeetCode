@@ -1,6 +1,6 @@
 # LeetCode总结
 
-# 目录：
+# 目录
 
 - 搜索(回溯、BFS、DFS): 
 	- 1. 回溯：数独、N皇后、37、51、79、93、[212、301]
@@ -30,9 +30,10 @@
   - 二叉搜索树
 - 数学：
   - 位运算
-  - 数论
+  - 数论：素数
   - 概率：洗牌算法、蓄水池抽样、蒙特卡洛
-  - 
+  - 特殊的数
+  - 数字的转化
 - 动态规划
 - 排序
 - 数据结构
@@ -42,7 +43,12 @@
 - 分治
 - 贪心
 
+# 心法宝典
+
+1. 递归要素：开头-判断边界（退出条件）；中间-进行相关的计算、缩小范围递归（经常用到全局变量哦）；结尾-返回值（还要学会如何利用返回值）
+
 # 搜索
+
 ## 1. 回溯
 回溯就是有规律的遍历，改变状态，然后再该回来状态(回溯)。
 ### 模版
@@ -2290,7 +2296,7 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 }
 ```
 # 树
-树就是练习递归的地方，递归重点：边界值（提前退出），缩小范围（进入递归），返回值（以及充分利用返回值）
+树就是练习递归的地方，递归重点：边界值（提前退出），缩小范围（进入递归）（此处一般都要辅以操作），返回值（以及充分利用返回值）
 
 ## 遍历
 **三种遍历方法**
@@ -2742,6 +2748,8 @@ private int arrowPath(TreeNode root) {
 
 ## 剪枝
 
+剪枝的要点就是让当前节点的cur.left=pruning(cur.left)  pruning函数返回当前树的根节点
+
 669. 修剪二叉搜索树
 给定一个二叉搜索树，同时给定最小边界L 和最大边界 R。通过修剪二叉搜索树，使得所有节点的值在[L, R]中 (R>=L) 。你可能需要改变树的根节点，所以结果应当返回修剪好的二叉搜索树的新的根节点。
 ```Java
@@ -2788,5 +2796,169 @@ public TreeNode pruneTree2(TreeNode root) {
 }
 ```
 ## 二叉搜索树
+二叉搜索树，最常考的性质就是中序遍历的递增，一般的做法是使用递归（中序遍历），然后使用全局变量保存pre节点，然后在中间的时候（中序遍历的时候）更新全局变量。
 
+98. 验证二叉搜索树
+给定一个二叉树，判断其是否是一个有效的二叉搜索树， 空树为BST。
+```Java
+TreeNode pre = null;
+public boolean isValidBST(TreeNode root) {
+    if (root == null ) {
+        return true;
+    }
+    if (!isValidBST(root.left)) {
+        return false;
+    }
+    if (pre != null && root.val <= pre.val) {
+        return false;
+    } 
+    pre = root;
+    return isValidBST(root.right);
+}
+```
+99. 恢复二叉搜索树
+二叉搜索树中的两个节点被错误地交换。请在不改变其结构的情况下，恢复这棵树。
+```Java
+// 难点：找到这两个错误的节点
+// 有序的序列，交换两个元素，会导致增长序列出现两个(或者一个)下降点
+// 两个下降点: first是第一个下降点处较大的元素；second是第二个下降点处较小的元素
+// 一个下降点: first下降点处较大元素；second是下降点处较小元素
+private TreeNode first = null;
+private TreeNode second = null;
+private TreeNode pre;
+public void recoverTree(TreeNode root) {
+    first = null;
+    second = null;
+    pre = null;
+    traverse(root);
+    // 交换 first 和 second
+    int temp = first.val;
+    first.val = second.val;
+    second.val = temp;
+}
+private void traverse(TreeNode root) {
+    if (root == null) return;
+    traverse(root.left);
+    if (pre != null && pre.val > root.val) {
+        // 此处是重点
+        if (first == null) {
+            first = pre;
+            second = root;  // 注意此处（只有一个下降点时）
+        } else second = root;
+    }
+    pre = root;
+    traverse(root.right);
+}
+```
+108. 将有序数组转换为二叉搜索树
+将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。
+```Java
+// 树尽量平衡 —— 要求数组尽量划分均等(二分)（使用下标进行划分，注意数目的奇偶）
+// 0 1 2 3 4 5
+public TreeNode sortedArrayToBST(int[] nums) {
+    TreeNode root = helper(nums, 0, nums.length-1);
+    return root;
+}
+private TreeNode helper(int[] nums, int i, int j) {
+    if (i < 0 || j >= nums.length ||  i > j) return null;
+    int mid = (i+j)/2;
+    TreeNode node = new TreeNode(nums[mid]);
+    node.left = helper(nums, i, mid-1);
+    node.right = helper(nums, mid+1, j);
+    return node;
+}
+```
+109. 将有序链表转换为二叉搜索树
+```Java
+public TreeNode sortedListToBST(ListNode head) {
+    // while (tail.next != null) tail = tail.next;
+    return helper(head, null);
+}
+private TreeNode helper(ListNode head, ListNode tail) {  // 左闭右开
+    if (head == tail) return null;
+    if (head.next == tail) return new TreeNode(head.val);
+    ListNode slow = head, fast = head;
+    
+    while (fast != tail && fast.next != tail) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    TreeNode root = new TreeNode(slow.val);
+    root.left = helper(head, slow); 
+    root.right = helper(slow.next, tail);
+    return root;
+}
+```
+230. 二叉搜索树中第K小的元素
+中序遍历
+```Java
+int count = 0;
+public int kthSmallest(TreeNode root, int k) {
+    if (root == null) {
+        return -1;
+    }
+    int left = kthSmallest(root.left, k);
+    if (left != -1) {
+        return left;
+    }
+    count++;
+    if (count == k) {
+        return root.val;
+    }
+    return kthSmallest(root.right, k);
+}
+```
+
+450. 删除二叉搜索树中的节点
+给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的 key 对应的节点，并保证二叉搜索树的性质不变，返回二叉搜索树（有可能被更新）的根节点的引用。
+```Java
+public TreeNode deleteNode(TreeNode root, int key) {
+    if (root == null) {
+        return null;
+    }
+    if (root.val != key) {
+        if (root.val > key) {
+            root.left = deleteNode(root.left, key);
+        } else {
+            root.right = deleteNode(root.right, key);
+        }
+    } else {
+        if (root.left == null) {
+            return root.right;
+        }
+        if (root.right == null) {
+            return root.left;
+        }
+        // 难点
+        TreeNode rightMaxNode = findRightMax(root);  // 找到右侧最大值
+        root.val = rightMaxNode.val;  // 与当前值交换
+        rightMaxNode.val = key;
+        root.right = deleteNode(root.right, key);  // 在右侧递归
+    }
+    return root;
+}
+private TreeNode findRightMax(TreeNode root) {
+    TreeNode p = root.right;
+    while (p != null && p.left != null) {
+        p = p.left;
+    }
+    return p;
+}
+```
+701. 二叉搜索树中的插入操作
+```Java
+public TreeNode insertIntoBST(TreeNode root, int val) {
+    if (root == null) return new TreeNode(val);
+    if (root.val > val) {
+        root.left = insertIntoBST(root.left, val);
+    } else {
+        root.right = insertIntoBST(root.right, val);
+    }
+    return root;
+}
+```
+
+# 数学
+
+## 采样
 

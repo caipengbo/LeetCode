@@ -20,7 +20,7 @@ public class P450DeleteNodeInBST {
     // 难点：如何调整节点（要删除的节点与左边最大值leftMax或者右边的最小值rightMin,
     // 如果是叶子就交换，然后删除以前leftMax或者rightMin的节点，如果不是叶子叶子）
     // 删除rightMin右边最小值，使用迭代
-    public TreeNode deleteNode(TreeNode root, int key) {
+    public TreeNode deleteNode2(TreeNode root, int key) {
         if (root == null) return null;
         // 找到node
         Queue<TreeNode> queue = new LinkedList<>();
@@ -44,4 +44,37 @@ public class P450DeleteNodeInBST {
         return null;
         // rightMin赋值给node，删除rightMin位置
     }
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val != key) {
+            if (root.val > key) {
+                root.left = deleteNode(root.left, key);
+            } else {
+                root.right = deleteNode(root.right, key);
+            }
+        } else {
+            if (root.left == null) {
+                return root.right;
+            }
+            if (root.right == null) {
+                return root.left;
+            }
+            // 难点
+            TreeNode rightMaxNode = findRightMax(root);  // 找到右侧最大值
+            root.val = rightMaxNode.val;  // 与当前值交换
+            rightMaxNode.val = key;
+            root.right = deleteNode(root.right, key);  // 在右侧递归
+        }
+        return root;
+    }
+    private TreeNode findRightMax(TreeNode root) {
+        TreeNode p = root.right;
+        while (p != null && p.left != null) {
+            p = p.left;
+        }
+        return p;
+    }
+
 }
