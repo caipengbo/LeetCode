@@ -31,4 +31,5 @@ public class P382LinkedListRandomNode {
         }
         return reservoir;
     }
+
 }

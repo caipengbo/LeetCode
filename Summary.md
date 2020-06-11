@@ -46,6 +46,7 @@
 # 心法宝典
 
 1. 递归要素：开头-判断边界（退出条件）；中间-进行相关的计算、缩小范围递归（经常用到全局变量哦）；结尾-返回值（还要学会如何利用返回值）
+2. 反转链表：迭代写法返回prev，递归写法每次考虑两个节点（返回值是前递归的返回值）
 
 # 搜索
 
@@ -2962,3 +2963,67 @@ public TreeNode insertIntoBST(TreeNode root, int val) {
 
 ## 采样
 
+常见的采样问题（抽到的元素概率相等）：
+
+1. 要求从N个元素中随机的抽取k个元素，其中N的大小未知
+
+- 如果N已知的情况下，可以每次抽一个，然后使用集合判断一下是不是重复了，重复了就重新随机抽取，这种方法重复率很高效率很低，并且要求N已知，如果N不知道就无能为力了（集合的角度）;
+- 概率的角度： 每次取一个，然后从剩下的元素重复这个操作，直到取m个（使用条件概率计算每一个元素的概率均是m/n，对于第二个元素概率计算方法为`第一个元素取到的概率*第二个元素取到的概率+第一个元素没有被取到的概率*第二个元素被取到的概率`）称为Knuth算法：
+
+```Java
+Knuth：
+	select = m
+	remaining = n
+	for i = [0,n)
+	     if (rand() % remaining) < select
+	             print  i
+	             select --
+	     remaining--
+优化：
+	int genknuth(int m,int n)
+	{
+	    int i;
+	    for(i=0;i<n;i++)
+	        if(rand()%(n -i) < m) {
+	            printf("%d\n",i);
+	            m--;
+	        }
+	    return 0;
+	}
+```
+
+- shuffle思想：打乱数组，然后取前m个。
+```Java
+public void knuthShuffle(int[] arr) {
+    int n = arr.length;
+    Random random = new Random();
+    for (int i = n-1; i >= 0; i--) {
+        swap(arr, i, random.nextInt(i+1));  // [0, i] 包括i
+    }
+}
+```
+蓄水池抽样算法
+2. 给出一个数据流，这个数据流的长度很大或者未知。并且对该数据流中数据只能访问一次。请写出一个随机选择算法，使得数据流中所有数据被选中的概率相等。
+```Java
+void selectKItems(int stream[], int n, int k) { 
+    int i;
+    // 创建长度为k的蓄水池，将前k个元素放入蓄水池
+    int reservoir[] = new int[k]; 
+    for (i = 0; i < k; i++) {
+        reservoir[i] = stream[i]; 
+    }
+    Random r = new Random();
+    // 从k+1开始
+    for (; i < n; i++) {
+        // 每次取[0,i]随机数
+        int j = r.nextInt(i+1);
+        // 取得的随机位置在蓄水池长度内，更新此位置元素
+        if (j < k) reservoir[j] = stream[i];
+    }   
+} 
+```
+假设i=n时候，蓄水池中的K个元素中的任一个，被选中的概率是 k/n
+当i=n+1时，前的K个元素的，每个元素被选中（留在蓄水池的概率是）（k/n）*(n/(n+1)) = k / (n+1)
+> 其中n/(n+1)是怎么的出来的呢？：蓄水池中的元素被替换，说明第n+1个数字被选中，概率为 k/(n+1), 与蓄水池中的任意一个1/k交换，概率为  k/(n+1)   *  1/k = 1/(n+1)， 那么没有被选中概率(留在蓄水池)就为  1-1/(n+1) = n/(n+1)
+
+当i= n+1时也成立，所以每一个元素被选中的概率 为 K/N
