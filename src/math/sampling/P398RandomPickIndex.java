@@ -16,6 +16,7 @@ public class P398RandomPickIndex {
         this.nums = nums;
         random = new Random();
     }
+    // 蓄水池抽样问题，不知道前方有多少符合要求的下标，取随机数，然后随机数<k, 将当前下标放入蓄水池
     public int pick(int target) {
         int ret = 0, cnt = 0;
         for (int i = 0; i < nums.length; i++) {

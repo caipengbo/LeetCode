@@ -1,4 +1,4 @@
-package math.geometry;
+package math.numbertheory;
 
 /**
  * Title: 204. 计数质数(筛选法)
@@ -12,7 +12,7 @@ public class P204CountPrimes {
         // for (int i = 2; i < n; i++) {
         // 优化 1. for (int i = 2; i < n/2; i++) {  // n不能被  number(>n/2的数整除)
         // if n is divisible by some number p, then n = p × q and since p ≤ q, we could derive that p ≤ √n.
-        // for (int i = 2; i * i < n; i++) { n能被 p整除, 那n = p × q 因为 p ≤ q, 那么 p ≤ √n
+        // for (int i = 2; i * i < n; i++) { n 能被 p整除, 那 n = p × q 因为 p ≤ q, 那么 p ≤ √n
         for (int i = 2; i * i <= n; i++) {
             if (n % i == 0) return false;
         }
@@ -26,14 +26,16 @@ public class P204CountPrimes {
         return count;
     }
     // 埃拉托色尼筛选法
-    // 素数筛法经常作为一道题的一部分用来打一定范围内素数表，（false代表是素数，true代表不是素数）
+    // 素数筛法经常作为一道题的一部分用来打一定范围内素数表，(false代表是素数，true代表不是素数)
     public int countPrimes(int n) {
         boolean[] notPrime = new boolean[n];
         notPrime[0] = true;
         notPrime[1] = true;
         int count = 0;
         for (int i = 2; i < n; i++) {
-            if (notPrime[i]) continue;
+            if (notPrime[i]) {
+                continue;
+            }
             // 是素数
             count++;
             // 优化：只筛选 比 i小的素数 与 i 的乘积

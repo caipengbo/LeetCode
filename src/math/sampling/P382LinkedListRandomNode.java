@@ -11,6 +11,7 @@ import java.util.Random;
  * 进阶:
  * 如果链表十分大且长度未知，如何解决这个问题？你能否使用常数级空间复杂度实现？
  *
+ *  蓄水池抽样的特点就是stream不知道有多长，要求计算每一次的概率
  * Created by Myth-Lab on 11/8/2019
  */
 public class P382LinkedListRandomNode {
