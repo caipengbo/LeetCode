@@ -14,6 +14,6 @@ https://leetcode-cn.com/problems/grumpy-bookstore-owner/
 public class PP1052GrumpyBookstoreOwner {
     // TODO
     public int maxSatisfied(int[] customers, int[] grumpy, int X) {
-
+        return -1;
     }
 }

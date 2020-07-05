@@ -5,6 +5,8 @@ import java.util.*;
 /**
  * Title: 139.单词拆分
  * Desc: 一个字符串是否可以拆分成单词字典中包含的单词（单词可以重复使用）
+ * 输入: s = "applepenapple", wordDict = ["apple", "pen"]
+ * 输出: true  解释: 返回 true 因为 "applepenapple" 可以被拆分成 "apple pen apple"。注意你可以重复使用字典中的单词。
  * Created by Myth-Lab on 11/25/2019
  */
 public class P139WordBreak {
@@ -51,8 +53,8 @@ public class P139WordBreak {
     public Boolean memSearch3(String s, Map<String, Boolean> map) {
         if (map.containsKey(s)) return map.get(s);
         for (int i = 0; i < s.length(); i++) {
-            String split1 = s.substring(0, i);
-            String split2 = s.substring(i);
+            String split1 = s.substring(0, i);  // 前部分
+            String split2 = s.substring(i);  // 后部分
             if (split1.length() != 0 && split2.length() != 0) {
                 if (map.containsKey(split1) && memSearch3(split2, map)) {
                     map.put(s, true);
@@ -63,7 +65,8 @@ public class P139WordBreak {
         map.put(s, false);
         return false;
     }
-    // 在上面代码的基础上改成 DP（状态是前缀）
+    // 在上面代码的基础上改成 DP（状态是前缀） 
+    // DP保存的是前部分是否符合要求
     public boolean wordBreak2(String s, List<String> wordDict) {
         boolean[] dp = new boolean[s.length()+1];   // s.sub(0, i)是否符合要求
         dp[0] = true;

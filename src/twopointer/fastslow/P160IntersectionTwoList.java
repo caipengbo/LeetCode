@@ -1,4 +1,4 @@
-package twopointer.;
+package twopointer.fastslow;
 
 import util.ListNode;
 

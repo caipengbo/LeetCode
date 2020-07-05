@@ -15,6 +15,7 @@ public class P191NumberOf1Bits {
         return cnt;
     }
     // P231题
+    // 数字-1与该数字相与，会将n二进制位的最后一个1变为0
     public int hammingWeight2(int n) {
         int cnt = 0;
         while (n != 0) {

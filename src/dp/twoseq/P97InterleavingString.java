@@ -1,8 +1,8 @@
 package dp.twoseq;
 
 /**
- * Title:
- * Desc:
+ * Title: 97. 交错字符串
+ * Desc: 给定三个字符串 s1, s2, s3, 验证 s3 是否是由 s1 和 s2 交错组成的。
  * Created by Myth-Lab on 12/1/2019
  */
 public class P97InterleavingString {

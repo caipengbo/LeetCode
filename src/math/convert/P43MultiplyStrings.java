@@ -1,4 +1,4 @@
-package math.other;
+package math.convert;
 
 /**
  * Title: 43. 字符串相乘

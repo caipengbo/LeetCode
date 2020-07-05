@@ -23,6 +23,7 @@ public class P201BitwiseANDOfNumbersRange {
         }
         return ret;
     }
+    // 按数字范围与会得到什么？？会得到高位无变化的部分
     // 去最高位无变化的部分：对于5 6 7 ：0101   0110   0111  显然是 前边 01 部分未曾变换，后面的部分肯定是2^(len-前len)个数字
     public int rangeBitwiseAnd(int m, int n) {
         int i = 0;

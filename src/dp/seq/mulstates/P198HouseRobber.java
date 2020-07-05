@@ -1,10 +1,11 @@
 package dp.seq.mulstates;
 
-import javax.sound.sampled.SourceDataLine;
 
 /**
  * Title: 198. 打家劫舍
- * Desc: 740题  可以转化成 该题，进行一个计数排序（下标统计每个点数出现的次数），就和该题一模一样了
+ * Desc: 如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。给定一个代表每个房屋存放金额的非负整数数组，
+ * 计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。
+ * 740题  可以转化成 该题，进行一个计数排序（下标统计每个点数出现的次数），就和该题一模一样了
  * Created by Myth-Lab on 11/21/2019
  */
 public class P198HouseRobber {

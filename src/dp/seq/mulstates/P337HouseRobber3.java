@@ -1,4 +1,4 @@
-package dp.tree;
+package dp.seq.mulstates;
 
 import java.util.HashMap;
 
@@ -6,7 +6,7 @@ import util.TreeNode;
 
 /**
  * Title: 337. 打家劫舍3 
- * Desc: 
+ * Desc: 二叉树”。 如果两个直接相连的房子在同一天晚上被打劫，房屋将自动报警。计算在不触动警报的情况下，小偷一晚能够盗取的最高金额。
  * Created by Myth on 01/03/2020 in VSCode
  */
 

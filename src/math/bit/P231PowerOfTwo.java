@@ -1,4 +1,4 @@
-package math.other;
+package math.bit;
 
 /**
  * Title: 231. 2的幂

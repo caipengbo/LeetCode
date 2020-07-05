@@ -2,7 +2,25 @@ package dp.twoseq;
 
 /**
  * Title: 72. 编辑距离
- * Desc: 画出二维表格更便于理解
+ * Desc: 给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。
+
+你可以对一个单词进行如下三种操作：
+
+    插入一个字符
+    删除一个字符
+    替换一个字符
+
+ * 画出二维表格更便于理解
+ * 
+     输入：word1 = "intention", word2 = "execution"
+    输出：5
+    解释：
+    intention -> inention (删除 't')
+    inention -> enention (将 'i' 替换为 'e')
+    enention -> exention (将 'n' 替换为 'x')
+    exention -> exection (将 'n' 替换为 'c')
+    exection -> execution (插入 'u')
+
  * Created by Myth-Lab on 11/27/2019
  */
 public class P72EditDistance {

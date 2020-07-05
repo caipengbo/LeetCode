@@ -1,11 +1,10 @@
-package dp.seq;
+package dp.seq.sub_seq;
 
 /**
 * Title:  5. 最长的回文子串(DP + 中心扩散法)
 * Desc: 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
 * Created by Myth on 12/28/2019 in VSCode
 */
-
 public class P5LongestPalindromicSubstring {
     // dp[i,j] = dp[i+1, j-1] + 2   if s[i] == s[j]
     // 状态转移方程决定了填表的顺序
@@ -17,7 +16,6 @@ public class P5LongestPalindromicSubstring {
         for (int i = 0; i < len; i++) {
             dp[i][i] = true;
         }
-        
         for (int i = len-1; i >= 0; i--) {
             for (int j = i+1; j < len; j++) {
                 if (s.charAt(i) == s.charAt(j) && (i+1 > j-1 || dp[i+1][j-1])) {

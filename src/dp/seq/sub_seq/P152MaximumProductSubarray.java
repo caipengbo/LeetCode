@@ -1,4 +1,4 @@
-package dp.seq;
+package dp.seq.sub_seq;
 
 /**
  * Title: P152. 乘积最大子序列
