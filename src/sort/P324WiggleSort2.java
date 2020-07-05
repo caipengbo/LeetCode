@@ -15,17 +15,18 @@ public class P324WiggleSort2 {
     public void wiggleSort(int[] nums) {
         // nums长度肯定符合要求
         int n = nums.length;
-        Arrays.sort(nums);
+        Arrays.sort(nums);  // 小 -> 大
         // [0,mid) [mid, n)
         int mid = (n%2==0) ? n/2 : n/2+1;
         int[] copyNums = Arrays.copyOf(nums, n);
+        // 偶数位置
         int odd = 0;
-        for (int i = mid-1; i >= 0; i--) {
+        for (int i = mid-1; i >= 0; i--) {  // 前半部分倒着
             nums[odd] = copyNums[i];
             odd += 2;
         }
         int even = 1;
-        for (int i = n-1; i >= mid; i--) {
+        for (int i = n-1; i >= mid; i--) {  //  右半边也倒着
             nums[even] = copyNums[i];
             even += 2;
         }

@@ -12,7 +12,28 @@
 # 01背包
 
 滚动数组，从后往前更新
-
+```Java
+void knapsack01(w, v) {
+    dp[N]
+    for i = 1 to N {
+        for j = W to w {
+            dp[j] = max(dp[j], dp[j-w]+v)
+        }    
+    }
+    return max(dp[N])
+}
+```
 # 完全背包
 
 滚动数组，从前往后更新
+```Java
+void knapsackComplete(w, v) {
+    dp[N]
+    for i = 1 to N {
+        for j = w to W {
+            dp[j] = max(dp[j], dp[j-w]+v)
+        }    
+    }
+    return max(dp[N])
+}
+```

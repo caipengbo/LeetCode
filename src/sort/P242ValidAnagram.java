@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * Title: 242. 有效的字母异位词
- * Desc:
+ * Desc: 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
  * Created by Myth-Lab on 10/18/2019
  */
 public class P242ValidAnagram {

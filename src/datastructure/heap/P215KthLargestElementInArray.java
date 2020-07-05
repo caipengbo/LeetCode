@@ -3,8 +3,8 @@ package datastructure.heap;
 import java.util.PriorityQueue;
 
 /**
-* Title: 215. Kth Largest Element in an Array
-* Desc: 
+* Title: 215. 数组中的第K个最大元素
+* Desc: 本解法使用分治，使用堆；使用快排的partition函数的解法见 divideconquer包，
 * Created by Myth on 01/16/2020 in VSCode
 */
 

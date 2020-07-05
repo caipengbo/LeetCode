@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 /**
  * Title: 164. 最大间距
- * Desc: 直观解法很简单，O(NlogN+N)
+ * Desc: 给定一个无序的数组，找出数组在排序之后，相邻元素之间最大的差值。如果数组元素个数小于 2，则返回 0。
+ * 直观解法很简单，O(NlogN+N)
  * Created by Myth-Lab on 10/16/2019
  */
 public class P164MaximumGap {

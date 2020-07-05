@@ -3,7 +3,7 @@ package sort;
 import java.util.*;
 
 /**
- * Title: 179. 最大数
+ * Title: 179. 最大数(能组成的最大整数)
  * Desc: 给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。
  * Created by Myth-Lab on 10/17/2019
  */
@@ -18,6 +18,7 @@ public class P179LargestNumber {
         Arrays.sort(strs, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
+                // 代表o2+o1会排在前面 o2+o1 > o1+o2 时返回大于0 的数
                 return (o2+o1).compareTo(o1+o2);
             }
         });

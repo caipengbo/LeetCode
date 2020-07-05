@@ -44,7 +44,6 @@ public class P48RotateImage {
         P48RotateImage p48 = new P48RotateImage();
         p48.rotate(matrix);
         StringBuilder sb = new StringBuilder();
-        sb.delete(, end)
     }
 
 }
