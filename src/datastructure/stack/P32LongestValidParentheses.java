@@ -10,6 +10,7 @@ import java.util.Stack;
 
 public class P32LongestValidParentheses {
     // 难点：括号有效
+    // 使用栈记录下标
     public int longestValidParentheses(String s) {
         Stack<Integer> stack = new Stack<>();
         int max = 0;

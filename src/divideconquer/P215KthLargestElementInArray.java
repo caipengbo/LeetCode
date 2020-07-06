@@ -9,6 +9,7 @@ package divideconquer;
 public class P215KthLargestElementInArray {
     // 大到小排列的 第 k-1 位置
     public int findKthLargest(int[] nums, int k) {
+        // 注意这个nums数组已经变化了
         return nums[find(nums, 0, nums.length-1, k-1)];
     }
     public int find(int[] nums, int l, int r, int k) {

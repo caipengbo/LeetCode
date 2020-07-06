@@ -15,7 +15,10 @@ public class P45JumpGame2 {
         while (cur < n-1) {  // next >= n-1 说明下一步可以达到数组尾部
             next = nums[cur] + cur;
             for (int i = cur; i <= next && i < n; i++) {
-                if (i == n-1 || nums[i]+i > nums[cur]+cur) cur = i;
+                // 可以将当前的范围扩大，就跳到那个扩的最大的位置
+                if (i == n-1 || nums[i]+i > nums[cur]+cur) {
+                    cur = i;
+                }
             }
             // 不确定是否可以到达边界
             // if (cur <= oldCur) return -1;

@@ -5,10 +5,33 @@ import java.util.List;
 
 /**
  * Title: 54. 螺旋矩阵 
- * Desc: 
+ * Desc: 给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
  * Created by Myth-PC on 05/02/2020 in VSCode
  */
 public class P54SpiralMatrix {
+
+    // 不使用visited数组，设置边界
+    public List<Integer> spiralOrder2(int[][] matrix) {
+        List<Integer> ret = new LinkedList<>();
+        if (matrix.length == 0 || matrix[0].length == 0) return ret;
+        int top = 0, bottom = matrix.length-1, left = 0, right = matrix[0].length-1; 
+        int i, j;
+        while (left <= right && top <= bottom) {
+            for (j = left; j <= right; j++) ret.add(matrix[top][j]);
+            top++;
+            if (top > bottom) break;
+            for (i = top; i <= bottom; i++) ret.add(matrix[i][right]);
+            right--;
+            if (right < left) break;
+            for (j = right; j >= left; j--) ret.add(matrix[bottom][j]);
+            bottom--;
+            if (top > bottom) break;
+            for (i = bottom; i >= top; i--) ret.add(matrix[i][left]);
+            left++;
+        }
+        return ret;
+    }
+    
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> ret = new LinkedList<>();
         if (matrix.length == 0 || matrix[0].length == 0) return ret;
@@ -66,26 +89,6 @@ public class P54SpiralMatrix {
         return ret;
     }
 
-    // 不使用visited数组，设置边界
-    public List<Integer> spiralOrder2(int[][] matrix) {
-        List<Integer> ret = new LinkedList<>();
-        if (matrix.length == 0 || matrix[0].length == 0) return ret;
-        int top = 0, bottom = matrix.length-1, left = 0, right = matrix[0].length-1; 
-        int i, j;
-        while (left <= right && top <= bottom) {
-            for (j = left; j <= right; j++) ret.add(matrix[top][j]);
-            top++;
-            if (top > bottom) break;
-            for (i = top; i <= bottom; i++) ret.add(matrix[i][right]);
-            right--;
-            if (right < left) break;
-            for (j = right; j >= left; j--) ret.add(matrix[bottom][j]);
-            bottom--;
-            if (top > bottom) break;
-            for (i = bottom; i >= top; i--) ret.add(matrix[i][left]);
-            left++;
-        }
-        return ret;
-    }
+    
 
 }

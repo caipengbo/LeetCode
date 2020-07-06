@@ -49,23 +49,25 @@ public class P49GroupAnagrams {
         }
         return ret;
     }
-
+    // 使用hash
     public List<List<String>> groupAnagrams2(String[] strs) {
         int len = strs.length;
         List<List<String>> ret = new LinkedList<>();
         if (len == 0) return ret;
+        // 类似于桶排序
         int[][] strHashs = new int[len][26];
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < strs[i].length(); j++) {
                 strHashs[i][strs[i].charAt(j)-'a']++;
             }
         }
+        // key代表出现过的单词
         HashMap<String, List<String>> hashMap = new HashMap<>();
         for (int i = 0; i < len; i++) {
             // 重点  Hash的Key
             StringBuilder sb = new StringBuilder("");
             for (int j = 0; j < 26; j++) {
-                sb.append(strHashs[i][j]);
+                sb.append(strHashs[i][j]);  // 最好加个-隔开每个单词的数目
             }
             String key = sb.toString();
             if (hashMap.containsKey(key)) {

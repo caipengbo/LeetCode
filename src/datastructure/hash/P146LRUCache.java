@@ -84,6 +84,7 @@ class LRUCache {
         empty--;
     }
 }
+// 第一步：继承LinkedHashMap
 class LRULinkedHashMap<K, V> extends LinkedHashMap<K, V> {
 
     private int capacity;
@@ -104,8 +105,9 @@ class LRULinkedHashMap<K, V> extends LinkedHashMap<K, V> {
     }
 }
 
-// 使用 LinkedHashMap
+// 第二步：使用 LinkedHashMap
 class LRUCache2 {
+    // 使用上面的LRULinkedHashMap
     LRULinkedHashMap<Integer, Integer> cache;
     public LRUCache2(int capacity) {
         cache = new LRULinkedHashMap<>(capacity);

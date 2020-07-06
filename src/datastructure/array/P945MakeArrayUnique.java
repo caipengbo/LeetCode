@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * Title: 945. 使数组唯一的最小增量 
- * Desc: 
+ * Desc: 给定整数数组 A，每次 move 操作将会选择任意 A[i]，并将其递增 1。返回使 A 中的每个值都是唯一的最少操作次数。
  * Created by Myth-MBP on 22/03/2020 in VSCode
  */
 
@@ -61,8 +61,9 @@ public class P945MakeArrayUnique {
         Arrays.sort(A);
         int n = A.length, count = 0;
         for (int i = 1; i < n; i++) {
+            // 这种主要是处理相等的元素
             if (A[i] <= A[i-1]) {
-                count += A[i-1] + 1 - A[i];
+                count += A[i-1] + 1 - A[i];   // A[i]要变成比他自己大 1 的数字
                 A[i] = A[i-1] + 1;
             }
         }

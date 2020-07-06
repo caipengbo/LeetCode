@@ -3,7 +3,6 @@ package greedy;
 /**
 * Title:  134. 加油站
 * Desc: 在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
-
 你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。
 你从其中的一个加油站出发，开始时油箱为空。
 
@@ -15,6 +14,7 @@ package greedy;
 * Created by Myth-PC on 23/01/2020 in VSCode
 */
 public class P134GasStation {
+    // 暴力方法， 一个位置一个位置去测试
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int n = gas.length, count, sum = 0;
         int[] arr = new int[n];
@@ -36,11 +36,12 @@ public class P134GasStation {
         return -1;
     }
     // 优化：一次遍历
-    // 如果
+    // 
     public int canCompleteCircuit2(int[] gas, int[] cost) {
-        int n = gas.length, ans = 0;
+        int n = gas.length, start = 0;
         // int[] arr = new int[n];
         int gasSum = 0, costSum = 0;
+        // 判断是否可以绕一圈
         for (int i = 0; i < n; i++) {
             gasSum += gas[i];
             costSum += cost[i];
@@ -53,13 +54,14 @@ public class P134GasStation {
         for (int i = 0; i < n; i++) {
             gasSum += gas[i];
             costSum += cost[i];
+            // 当前消耗的量大于油的量，以前选的start不对，重新选start
             if (costSum > gasSum) {
                 gasSum = 0;
                 costSum = 0;
-                ans = i + 1;
+                start = i + 1;
             }
         }
-        return ans;
+        return start;
     }
 
 
