@@ -13,7 +13,7 @@ import java.util.Arrays;
 */
 
 public class P820ShortEncodingOfWords {
-    // Tie解法，每个word反转就是前缀
+    // Trie解法，每个word反转就是前缀
     // 犯的错误: 没有对单词进行排序，先插入长的，这样短的就插入不进去了，就包含在长单词里面了
     private class TrieNode {
         char val;

@@ -15,12 +15,14 @@ public class P239SlidingWindowMaximum {
     public int[] maxSlidingWindow(int[] nums, int k) {
         int n = nums.length;
         if (n == 0 || k == 0 || k > n) return new int[0];
+        // 单调递减栈
         Deque<Integer> deque = new ArrayDeque<>();  // index
         int[] ret = new int[n-k+1];
         for (int i = 0; i < n; i++) {
             while (!deque.isEmpty() && i - deque.peekFirst() >= k) deque.removeFirst();  // 去头
-            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) deque.removeLast();  // 循环去尾
-            deque.addLast(i); 
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) deque.removeLast();  // 循环去尾  保持单调递减特性
+            deque.addLast(i);
+            // 注意下标
             if (i >= k-1) ret[i-k+1] = nums[deque.peekFirst()];
         }
         return ret;

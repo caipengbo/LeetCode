@@ -10,6 +10,7 @@ import java.util.PriorityQueue;
 
 public class P215KthLargestElementInArray {
     public int findKthLargest(int[] nums, int k) {
+        // 小顶堆：会收集最大的K个数，然后堆顶是最小的（即最大的K个数里面最小的，第K大的）
         PriorityQueue<Integer> heap = new PriorityQueue<>(k, (o1, o2)->o1.compareTo(o2));
         for (int i = 0; i < nums.length; i++) {
             if (i < k) heap.add(nums[i]);

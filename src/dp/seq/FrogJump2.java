@@ -1,4 +1,4 @@
-package datastructure.monotonicqueue;
+package dp.seq;
 
 import java.util.Arrays;
 
@@ -28,24 +28,6 @@ public class FrogJump2 {
         return dp[n-1];
 
     }
-    /** 使用单调栈优化
-from collections import deque
-def min_cost(A, K):
-    Q = deque([(0, A[0])])
-    for i in range(1, len(A)):
-        
-        # keep sliding width == K steps
-        while Q and Q[0][0] < i - K:
-            Q.popleft()
-            
-        # remove inferior elements at the tail
-        while Q and Q[-1][1] > A[i] + Q[0][1]:
-            Q.pop()
-
-        Q.append((i, A[i] + Q[0][1]))
-    return Q[-1][1]
-     * 
-     */
     public static void main(String[] args) {
         int[] costs = {0, 3, 2, 7, 1, 4};
         FrogJump2 frogJump2 = new FrogJump2();

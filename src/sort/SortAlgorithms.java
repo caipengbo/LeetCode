@@ -2,13 +2,15 @@ package sort;
 
 import java.util.Arrays;
 
+import util.ListNode;
+
 /**
  * Title: 重要的(从小到大)排序算法（要求会手写）
  * Desc: 面试重要排序算法
  * Created by Myth-Lab on 10/11/2019
  */
 public class SortAlgorithms {
-    // 冒泡排序(交换相邻元素)
+    // 冒泡排序(交换相邻元素,将最大元素交换到最后)
     private void swap(int[] array, int i, int j) {
         int temp = array[i];
         array[i] = array[j];
@@ -16,8 +18,10 @@ public class SortAlgorithms {
     }
     private void bubbleSort(int[] array) {
         for (int i = 0; i < array.length-1; i++) {
-            for (int j = 0; j < array.length-i-1; j++) {
-                if (array[j] > array[j+1]) swap(array, j, j+1);
+            for (int j = 0; j < array.length-i-1; j++) {  // 随着i的增大j的范围不断缩小
+                if (array[j] > array[j+1]) {
+                    swap(array, j, j+1);
+                }
             }
         }
     }
@@ -43,24 +47,26 @@ public class SortAlgorithms {
         quickSort(arr, p+1, r);
     }
     
-    // 简单的插入排序(有序区在前)
-    public void insertSort(int[] array) {
+    // 简单的插入排序(有序区在前)  适用于 —— 基本有序的
+    public void insertSort(int[] array) {  
         int i, j, temp;
         // for (i = 0; i < array.length; i++) {
         // 因为初始时候array[0] 只有一个元素自成一个有序区，所以让 i 起始为 1
         for (i = 1; i < array.length; i++) {
             temp = array[i];
-            for (j = i-1; j >= 0 && temp < array[j]; j--) {
-                array[j+1] = array[j];
+            // 在左侧有序区腾出来空
+            for (j = i-1; j >= 0 && temp < array[j]; j--) {  // 已经有序，就不会移动
+                array[j+1] = array[j];   // 往后移动，腾出来空
             }
-            array[j+1] = temp;
+            array[j+1] = temp;   // 插入
         }
     }
     
-    // 希尔排序，缩小增量排序：缩小规模
+    // 希尔排序，缩小增量排序：缩小规模   
     // 简单的插入排序在数据有序性越高效率越高，规模越小效率越高
     public void shellSort(int[] array) {
         int n = array.length;
+        // 分组插入排序
         for (int gap = n/2; gap > 0; gap/=2) {
             insertSort(array, gap);
         }
@@ -68,7 +74,7 @@ public class SortAlgorithms {
     // 每一组进行插入排序： gap：间距增量;  i:起始位置
     private void insertSort(int[] array, int gap) {
         int i, j, temp;
-        // 注意此处为何初始为gap?
+        // 注意此处为何初始为gap?  gap个一组，进行分组插入排序
         for (i = gap; i < array.length; i++) {
             temp = array[i];
             for (j = i-gap; j >= 0 && temp < array[j]; j-=gap) {
@@ -78,7 +84,7 @@ public class SortAlgorithms {
         }
     }
     
-    // 简单选择排序
+    // 简单选择排序，每次从无序区选择一个最值追加到有序区的末尾
     private void selectSort(int[] array) {
         for (int i = 0; i < array.length; i++) {
             int min = i;
@@ -94,10 +100,13 @@ public class SortAlgorithms {
     // 从小到大的顺序排序 —— 大顶堆
     public void heapSort(int[] array) {
         int size = array.length;
+        // 1. 构建大顶堆
         bulidMaxHeap(array, size);
         for (int i = array.length-1; i > 0; i--) {
+            // 2. 每次讲堆顶的元素和堆末尾的元素交换
             swap(array, 0, i);
             size--;
+            // 3. 重建堆
             heapify(array, 0, size);  // 只调整发生交换的一侧
         }
     }
@@ -146,6 +155,57 @@ public class SortAlgorithms {
         mergeSort(array, l, m);
         mergeSort(array, m+1, r);
         merge(array, l, m, r);
+    }
+    // 链表的归并排序
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        // 将链表分为两段
+        ListNode p = head, q = head, pre = head;
+        while (q != null && q.next != null) {
+            pre = p;
+            p = p.next;
+            q = q.next.next;
+        }
+
+        pre.next = null;  // 截断链表
+        ListNode left = sortList(head);
+        ListNode right = sortList(p);
+        return mergeTwoListsRecursive(left, right);
+    }
+    public ListNode mergeTwoListsRecursive(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+
+        if (l1.val <= l2.val) {
+            l1.next = mergeTwoListsRecursive(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoListsRecursive(l1, l2.next);
+            return l2;
+        }
+    }
+    // 非递归版本（自底向上）
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        ListNode dummy = new ListNode(-1), cur = dummy;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                cur.next = l1;
+                l1 = l1.next;
+            } else {
+                cur.next = l2;
+                l2 = l2.next;
+            }
+            cur = cur.next;
+        }
+        if (l1 == null) {
+            cur.next = l2;
+        } else {
+            cur.next = l1;
+        } 
+        return dummy.next;
     }
     
 
