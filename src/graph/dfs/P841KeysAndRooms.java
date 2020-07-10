@@ -13,7 +13,9 @@ public class P841KeysAndRooms {
         visited[0] = true;
         dfs(rooms, 0, visited);
         for (boolean visit : visited) {
-            if (!visit) return false;
+            if (!visit) {
+                return false;
+            }
         }
         return true;
     }

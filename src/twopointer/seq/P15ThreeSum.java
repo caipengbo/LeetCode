@@ -12,7 +12,8 @@ import java.util.List;
  */
 public class P15ThreeSum {
     // 难点: 三数之和 -> 两数之和(哈希、排序+双指针); 排除重复
-    // 排序+双指针 : val<target时low++; val>target时 high--; val==target时low++ & high--
+
+    // 本题：排序+双指针 : val<target时low++; val>target时 high--; val==target时low++ & high--
     // 如何跳过重复
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> ret = new LinkedList<>();
@@ -22,7 +23,9 @@ public class P15ThreeSum {
             if (nums[i] > 0) break;
             int j = i+1, k = nums.length-1, sum = 0 - nums[i];
             Integer jPre = null, kPre = null;
-            if (iPre != null && iPre == nums[i]) continue;  // 去重
+            if (iPre != null && iPre == nums[i]) {
+                continue;  // 去重
+            }
             iPre = nums[i];
             while (j < k) {
                 if (nums[j] + nums[k] < sum) {
