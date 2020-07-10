@@ -49,7 +49,7 @@ public class P138CopyListWithRandomPointer {
             p = p.next;
             q.next = p.next;
         }
-        p.next = null;  // 注意封尾操作，详细的拆分 参见 328题
+        p.next = null;  // 注意封尾操作，详细的拆分参见 328题
         return newNode;
     }
     // 拆开链表的地方有点不一样

@@ -22,7 +22,7 @@ public class P429NaryTreeLevelOrderTraversal {
             children = _children;
         }
     }
-    // Recursive
+    // BFS
     public List<List<Integer>> levelOrder(Node root) {
         List<List<Integer>> ret = new ArrayList<>();
         if (root == null) return ret;

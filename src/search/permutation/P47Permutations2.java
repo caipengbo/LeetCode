@@ -2,7 +2,10 @@ package search.permutation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Title: 47. 全排列2
@@ -11,6 +14,43 @@ import java.util.List;
  * Created by Myth on 7/18/2019
  */
 public class P47Permutations2 {
+
+    // ======== 使用交换法 ======
+    private void backtracking(int[] nums, List<List<Integer>> ans, int start, int end) {
+        if (start == end) {
+            List<Integer> cur = new ArrayList<>(nums.length);
+            for (int num : nums) {
+                cur.add(num);
+            }
+            ans.add(cur);
+            return;
+        }
+        // 对于每次重复的，只处理一个
+        Set<Integer> visited = new HashSet<>();
+        for (int i = start; i < end; i++) {
+            if (visited.contains(nums[i])) {
+                continue;
+            }
+            visited.add(nums[i]);
+            swap(nums, start, i);
+            backtracking(nums, ans, start+1, end);
+            swap(nums, start, i);
+        }
+    }
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    public List<List<Integer>> permuteUnique2(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (nums == null || nums.length == 0) return ans;
+        
+        backtracking(nums, ans, 0, nums.length);
+        return ans;
+    }
+
     private void backtracking(int[] nums, int count, boolean[] visited, List<Integer> cur, List<List<Integer>> ans) {
         if (count == nums.length) {
             ans.add(new ArrayList<>(cur));
@@ -39,9 +79,13 @@ public class P47Permutations2 {
         backtracking(nums, 0, visited, cur, ans);
         return ans;
     }
+
+    
+
+
     public static void main(String[] args) {
         int[] nums1 = {1, 1, 2};
         P47Permutations2 p47 = new P47Permutations2();
-        System.out.println(p47.permuteUnique(nums1));
+        System.out.println(p47.permuteUnique2(nums1));
     }
 }

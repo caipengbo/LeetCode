@@ -1,8 +1,8 @@
-package dp.seq;
+package datastructure.hash;
 
 /**
 * Title: 3. 无重复字符的最长子串
-* Desc: 双指针、滑动窗口 + 简单DP（和股票题目似的，保存一个最大值，姑且算DP吧）
+* Desc: 双指针、滑动窗口 + Hash
 * Created by Myth on 12/27/2019 in VSCode
 */
 

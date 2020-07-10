@@ -1,7 +1,7 @@
 package dp.seq.sub_seq;
 
 /**
- * Title: 53. 最大子序和
+ * Title: 53. 最大子序和（剑指offer42）
  * Desc: 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
  * Created by Myth-Lab on 11/20/2019
  */

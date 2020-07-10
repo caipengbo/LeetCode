@@ -8,7 +8,7 @@ import java.util.*;
  * Created by Myth-Lab on 10/25/2019
  */
 public class ShortestPath {
-    // Dijkstra：单源最短路径：src到其他各点的最短距离
+    // Dijkstra：单源最短路径：src到其他各点的最短距离（每次更新这个距离数组，使用新添加的元素到其他）
     // 使用邻接矩阵表示图(无负权)
     // 返回值: {各个顶点编号, 对应距离}}
     public HashMap<Integer, Integer> dijkstra(int[][] graph, int src) {

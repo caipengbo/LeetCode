@@ -47,7 +47,6 @@ public class P66AddOne {
         digits = new int[digits.length + 1];
         digits[0] = 1;
         return digits;
-        String.
     }
 
 }
