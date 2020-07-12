@@ -1,5 +1,6 @@
 package datastructure.stack;
 
+import java.util.Collections;
 import java.util.Stack;
 
 /**
@@ -40,6 +41,8 @@ public class P150PolishNotation {
 				break;
 			}
 		}
+		String s = "aaaa";
+		Arrays.sort
 		return numStack.pop();
 	}
 }
