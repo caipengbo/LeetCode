@@ -42,7 +42,6 @@ public class P150PolishNotation {
 			}
 		}
 		String s = "aaaa";
-		Arrays.sort
 		return numStack.pop();
 	}
 }
