@@ -6,15 +6,21 @@ package twopointer.seq;
  * Created by Myth-Lab on 10/13/2019
  */
 public class P42TrappingRainWater {
-    // 水都是从高往低流，所以柱子下降就一定能存住水，为啥能存贮水呢？因为右边还有一个比它更高的柱子
-    // 左右两端双指针，向中间最大的柱子聚拢，期间下降的地方就肯定能存住水
-    // 重点：怎么聚拢
+
+    // 暴力解法：当前列的水 等于 min(左边最高，右边最高) - 当前高度
+
+    // 重点：当前位置左边最大值leftMax 右边最大值如何求？？？
+
+    // 可以存在数组里，一次遍历从左往右遍历就可以求出来leftMax，然后从右往左一次遍历就可以求出来rightMax
+
+    // 也可以使用双指针，
     public int trap(int[] height) {
         int left = 0, right = height.length-1;
         int leftMax = 0, rightMax = 0;
         int ret = 0;
         while (left < right) {
             // 左侧
+            // 小的一侧进行计算
             if (height[left] <= height[right]) {
                 if (height[left] > leftMax) leftMax = height[left];
                 else ret += leftMax - height[left];

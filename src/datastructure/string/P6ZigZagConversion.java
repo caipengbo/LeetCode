@@ -7,6 +7,27 @@ package datastructure.string;
 */
 
 public class P6ZigZagConversion {
+    // 精简版
+    public String convert2(String s, int numRows) {
+        if (numRows <= 2) return s;
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++) {
+            rows[i] = new StringBuilder();
+        }
+        // Key: 巧用Flag控制方向
+        int len = s.length(), i = 0, j = 0, flag = -1;
+        while (i < len) {
+            rows[j].append(s.charAt(i++));
+            if (j == 0 || j == numRows-1) flag = -flag;
+            j += flag;
+        }
+        StringBuilder ret = new StringBuilder();
+        for (StringBuilder row : rows) {
+            ret.append(row);
+        }
+        return ret.toString();
+    }
+
     public String convert(String s, int numRows) {
         
         StringBuilder[] rows = new StringBuilder[numRows];
@@ -31,25 +52,4 @@ public class P6ZigZagConversion {
         }
         return ret.toString();
     }
-    // 精简版
-    public String convert2(String s, int numRows) {
-        if (numRows <= 2) return s;
-        StringBuilder[] rows = new StringBuilder[numRows];
-        for (int i = 0; i < numRows; i++) {
-            rows[i] = new StringBuilder();
-        }
-        // Key: 巧用Flag控制方向
-        int len = s.length(), i = 0, j = 0, flag = -1;
-        while (i < len) {
-            rows[j].append(s.charAt(i++));
-            if (j == 0 || j == numRows-1) flag = -flag;
-            j += flag;
-        }
-        StringBuilder ret = new StringBuilder();
-        for (StringBuilder row : rows) {
-            ret.append(row);
-        }
-        return ret.toString();
-    }
-
 }
