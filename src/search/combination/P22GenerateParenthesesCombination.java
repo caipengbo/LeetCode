@@ -10,9 +10,10 @@ import java.util.List;
  * Created by Myth on 7/23/2019
  */
 public class P22GenerateParenthesesCombination {
+    // 重点，根据括号的数目来判断是否可以放置
     // 回溯(不带循环的回溯，因为每种选择不太一样，无法使用循环语句写出)
     // 结束：串的长度=2*n
-    // 限制条件：左括号小于n时都可以放； 右括号小于左括号数目时才可以放
+    // 限制条件：左括号数目小于n时都可以放； 右括号数目小于左括号数目时才可以放
     private void backtracking(int n, int open, int close, String cur, List<String> ans) {
         if (cur.length() == 2*n) {
             // 不用new String，因为String每次会产生新的对象
@@ -23,6 +24,7 @@ public class P22GenerateParenthesesCombination {
             // 注意 cur+"(" 会产生新的对象
             backtracking(n, open+1, close, cur+"(", ans);
         }
+        
         if (close < open) {
             backtracking(n, open, close+1, cur+")", ans);
         }

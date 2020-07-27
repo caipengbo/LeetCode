@@ -12,8 +12,36 @@ import java.util.PriorityQueue;
  * Created by Myth on 9/8/2019
  */
 public class P23MergeKSortedLists {
+
+    // 使用大小为K的堆，找到最小的点，链接到结果链表，然后此节点的下一个节点加入堆
+    public ListNode mergeKLists1(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+        // init
+        PriorityQueue<ListNode> queue = new PriorityQueue<>((o1, o2) -> (o1.val - o2.val));
+        int len = lists.length;
+        for (int i = 0; i < len; i++) {
+            if (lists[i] != null) {
+                queue.add(lists[i]);
+                // lists[i] = lists[i].next;
+            }
+        }
+        // loop
+        ListNode dummy = new ListNode(-1), p = dummy;
+        while (!queue.isEmpty()) {
+            ListNode node = queue.poll();
+            p.next = node;
+            p = p.next;
+            // 重点，也是没想到的地方！
+            if (node.next != null) {
+                queue.add(node.next);
+            }
+        }
+        return dummy.next;
+    }
     // 使用堆
-    public ListNode mergeKLists(ListNode[] lists) {
+    public ListNode mergeKLists3(ListNode[] lists) {
         int k = lists.length;
         if (k == 0) return null;
         PriorityQueue<ListNode> priorityQueue = new PriorityQueue<ListNode>(k, new Comparator<ListNode>() {
@@ -74,6 +102,6 @@ public class P23MergeKSortedLists {
         ListNode[] listNodes = new ListNode[2];
         listNodes[0] = ListUtil.stringToListNode("[-2,-1,-1,-1]");
         listNodes[1] = ListUtil.stringToListNode("[]");
-        ListUtil.prettyPrintLinkedList(p23.mergeKLists(listNodes));
+       // ListUtil.prettyPrintLinkedList(p23.mergeKLists(listNodes));
     }
 }

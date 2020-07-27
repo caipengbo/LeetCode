@@ -11,22 +11,21 @@ import util.ListUtil;
  * Created by Myth on 9/6/2019
  */
 public class P24SwapNodesinPairs {
-    // 节点的移动（三个节点）
-    public ListNode swapPairs(ListNode head) {
-        if (head == null || head.next == null) return head;
+    // 
+    public ListNode swapPairsNew(ListNode head) {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
-        ListNode cur = dummy, swap1, swap2;
-        while (cur.next != null && cur.next.next != null) {
-            swap1 = cur.next;
-            swap2 = cur.next.next;
-            cur.next = swap2;
-            swap1.next = swap2.next;
-            swap2.next = swap1;
-            cur = swap1;
+        ListNode p = dummy, q = head;
+        while (q != null && q.next != null) {
+            p.next = q.next;
+            q.next = q.next.next;
+            p.next.next = q;
+            p = q;
+            q = q.next;
         }
         return dummy.next;
     }
+
     // 递归写法(考虑两个节点)
     public ListNode swapPairsRecursive(ListNode head) {
         if(head == null || head.next == null) return head;
@@ -35,7 +34,6 @@ public class P24SwapNodesinPairs {
         nextNode.next = head;
         return nextNode;
     }
-    // 第二遍
     public ListNode swapPairs2(ListNode head) {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
@@ -55,6 +53,23 @@ public class P24SwapNodesinPairs {
             }
         }
         before.next = null;
+        return dummy.next;
+    }
+
+     // 节点的移动（三个节点）
+     public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode cur = dummy, swap1, swap2;
+        while (cur.next != null && cur.next.next != null) {
+            swap1 = cur.next;
+            swap2 = cur.next.next;
+            cur.next = swap2;
+            swap1.next = swap2.next;
+            swap2.next = swap1;
+            cur = swap1;
+        }
         return dummy.next;
     }
 
