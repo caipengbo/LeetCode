@@ -52,7 +52,7 @@ public class P33SearchRotatedSortedArray {
         if (lo <= r && nums[lo] == target) return lo;
         return -1;
     }
-    //  第二种解法：
+    //  第二种解法：√
     public int search2(int[] nums, int target) {
         if (nums.length == 0) return -1;
         int left = 0, right = nums.length - 1;
@@ -61,7 +61,7 @@ public class P33SearchRotatedSortedArray {
             mid = left + (right - left) / 2;
             // if (target == nums[mid]) return mid;
             // 左边有序（旋转点在右边）
-            if (nums[left] <= nums[mid]) {
+            if (nums[left] < nums[mid]) {
                 if (nums[left] <= target && target <= nums[mid]) right = mid;
                 else left = mid + 1;
             } else { // 右边有序（旋转点在左边）
@@ -80,12 +80,14 @@ public class P33SearchRotatedSortedArray {
         int[] nums3 = {3,4,5,1,2};
         int[] nums4 = {1,2,3,4,5};
         int[] nums5 = {3,1};
-        System.out.println(p33.search2(nums1, 5));
-        System.out.println(p33.search2(nums2, 4));
-        System.out.println(p33.search2(nums3, 8));
-        System.out.println(p33.search2(nums4, 5));
-        System.out.println(p33.search2(nums5, 3));
-        System.out.println(p33.search2(nums5, 1));
+        int[] nums6 = {1,3};
+        // System.out.println(p33.search2(nums1, 5));
+        // System.out.println(p33.search2(nums2, 4));
+        // System.out.println(p33.search2(nums3, 8));
+        // System.out.println(p33.search2(nums4, 5));
+        // System.out.println(p33.search2(nums5, 3));
+        // System.out.println(p33.search2(nums5, 1));
+        System.out.println(p33.search2(nums6, 1));
 //        System.out.println(p33.findRotatedPoint(nums4));
     }
 }

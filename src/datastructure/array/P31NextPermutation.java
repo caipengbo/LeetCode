@@ -5,8 +5,8 @@ import java.util.Arrays;
 /**
  * Title: 31. 下一个排列 
  * Desc: 实现获取下一个排列的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。
- * 如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。 Created by Myth-MBP on 12/07/2020 in
- * VSCode
+ * 如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。 
+ * Created by Myth-MBP on 12/07/2020 in VSCode
  */
 public class P31NextPermutation {
     // 下一个排列的特点：前面找个小的数，后面找个大的数，然后交换
@@ -16,6 +16,7 @@ public class P31NextPermutation {
         int n = nums.length;
         
         int i = 0;
+        // 注意此时的i为何是从后面开始找的？？
         for (i = n-1; i > 0;i--) {
             // i-1位置是左边较小的数，
             if (nums[i-1] < nums[i]) {

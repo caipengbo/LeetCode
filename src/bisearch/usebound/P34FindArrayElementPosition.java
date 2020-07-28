@@ -33,7 +33,37 @@ public class P34FindArrayElementPosition {
         else if (l > 0 && nums[l-1] == target) ret[1] = l-1;
         return ret;
     }
+    private int findFirst(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return -1;
+        int l = 0, r = nums.length-1, m;
 
+        while (l < r) {
+            m = (l + r) / 2;
+            if (nums[m] >= target) {
+                r = m;
+            } else {
+                l = m+1;
+            }
+        }
+
+        return nums[l] == target ? l : -1;
+    }
+
+    private int findLast(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return -1;
+        int l = 0, r = nums.length, m;
+
+        while (l < r) {
+            m = (l + r) / 2;
+            if (nums[m] > target) {
+                r = m;
+            } else {
+                l = m+1;
+            }
+        }
+        
+        return (l-1 >= 0 && nums[l-1] == target) ? l-1 : -1;
+    }
     public static void main(String[] args) {
         P34FindArrayElementPosition p34 = new P34FindArrayElementPosition();
         int[] nums = {5,7,7,8,8,10};

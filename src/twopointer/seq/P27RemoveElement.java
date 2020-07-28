@@ -8,10 +8,19 @@ package twopointer.seq;
 
 public class P27RemoveElement {
     // 该题虽然很简单，但是要考虑的情况很多： 要移除的元素很多？ 很少？ 
-    // 1. 要移动的元素很少的时候，就两个前向指针即可
-
-    // 2. 当要移动的很多时候
-    public int removeElement(int[] nums, int val) {
+    // 1. 要删除的元素很多的时候，就两个前向指针即可
+    public int removeElement1(int[] nums, int val) {
+        int ans = 0;
+        for(int num: nums) {
+            if(num != val) {
+                nums[ans] = num;
+                ans++;
+            }
+        }
+        return ans;
+    }
+    // 2. 当要保留的很多的时候，说明移除的少
+    public int removeElement2(int[] nums, int val) {
         if (nums == null || nums.length == 0) return 0;
         int i = 0, j = nums.length-1;
         while (i <= j) {
@@ -24,13 +33,13 @@ public class P27RemoveElement {
         return j+1;
     }
     // 2.2 只和最后一个元素交换
-    public int removeElement2(int[] nums, int val) {
+    public int removeElement3(int[] nums, int val) {
         if (nums == null || nums.length == 0) return 0;
         int i = 0, n = nums.length;
         while (i < n) {
             if (nums[i] == val) {
-                nums[i] = nums[n-1];
-                n--;
+                // 不找位置，全都移过去（代码简洁，效率略低于2）
+                nums[i] = nums[--n];
             } else {
                 i++;
             }
@@ -45,7 +54,7 @@ public class P27RemoveElement {
         P27RemoveElement p27 = new P27RemoveElement();
         int[] nums = {2, 2, 2};
         int[] nums2 = {1};
-        System.out.println(p27.removeElement(nums, 2));
-        System.out.println(p27.removeElement(nums2, 1));
+        System.out.println(p27.removeElement1(nums, 2));
+        System.out.println(p27.removeElement1(nums2, 1));
     }
 }

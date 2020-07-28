@@ -13,7 +13,8 @@ public class P35SearchInsertPosition {
         int l = 0, r = nums.length;
         int m;
         while (l < r) {
-            m = l + (r - l) / 2;
+            // m = l + (r - l) / 2;
+            m = l + ((r - l) >> 1);
             // 注意此处为何不是 <= ?
             if (nums[m] < target) l = m + 1; // 右侧
             else r = m;  // 左侧
@@ -28,9 +29,9 @@ public class P35SearchInsertPosition {
         int target2 = 2;
         int target3 = 7;
         int target4 = 0;
-        System.out.println(p35.searchInsert(nums, target1));
-        System.out.println(p35.searchInsert(nums, target2));
+        // System.out.println(p35.searchInsert(nums, target1));
+        // System.out.println(p35.searchInsert(nums, target2));
         System.out.println(p35.searchInsert(nums, target3));
-        System.out.println(p35.searchInsert(nums, target4));
+        // System.out.println(p35.searchInsert(nums, target4));
     }
 }
