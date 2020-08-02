@@ -6,6 +6,37 @@ package math.convert;
  * Created by Myth-Lab on 11/7/2019
  */
 public class P43MultiplyStrings {
+
+    public String multiply(String num1, String num2) {
+        // 注意此处
+        if ("0".equals(num1) || "0".equals(num2)) {
+            return "0";
+        }
+        int len1 = num1.length(), len2 = num2.length();
+        int[] res = new int[len1+len2];
+        for (int i = len1-1; i >= 0; i--) {
+            int n1 = num1.charAt(i) - '0';
+            for (int j = len2-1; j >= 0; j--) {
+                int n2 = num2.charAt(j) - '0';
+                int sum = res[i+j+1] + (n1 * n2);
+                res[i+j] += sum / 10;
+                res[i+j+1] = sum % 10;
+            }
+        }
+        boolean start = true;
+        StringBuilder sb = new StringBuilder();
+        // 注意此处求前导0的写法（注意不要写成了去除第一个0）
+        for (int num : res) {
+            if (start && num == 0) {
+                continue;
+            }
+            start = false;
+            sb.append(num);
+        }
+        return sb.toString();
+    }
+
+
     private String add(String num1, String num2) {
         StringBuilder ret = new StringBuilder();
         int extra = 0;
@@ -50,7 +81,7 @@ public class P43MultiplyStrings {
         return ret.reverse().toString();
     }
 
-    public String multiply(String num1, String num2) {
+    public String multiply2(String num1, String num2) {
         String ret = "0";
         int mul, extra;
         StringBuilder zero = new StringBuilder();
@@ -78,7 +109,7 @@ public class P43MultiplyStrings {
     // 根据进位规律
     // 乘数 num1 位数为 MM，被乘数 num2 位数为 NN， num1 x num2 结果 res 最大总位数为 M+N
     //num1[i] x num2[j] 的结果为 tmp(位数为两位，"0x","xy"的形式)，其第一位位于 res[i+j]，第二位位于 res[i+j+1]。
-    public String multiply2(String num1, String num2) {
+    public String multiply3(String num1, String num2) {
         // TODO Again
         if (num1.equals("0") || num2.equals("0")) {
             return "0";

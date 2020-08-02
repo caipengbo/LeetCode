@@ -12,7 +12,7 @@ public class P45JumpGame2 {
     public int jump(int[] nums) {
         int n = nums.length, k = 0, cur = 0, next;
         // 求每个范围的最值
-        while (cur < n-1) {  // next >= n-1 说明下一步可以达到数组尾部
+        while (cur < n-1) {  // next >= n-1 说明下一步可以达到数组尾部，注意此处
             next = nums[cur] + cur;
             for (int i = cur; i <= next && i < n; i++) {
                 // 可以将当前的范围扩大，就跳到那个扩的最大的位置
