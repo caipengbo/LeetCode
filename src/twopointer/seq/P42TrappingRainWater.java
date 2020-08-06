@@ -1,6 +1,5 @@
 package twopointer.seq;
 
-import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 
 /**
  * Title: 42. 接雨水（双指针解法，更常用的是单调栈解法）

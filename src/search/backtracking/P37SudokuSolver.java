@@ -6,6 +6,8 @@ package search.backtracking;
  * Created by Myth on 7/25/2019
  */
 public class P37SudokuSolver {
+    
+
     // 注意
     public void solveSudoku(char[][] board) {
         if (board == null || board.length != 9 || board[0].length != 9) return;
@@ -33,12 +35,12 @@ public class P37SudokuSolver {
     private boolean isValid(char[][] board, int row, int col, char c) {
         int x, y; // 3X3 index
         for (int i = 0; i < 9; i++) {
-            if (board[row][i] != '.'&& board[row][i] == c) return false;  // 行
-            if (board[i][col] != '.' && board[i][col] == c) return false; // 列
+            if (board[row][i] == c) return false;  // 行
+            if (board[i][col] == c) return false; // 列
             // 3X3 格 难点！！！
             x = 3 * (row / 3) + i / 3;
             y = 3 * (col / 3) + i % 3;
-            if (board[x][y] != '.' && board[x][y] == c) return false;
+            if (board[x][y] == c) return false;
         }
         return true;
     }
