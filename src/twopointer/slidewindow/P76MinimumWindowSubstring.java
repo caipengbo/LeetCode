@@ -1,4 +1,4 @@
-package twopointer.seq;
+package twopointer.slidewindow;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -114,15 +114,14 @@ public class P76MinimumWindowSubstring {
         return min == Integer.MAX_VALUE ? "" : s.substring(left, right+1);
     }
     public String minWindow4(String s, String t) {
-
         int[] map = new int[128];
+        // 后续会大于0的原因
         for (char c : t.toCharArray()) map[c]++;
 
         int count = t.length();
         int minLen = Integer.MAX_VALUE, l = 0, r = 0;
         int i = 0, j = 0;
         while (j < s.length()) {
-
             if (map[s.charAt(j++)]-- > 0) count--;
             while (count == 0) {
                 if (j - i < minLen) {

@@ -8,13 +8,16 @@ package twopointer.seq;
  */
 public class P42TrappingRainWater {
 
+    // 每个位置为什么可以存水，因为左右有比其高的柱子那么：
+
     // 暴力解法：当前列的水 等于 min(左边最高，右边最高) - 当前高度
 
     // 重点：当前位置左边最大值leftMax 右边最大值如何求？？？
 
-    // 可以存在数组里，一次遍历从左往右遍历就可以求出来leftMax，然后从右往左一次遍历就可以求出来rightMax
+    // 1. 可以存在数组里，一次遍历从左往右遍历就可以求出来leftMax，然后从右往左一次遍历就可以求出来rightMax
 
-    // 也可以使用双指针，
+
+    // 2. 也可以使用双指针，
     public static int trap(int[] height) {
         int left = 0, right = height.length-1;
         int leftMax = 0, rightMax = 0;
