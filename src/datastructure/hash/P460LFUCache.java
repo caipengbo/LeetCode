@@ -1,34 +1,63 @@
 package datastructure.hash;
 
 import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.TreeMap;
-import java.util.Map.Entry;
+import java.util.Map;;
 
 /**
 * Title:  460. LFU缓存
 * Desc: 设计并实现最不经常使用（LFU）缓存的数据结构。它应该支持以下操作：get 和 put
 * Created by Myth-PC on 26/01/2020 in VSCode
 */
+/**
+ * HashMap<Integer, Node> cache 存缓存的内容; 将写法 1 写法 2 中的 freqMap 不再用 HashMap 来表示，
+ * 而是直接用双向链表 DoublyLinkedList firstLinkedList; DoublyLinkedList lastLinkedList，
+ * 省去了一些哈希相关的耗时，也不需要用 min 来存储最小频次了，lastLinkedList.pre 这条 DoublyLinkedList 
+ * 即为最小频次对应的 Node 双向链表，lastLinkedList.pre.tail.pre 
+ * 这个 Node 即为最小频次的双向链表中的所有 Node 中最先访问的 Node，即容量满了后要删除的 Node。
+ */
+class FNode {
+    int key;
+    int value;
+    int freq = 1;
+    FNode pre;
+    FNode post;
+
+    public FNode() {}
+    
+    public FNode(int key, int value) {
+        this.key = key;
+        this.value = value;
+    }
+}
+
+class DoublyLinkedList {
+    // 两个傀儡节点
+    FNode head;
+    FNode tail;
+
+    public DoublyLinkedList() {
+        head = new FNode();
+        tail = new FNode();
+        head.post = tail;
+        tail.pre = head;
+    }
+    // 删除任意Nod
+    void removeNode(FNode node) {
+        node.pre.post = node.post;
+        node.post.pre = node.pre;
+    }
+    // 插入到head到后面第一个位置（头插法）
+    void addNode(FNode node) {
+        node.post = head.post;
+        head.post.pre = node;
+        head.post = node;
+        node.pre = head;
+    }
+}
 
 class LFUCache {
-    class Node {
-        int key;
-        int value;
-        int freq = 1;
-    
-        public Node() {}
-        
-        public Node(int key, int value) {
-            this.key = key;
-            this.value = value;
-        }
-    }
-
-    Map<Integer, Node> cache;  // 存储缓存的内容
-    Map<Integer, LinkedHashSet<Node>> freqMap; // 存储每个频次对应的双向链表
+    Map<Integer, FNode> cache; // 存储缓存的内容
+    Map<Integer, DoublyLinkedList> freqMap; // 存储每个频次对应的双向链表
     int size;
     int capacity;
     int min; // 存储当前最小频次
@@ -40,7 +69,7 @@ class LFUCache {
     }
     
     public int get(int key) {
-        Node node = cache.get(key);
+        FNode node = cache.get(key);
         if (node == null) {
             return -1;
         }
@@ -52,130 +81,49 @@ class LFUCache {
         if (capacity == 0) {
             return;
         }
-        Node node = cache.get(key);
+        FNode node = cache.get(key);
         if (node != null) {
-            node.value = value;
-            freqInc(node);
+            node.value = value;  // 覆盖值
+            freqInc(node);  // 增加频率
         } else {
+            // 满了、淘汰
             if (size == capacity) {
-                Node deadNode = removeNode();
-                cache.remove(deadNode.key);
+                DoublyLinkedList minFreqLinkedList = freqMap.get(min);  // 获取最低频次对应到双向链表
+                cache.remove(minFreqLinkedList.tail.pre.key);  // 相同频率，去除最老到那个
+                minFreqLinkedList.removeNode(minFreqLinkedList.tail.pre); // 这里不需要维护min, 因为下面add了newNode后min肯定是1.
                 size--;
             }
-            Node newNode = new Node(key, value);
+            // 插入新元素
+            FNode newNode = new FNode(key, value);
             cache.put(key, newNode);
-            addNode(newNode);
-            size++;     
+            DoublyLinkedList linkedList = freqMap.get(1);
+            if (linkedList == null) {
+                linkedList = new DoublyLinkedList();
+                freqMap.put(1, linkedList);  // 插入到频率为1到元素里
+            }
+            linkedList.addNode(newNode);
+            size++;  
+            min = 1;   
         }
     }
-
-    void freqInc(Node node) {
+    // 访问次数++
+    void freqInc(FNode node) {
         // 从原freq对应的链表里移除, 并更新min
         int freq = node.freq;
-        LinkedHashSet<Node> set = freqMap.get(freq);
-        set.remove(node);
-        if (freq == min && set.size() == 0) { 
+        DoublyLinkedList linkedList = freqMap.get(freq);
+        linkedList.removeNode(node);  // 原链表中删除
+        // 当前linkedList没有节点（更新min）
+        if (freq == min && linkedList.head.post == linkedList.tail) { 
             min = freq + 1;
         }
         // 加入新freq对应的链表
         node.freq++;
-        LinkedHashSet<Node> newSet = freqMap.get(freq + 1);
-        if (newSet == null) {
-            newSet = new LinkedHashSet<>();
-            freqMap.put(freq + 1, newSet);
+        linkedList = freqMap.get(freq + 1);
+        if (linkedList == null) {
+            linkedList = new DoublyLinkedList();
+            freqMap.put(freq + 1, linkedList);
         }
-        newSet.add(node);
-    }
-
-    void addNode(Node node) {
-        LinkedHashSet<Node> set = freqMap.get(1);
-        if (set == null) {
-            set = new LinkedHashSet<>();
-            freqMap.put(1, set);
-        } 
-        set.add(node); 
-        min = 1;
-    }
-
-    Node removeNode() {
-        LinkedHashSet<Node> set = freqMap.get(min);
-        Node deadNode = set.iterator().next();
-        set.remove(deadNode);
-        return deadNode;
-    }
-}
-// =======  自己实现的 有Bug=========
-class LFUNode {
-    int key;
-    int val;
-    int freq;
-    LFUNode(int k, int v) {
-        key = k;
-        val = v;
-        freq = 0;
-    }
-}
-class LFUCache2 {
-    HashMap<Integer, LFUNode> cache;
-    // freq - Set
-    HashMap<Integer, LinkedHashSet<LFUNode>> freqMap;
-
-    int minFrequency;
-
-    int size, capacity;
-    public LFUCache2(int capacity) {
-        cache = new HashMap<>();
-        freqMap = new HashMap<>();
-        minFrequency = 0;
-        this.size = 0;
-        this.capacity = capacity;
-    }
-    
-    public int get(int key) {
-        if (capacity <= 0) return -1;
-        LFUNode node = cache.getOrDefault(key, null);
-        if (node == null) {
-            System.out.println(-1);
-            return -1;
-        }
-        // 更新频率
-        LinkedHashSet<LFUNode> nodeSet = freqMap.get(node.freq);
-        nodeSet.remove(node); 
-        if (minFrequency == node.freq && nodeSet.size() == 0) minFrequency += 1;  // 更新最小频率
-        node.freq += 1;
-        addFreqMap(node.freq, node);
-        
-        System.out.println(node.val);
-        return node.val;
-    }
-    // size 和 重复之间 关系
-    public void put(int key, int value) {
-        if (capacity <= 0) return;
-        LFUNode node = cache.getOrDefault(key, null);
-        if (node != null) {  // 存在，从原freqMap中删除
-            LinkedHashSet<LFUNode> nodeSet = freqMap.get(node.freq);
-            cache.remove(node.key);
-            nodeSet.remove(node); 
-            size--;
-        }
-        if (size >= capacity) {
-            LinkedHashSet<LFUNode> nodeSet = freqMap.get(minFrequency);
-            LFUNode oldNode = nodeSet.iterator().next();
-            cache.remove(oldNode.key);
-            nodeSet.remove(oldNode);  // 删除最小频率Set中的第一个元素
-            size--;
-        }
-        node = new LFUNode(key, value);
-        cache.put(key, node);
-        addFreqMap(0, node);
-        minFrequency = 0;
-        size++;
-    }
-
-    private void addFreqMap(int freq, LFUNode node) {
-        LinkedHashSet<LFUNode> newNodeSet = freqMap.getOrDefault(freq, new LinkedHashSet<>());
-        newNodeSet.add(node);
-        freqMap.put(freq, newNodeSet);
+        linkedList.addNode(node);
     }
 }
 
