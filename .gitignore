@@ -4,3 +4,5 @@
 .settings/
 bin/
 test/
+src/Contest.java
+.DS_Store

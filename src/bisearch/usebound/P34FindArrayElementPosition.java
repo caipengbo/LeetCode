@@ -21,7 +21,7 @@ public class P34FindArrayElementPosition {
             else l = m + 1;
         }
         if (nums[l] == target) ret[0] = l;
-        // 找右边的位置
+        // 找右边的位置（也可以使用一种二分查找函数，最右边的位置求target+1,然后求出来的内容）
         l = 0;
         r = nums.length - 1;
         while (l < r) {
@@ -33,6 +33,7 @@ public class P34FindArrayElementPosition {
         else if (l > 0 && nums[l-1] == target) ret[1] = l-1;
         return ret;
     }
+    
     private int findFirst(int[] nums, int target) {
         if (nums == null || nums.length == 0) return -1;
         int l = 0, r = nums.length-1, m;
