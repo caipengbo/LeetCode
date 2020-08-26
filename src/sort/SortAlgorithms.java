@@ -61,6 +61,30 @@ public class SortAlgorithms {
             array[j+1] = temp;   // 插入
         }
     }
+    // 折半插入排序
+    public void insertSortBiSearch(int[] array) {  
+        int i, j, temp;
+        // for (i = 0; i < array.length; i++) {
+        // 因为初始时候array[0] 只有一个元素自成一个有序区，所以让 i 起始为 1
+        for (i = 1; i < array.length; i++) {
+            temp = array[i];
+            // 二分查找要插入的位置
+            int l = 0;
+            int r = i-1;
+            while (l < r) {
+                int m = (l + r) / 2;
+                if (temp < array[m]) {
+                    r = m;  // 左侧
+                } else {
+                    l = m+1;  // 右侧
+                }
+            }
+            for (j = i-1; j >= 0 && temp < array[j]; j--) {
+                array[j+1] = array[j];
+            }
+            array[j+1] = temp;   // 插入
+        }
+    }
     
     // 希尔排序，缩小增量排序：缩小规模   
     // 简单的插入排序在数据有序性越高效率越高，规模越小效率越高
@@ -230,6 +254,12 @@ public class SortAlgorithms {
         insertSort(array);
         System.out.println(Arrays.toString(array));
     }
+
+    private void testInsertSortBiSearch(int[] array) {
+        insertSortBiSearch(array);
+        System.out.println(Arrays.toString(array));
+    }
+
     public void testBubbleSort(int[] array) {
         bubbleSort(array);
         System.out.println(Arrays.toString(array));
@@ -253,13 +283,13 @@ public class SortAlgorithms {
         int[] array6 = {6,6,6,6,6,6};
         int[] array7 = {10,8,7,6,5,4};
         SortAlgorithms sortAlgorithms = new SortAlgorithms();
-        sortAlgorithms.testHeapSort(array1);
-        sortAlgorithms.testHeapSort(array2);
-        sortAlgorithms.testHeapSort(array3);
-        sortAlgorithms.testHeapSort(array4);
-        sortAlgorithms.testHeapSort(array5);
-        sortAlgorithms.testHeapSort(array6);
-        sortAlgorithms.testHeapSort(array7);
+        sortAlgorithms.testInsertSortBiSearch(array1);
+        sortAlgorithms.testInsertSortBiSearch(array2);
+        sortAlgorithms.testInsertSortBiSearch(array3);
+        sortAlgorithms.testInsertSortBiSearch(array4);
+        sortAlgorithms.testInsertSortBiSearch(array5);
+        sortAlgorithms.testInsertSortBiSearch(array6);
+        sortAlgorithms.testInsertSortBiSearch(array7);
     }
 
 }

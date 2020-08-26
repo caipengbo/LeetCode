@@ -41,6 +41,7 @@ public class P1143LongestCommonSubsequence {
         dfs(path, text1, n, m, ret);
         return ret.toString();
     }
+    // 从后往前，查找产生最大值的路径
     private static void dfs(int[][] path, String text1, int i, int j, StringBuilder cur) {
         if (i == 0 || j == 0) {
             return;
@@ -55,8 +56,6 @@ public class P1143LongestCommonSubsequence {
         }
     }
     public static void main(String[] args) {
-
         System.out.println(P1143LongestCommonSubsequence.longestCommonSubsequence2("a1b2d3eee4", "oo1a2cs3csd4"));
-
     }
 }
