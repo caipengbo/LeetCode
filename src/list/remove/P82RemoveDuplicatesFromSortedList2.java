@@ -9,6 +9,23 @@ import util.ListUtil;
  * Created by Myth-Lab on 10/9/2019
  */
 public class P82RemoveDuplicatesFromSortedList2 {
+
+    // √ 重复数字全部消失
+    public ListNode deleteDuplicates2(ListNode head) {
+        if(head == null) return null;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy, p = head;
+        while (p != null) {
+            if (p.next == null || p.next.val != p.val) {
+                if (pre.next == p) pre = p;
+                else pre.next = p.next;
+            }
+            p = p.next;
+        }
+        return dummy.next;
+    }
+
     public ListNode deleteDuplicates(ListNode head) {
         if(head == null) return null;
         int temp = (head.val == -1) ? -2 : -1;
@@ -29,20 +46,7 @@ public class P82RemoveDuplicatesFromSortedList2 {
         }
         return dummy.next;
     }
-    public ListNode deleteDuplicates2(ListNode head) {
-        if(head == null) return null;
-        ListNode dummy = new ListNode(-1);
-        dummy.next = head;
-        ListNode pre = dummy, p = head;
-        while (p != null) {
-            if (p.next == null || p.next.val != p.val) {
-                if (pre.next == p) pre = p;
-                else pre.next = p.next;
-            }
-            p = p.next;
-        }
-        return dummy.next;
-    }
+   
 
     public static void main(String[] args) {
         P82RemoveDuplicatesFromSortedList2 p82 = new P82RemoveDuplicatesFromSortedList2();

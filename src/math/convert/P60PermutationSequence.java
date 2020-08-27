@@ -6,9 +6,7 @@ import java.util.ArrayList;
  * Title: 60. 第k个排列 
  * Desc: 给出集合 [1,2,3,…,n]，其所有元素共有 n! 种排列。 给定 n 和 k，返回第 k 个排列。
  * 
- * 说明：
- * 
- * 给定 n 的范围是 [1, 9]。 给定 k 的范围是[1, n!]。 从1开始的，所以要减去1 
+ * 说明：给定 n 的范围是 [1, 9]。 给定 k 的范围是[1, n!]。 从1开始的，所以要减去1 
  * Created by Myth-MBP on06/08/2020 in VSCode
  */
 public class P60PermutationSequence {

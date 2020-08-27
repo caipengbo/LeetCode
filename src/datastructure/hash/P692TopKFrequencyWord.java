@@ -3,6 +3,13 @@ package datastructure.hash;
 import java.util.*;
 
 
+
+/**
+* Title: 692. 前K个高频单词
+* Desc: 给一非空的单词列表，返回前 k 个出现次数最多的单词。返回的答案应该按单词出现频率由高到低排序。如果不同的单词有相同出现频率，按字母顺序排序。
+* Created by Myth-MBP on 27/08/2020 in VSCode
+*/
+
 public class P692TopKFrequencyWord {
 
     public static void main(String[] args) {

@@ -8,7 +8,7 @@ import util.ListUtil;
  * Desc: 反转一个单链表
  * Created by Myth on 9/6/2019
  */
-public class P206ReverseLinkedList {
+public class P206ReverseList {
     // 迭代（循环版本）
     public ListNode reverseList(ListNode head) {
         ListNode front = null, cur = head, back;
@@ -30,7 +30,7 @@ public class P206ReverseLinkedList {
     }
 
     public static void main(String[] args) {
-        P206ReverseLinkedList p206 = new P206ReverseLinkedList();
+        P206ReverseList p206 = new P206ReverseList();
         ListUtil.prettyPrintLinkedList(p206.reverseList(ListUtil.stringToListNode("[1]")));
     }
 }

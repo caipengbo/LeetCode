@@ -8,6 +8,7 @@ import util.ListNode;
  * Created by Myth-Lab on 10/9/2019
  */
 public class P83RemoveDuplicatesFromSortedList {
+    // 重复元素出现一次
     public ListNode deleteDuplicates(ListNode head) {
         if(head == null) return null;
         ListNode dummy = new ListNode(-1);

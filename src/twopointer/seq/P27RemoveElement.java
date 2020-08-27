@@ -2,7 +2,7 @@ package twopointer.seq;
 
 /**
 * Title: 27. 移除元素
-* Desc:  原地移除元素
+* Desc:  给定一个数组，原地移除元素（分为很多情况）
 * Created by Myth-MBP on 15/03/2020 in VSCode
 */
 

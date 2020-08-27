@@ -7,7 +7,7 @@ import util.ListNode;
  * Desc: 删除链表中等于给定值 val 的所有节点。
  * Created by Myth-Lab on 10/9/2019
  */
-public class P203RemoveLinkedListElements {
+public class P203RemoveListElements {
     public ListNode removeElements(ListNode head, int val) {
         if(head == null) return null;
         int temp = (val == -1) ? -2 : -1;

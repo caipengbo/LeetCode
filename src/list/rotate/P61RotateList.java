@@ -19,7 +19,7 @@ public class P61RotateList {
             if (fast == null) break;
             fast = fast.next;
         }
-        // k== 链表长度
+        // k == 链表长度
         if (i == k && fast == null) return head;
         if (i < k) {
             k = k % i;
