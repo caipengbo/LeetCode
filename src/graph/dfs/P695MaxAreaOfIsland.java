@@ -36,7 +36,7 @@ public class P695MaxAreaOfIsland {
         if (j-1 >= 0 && grid[i][j-1] == 1) dfs(grid, i, j-1);
         if (j+1 < n && grid[i][j+1] == 1) dfs(grid, i, j+1);
     }
-    // 第二遍，变成0，全局变量统计数目
+    // ======== 第二遍，变成0，全局变量统计数目
     int count2 = 0;
     public int maxAreaOfIsland2(int[][] grid) {
         
