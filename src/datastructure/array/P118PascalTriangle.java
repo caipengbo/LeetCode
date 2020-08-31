@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+/**
+* Title: 118. 杨辉三角
+* Desc: 生成杨辉三角
+* Created by Myth-MBP on 31/08/2020 in VSCode
+*/
+
 public class P118PascalTriangle {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> ret = new ArrayList<>();

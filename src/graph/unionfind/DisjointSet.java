@@ -39,6 +39,7 @@ public class DisjointSet {
         }
         return i;
     }
+    // 合并
     public boolean union(int i, int j) {
         int iParent = find(i);
         int jParent = find(j);

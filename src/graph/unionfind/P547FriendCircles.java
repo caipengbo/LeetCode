@@ -47,6 +47,7 @@ public class P547FriendCircles {
                 if (i != j && M[i][j] != 0) union(i, j, disjoint);
             }
         }
+        // 查看有几个联通分量
         int cnt = 0;
         for (int i = 0; i < n; i++) {
             if (disjoint[i] == i) cnt++;

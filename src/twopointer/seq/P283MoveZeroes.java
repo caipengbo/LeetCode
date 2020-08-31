@@ -8,6 +8,22 @@ package twopointer.seq;
  * Created by Myth-Lab on 10/15/2019
  */
 public class P283MoveZeroes {
+    // 优秀代码 =========
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    public void moveZeroes3(int[] nums) {
+        int zeroPos = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                swap(nums, zeroPos++, i);
+            }
+        }
+    }
+    
+
     // 我的代码，复杂！！！！
     public void moveZeroes(int[] nums) {
         int p = 0, q = 0;
@@ -34,17 +50,5 @@ public class P283MoveZeroes {
             if (nums[i] != 0) nums[i] = 0;
         }
     }
-    private void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
-    }
-    public void moveZeroes3(int[] nums) {
-        int zeroPos = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] != 0) {
-                swap(nums, zeroPos++, i);
-            }
-        }
-    }
+   
 }
