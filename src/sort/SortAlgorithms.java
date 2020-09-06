@@ -159,6 +159,7 @@ public class SortAlgorithms {
     private void merge(int[] array, int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
+        // 使用O(n)的空间
         int[] temp1 = new int[n1];
         int[] temp2 = new int[n2];
         for (int i = 0; i < n1; i++)

@@ -42,4 +42,53 @@ public class P70ClimbingStairs {
     public int climbStairs(int n) {
         return f4(n);
     }
+    // ========不能连续两个2
+    public static int f(int n) {
+        int[][] dp = new int[n+1][2];
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = 1;  // 1
+            dp[i][1] = 0;  // 2
+        }
+        for (int i = 2; i <= n; i++) {
+            // 走一步
+            dp[i][0] = dp[i-1][0] + dp[i-1][1];
+            dp[i][1] = dp[i-2][0];
+        }
+        return dp[n][0] + dp[n][1];
+    }
+    public static long f2(int n) {
+        if (n == 0) return 0;
+        long dp10 = 1, dp20 = 1, dp21 = 0;
+        long temp1;
+        
+        for (int i = 2; i <= n; i++) {
+            // 走一步
+            temp1 = dp10;
+            dp10 = dp20;
+            dp20 = temp1 + dp20;
+            dp21 = temp1;
+        }
+        return dp20+dp21;
+    }
+    public static long count(int step, boolean last_two) {
+        if (step == 1 || step == 0) {
+            return 1;
+        }
+        long res = count(step-1, false);
+        if (!last_two) {
+            res += count(step-2, true);
+        }
+        return res;
+    }
+    public static void main(String[] args) {
+
+        for (int i = 0; i <= 10; i++) {
+            if (count(i, false) != f(i)) {
+                System.out.println(i);
+            }
+            
+        }
+        // System.out.println(f(1000));
+        
+    }
 }
