@@ -2,7 +2,7 @@ package math.bit;
 
 /**
  * Title: 190. 颠倒二进制位
- * Desc:
+ * Desc: 颠倒给定的 32 位无符号整数的二进制位。
  * Created by Myth-Lab on 10/30/2019
  */
 public class P190ReverseBits {

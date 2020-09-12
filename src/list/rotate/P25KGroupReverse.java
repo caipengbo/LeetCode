@@ -6,10 +6,11 @@ import util.ListUtil;
 /**
  * Title: 25. K个一组反转链表 
  * Desc: 给你一个链表，每 k 个节点一组进行翻转，请你返回翻转后的链表。
- * k 是一个正整数，它的值小于或等于链表的长度。 如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。 
+ * k 是一个正整数，它的值小于或等于链表的长度。 
+ * 如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。 
  * Created by Myth-PC on 08/02/2020 in VSCode
  */
-public class P25ReverseNodesInKGroup {
+public class P25KGroupReverse {
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode p = head, q = head;
         // 找到 第 k-1个结点p
@@ -33,7 +34,6 @@ public class P25ReverseNodesInKGroup {
     
     private ListNode reverse2(ListNode head) {
         ListNode cur = head, before = null, after = cur.next;
-        
         while (cur != null) {
             after = cur.next;
             cur.next = before;
@@ -62,7 +62,7 @@ public class P25ReverseNodesInKGroup {
     }
     public static void main(String[] args) {
         ListNode list = ListUtil.stringToListNode("[1,2,3,4,5,6,7,8]");
-        P25ReverseNodesInKGroup p25 = new P25ReverseNodesInKGroup();
+        P25KGroupReverse p25 = new P25KGroupReverse();
         // ListNode head = p25.reverseKGroup2(list, 2);
         ListNode head = p25.reverse2(list);
         // System.out.println(list.val);

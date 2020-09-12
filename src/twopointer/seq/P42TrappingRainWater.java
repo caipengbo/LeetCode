@@ -2,7 +2,7 @@ package twopointer.seq;
 
 
 /**
- * Title: 42. 接雨水（双指针解法，更常用的是单调栈解法）
+ * Title: 42. 接雨水（双指针解法，更常用的是单调栈解法） 二维接雨水见heap包里407题
  * Desc: 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
  * Created by Myth-Lab on 10/13/2019
  */
@@ -15,7 +15,29 @@ public class P42TrappingRainWater {
     // 重点：当前位置左边最大值leftMax 右边最大值如何求？？？
 
     // 1. 可以存在数组里，一次遍历从左往右遍历就可以求出来leftMax，然后从右往左一次遍历就可以求出来rightMax
-
+    public int trapWater(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        int len = arr.length;
+        int[] leftMax = new int[len];
+        int[] rightMax= new int[len];
+        int max = 0;
+        for (int i = 0; i < len; i++) {
+            max = Math.max(max, arr[i]);
+            leftMax[i] = max;
+        }
+        max = 0;
+        for (int i = len-1; i >= 0; i--) {
+            max = Math.max(max, arr[i]);
+            rightMax[i] = max;
+        }
+        int sum = 0;
+        for (int i = 0; i < len; i++) {
+            sum += Math.min(leftMax[i], rightMax[i]) - arr[i];
+        }
+        return sum;
+    }
 
     // 2. 也可以使用双指针，
     public static int trap(int[] height) {

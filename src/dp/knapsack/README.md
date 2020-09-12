@@ -13,14 +13,18 @@
 
 滚动数组，从后往前更新
 ```Java
-void knapsack01(w, v) {
-    dp[N]
-    for i = 1 to N {
-        for j = W to w {
-            dp[j] = max(dp[j], dp[j-w]+v)
-        }    
+// n个商品，背包W,  w商品重量数组   v价值数组
+void knapsack01(int n, int W, int[] w, int[] v) {
+    dp[W+1]
+    // int[] count = new int[W+1]
+    for (int i = 0; i < n; i++) {
+        for (int j = W; j >= w[i]; j--) {
+            // if (dp[j] <= dp[j-w[i]]+v) count[j] = count[j-w[j]]+1
+            // 限制条件，如果有多个限制条件，多几个循环
+            dp[j] = max(dp[j], dp[j-w[i]]+v)
+        }
     }
-    return max(dp[N])
+    return dp[W]  // max(dp[N])
 }
 ```
 # 完全背包
@@ -28,12 +32,16 @@ void knapsack01(w, v) {
 滚动数组，从前往后更新
 ```Java
 void knapsackComplete(w, v) {
-    dp[N]
-    for i = 1 to N {
-        for j = w to W {
-            dp[j] = max(dp[j], dp[j-w]+v)
-        }    
+    dp[W+1]
+    // int[] count = new int[W+1]
+    for (int i = 0; i < n; i++) {
+        // 注意此处
+        for (int j = w[i]; j <= W; j++) {
+            // if (dp[j] <= dp[j-w[i]]+v) count[j] = count[j-w[j]]+1
+            // 限制条件，如果有多个限制条件，多几个循环
+            dp[j] = max(dp[j], dp[j-w[i]]+v)
+        }
     }
-    return max(dp[N])
+    return dp[W]  // max(dp[N])
 }
 ```

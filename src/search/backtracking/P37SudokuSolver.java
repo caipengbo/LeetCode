@@ -6,8 +6,6 @@ package search.backtracking;
  * Created by Myth on 7/25/2019
  */
 public class P37SudokuSolver {
-    
-
     // 注意
     public void solveSudoku(char[][] board) {
         if (board == null || board.length != 9 || board[0].length != 9) return;

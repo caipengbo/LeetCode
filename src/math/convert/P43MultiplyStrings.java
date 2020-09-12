@@ -6,6 +6,34 @@ package math.convert;
  * Created by Myth-Lab on 11/7/2019
  */
 public class P43MultiplyStrings {
+    // ===============最简单的写法
+    // 根据进位规律
+    // 乘数 num1 位数为 MM，被乘数 num2 位数为 NN， num1 x num2 结果 res 最大总位数为 M+N
+    //num1[i] x num2[j] 的结果为 tmp(位数为两位，"0x","xy"的形式)，其第一位位于 res[i+j]，第二位位于 res[i+j+1]。
+    public String multiply3(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        int[] res = new int[num1.length() + num2.length()];
+        for (int i = num1.length() - 1; i >= 0; i--) {
+            int n1 = num1.charAt(i) - '0';
+            for (int j = num2.length() - 1; j >= 0; j--) {
+                int n2 = num2.charAt(j) - '0';
+                int sum = (res[i + j + 1] + n1 * n2);  // 只加res[i+j+1]
+                res[i + j + 1] = sum % 10;
+                res[i + j] += sum / 10;
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < res.length; i++) {
+            if (i == 0 && res[i] == 0) continue;
+            result.append(res[i]);
+        }
+        return result.toString();
+    }
+
+    // ================
 
     public String multiply(String num1, String num2) {
         // 注意此处
@@ -106,32 +134,7 @@ public class P43MultiplyStrings {
         }
         return ret.substring(z);
     }
-    // 根据进位规律
-    // 乘数 num1 位数为 MM，被乘数 num2 位数为 NN， num1 x num2 结果 res 最大总位数为 M+N
-    //num1[i] x num2[j] 的结果为 tmp(位数为两位，"0x","xy"的形式)，其第一位位于 res[i+j]，第二位位于 res[i+j+1]。
-    public String multiply3(String num1, String num2) {
-        // TODO Again
-        if (num1.equals("0") || num2.equals("0")) {
-            return "0";
-        }
-        int[] res = new int[num1.length() + num2.length()];
-        for (int i = num1.length() - 1; i >= 0; i--) {
-            int n1 = num1.charAt(i) - '0';
-            for (int j = num2.length() - 1; j >= 0; j--) {
-                int n2 = num2.charAt(j) - '0';
-                int sum = (res[i + j + 1] + n1 * n2);  // 只加res[i+j+1]
-                res[i + j + 1] = sum % 10;
-                res[i + j] += sum / 10;
-            }
-        }
-
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < res.length; i++) {
-            if (i == 0 && res[i] == 0) continue;
-            result.append(res[i]);
-        }
-        return result.toString();
-    }
+    
     public static void main(String[] args) {
         P43MultiplyStrings p43 = new P43MultiplyStrings();
         System.out.println(p43.multiply("123", "0"));

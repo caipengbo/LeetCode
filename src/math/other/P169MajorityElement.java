@@ -3,7 +3,7 @@ package math.other;
 import java.util.HashMap;
 
 /**
- * Title: 169. 求众数
+ * Title: 169. 求众数  （229 找1/3的数）
  * Desc: 输入的数组一定存在众数
  * Created by Myth-Lab on 11/6/2019
  */
