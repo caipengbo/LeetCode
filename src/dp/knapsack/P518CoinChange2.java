@@ -3,8 +3,8 @@ package dp.knapsack;
 import java.util.Arrays;
 
 /**
-* Title: 518. 零钱兑换2（完全背包的零钱兑换）
-* Desc: 
+* Title: 518. 零钱兑换2（完全背包的零钱兑换）—— 有多少种可能
+* Desc: 给定不同面额的硬币和一个总金额。写出函数来计算可以凑成总金额的硬币组合数。
 * Created by Myth on 12/19/2019 in VSCode
 */
 

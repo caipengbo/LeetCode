@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
 * Title: 377. 组合总和（和322换零钱基本一致）
-* Desc: 
+* Desc: 给定一个由正整数组成且不存在重复数字的数组，找出和为给定目标正整数的组合的个数。
 * Created by Myth on 12/13/2019 in VSCode
 */
 

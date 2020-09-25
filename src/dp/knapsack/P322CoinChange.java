@@ -3,8 +3,9 @@ package dp.knapsack;
 import java.util.Arrays;
 
 /**
-* Title: 322. 零钱兑换（完全背包问题）
-* Desc: 每种硬币可以用无限次
+* Title: 322. 零钱兑换（完全背包问题）—— 最少硬币数
+* Desc: 给定不同面额的硬币 coins 和一个总金额 amount。可以凑成总金额所需的最少的硬币个数。
+* 如果没有任何一种硬币组合能组成总金额，返回 -1。 每种硬币可以用无限次
 * Created by Myth on 12/11/2019 in VSCode
 */
 
