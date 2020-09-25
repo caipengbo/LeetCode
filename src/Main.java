@@ -1,31 +1,59 @@
+import java.util.Arrays;
+import java.util.Scanner;
 
-import java.util.*;
-
-public class Main
-{
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
-        // int n = sc.nextInt();
-        // System.out.println(ugly(n));
-        String line = sc.nextLine();
-        String[] numStrs = line.split(",");
-        int[] nums = new int[numStrs.length];
-        int i = 0;
-        for (String numStr : numStrs) {
-            nums[i++] = Integer.parseInt(numStr);
-        }
-        System.out.println(p3(nums));
+public class Main {
+    private final static String target = "Hello";
+    private final static String target2 = "Hello";
+    public static String get(){
+        return "Hello";
     }
-    private static int p3(int[] nums) {
-        if (nums.length == 0) return 0;
-        int[] dp = new int[nums.length+1];
-        dp[0] = 0;
-        dp[1] = nums[0];
-        for (int i = 2; i <= nums.length; i++) {
-            dp[i] = Math.max(dp[i-1], dp[i-2]+nums[i-1]);
-        }
-        return dp[nums.length];
+    public static void main(String[] args) {
+        
+        System.out.println(minimumOperations("yry"));
+        System.out.println(minimumOperations("ryr"));
+        
     }
+    // 红 黄 红
+    public static int minimumOperations(String leaves) {
+        char[] arr = leaves.toCharArray();
+        int n = leaves.length();
+        int min = Integer.MAX_VALUE;
+        // 每个区间红黄
+        int[] leftYellow = new int[n];
+        int[] leftRed = new int[n];
+        int[] rightYellow = new int[n];
+        int y = 0, r = 0;;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 'y') {
+                y++;
+            } else {
+                r++;
+            }
+            leftYellow[i] = y;
+            leftRed[i] = r;
+        }
+        y = 0;
+        for (int i = n-1; i >= 0; i--) {
+            if (arr[i] == 'y') {
+                y++;
+            }
+            rightYellow[i] = y;
+        }
+        System.out.println(Arrays.toString(leftYellow));
+        System.out.println(Arrays.toString(leftRed));
+        System.out.println(Arrays.toString(rightYellow));
 
-    
+        for (int i = 0; i < n; i++) {
+            for (int j = i+2; j < n; j++) {
+                int temp = leftYellow[i];  // 左边
+                temp += rightYellow[j];  // 右边
+
+                temp += (leftRed[j-1] - leftRed[i]);
+                
+                min = Math.min(min, temp);
+            }
+           
+        }
+        return min;
+    }
 }
