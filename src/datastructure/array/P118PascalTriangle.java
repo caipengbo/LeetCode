@@ -26,6 +26,7 @@ public class P118PascalTriangle {
         }
         return ret;
     }
+    // 获得第K行
     public List<Integer> getRow(int k) {
         List<Integer> res = new ArrayList<>(k + 1);
         for (int i = 0; i <= k; i++) {

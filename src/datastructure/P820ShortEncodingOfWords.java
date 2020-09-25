@@ -13,6 +13,36 @@ import java.util.Arrays;
 */
 
 public class P820ShortEncodingOfWords {
+    
+    // ============== 修改后的做法 =========
+    private class Trie {
+        private TrieNode root;
+        Trie() {
+            this.root = new TrieNode(' ');
+        }
+        public int insert(String word) {
+            TrieNode p = this.root;
+            boolean flag = false;
+            for (int j = word.length()-1; j >= 0; j--) {
+                if (p.children[word.charAt(j)-'a'] == null) {
+                    p.children[word.charAt(j)-'a'] = new TrieNode(word.charAt(j));
+                    flag = true;
+                }
+                p = p.children[word.charAt(j)-'a'];
+            }
+            return flag ? word.length()+1 : 0;
+        }
+    }
+    public int minimumLengthEncoding(String[] words) {
+        Trie trie = new Trie();
+        int count = 0;
+        Arrays.sort(words, (s1,s2) -> (s2.length()-s1.length()));
+        for (int i = 0; i < words.length; i++) {
+            count += trie.insert(words[i]);
+        }
+        return count;
+    }
+    // =========================== 错误解法 ========================
     // Trie解法，每个word反转就是前缀
     // 犯的错误: 没有对单词进行排序，先插入长的，这样短的就插入不进去了，就包含在长单词里面了
     private class TrieNode {
@@ -46,34 +76,7 @@ public class P820ShortEncodingOfWords {
         }
         return count;
     }
-    // ============== 修改后的做法 =========
-    private class Trie {
-        private TrieNode root;
-        Trie() {
-            this.root = new TrieNode(' ');
-        }
-        public int insert(String word) {
-            TrieNode p = this.root;
-            boolean flag = false;
-            for (int j = word.length()-1; j >= 0; j--) {
-                if (p.children[word.charAt(j)-'a'] == null) {
-                    p.children[word.charAt(j)-'a'] = new TrieNode(word.charAt(j));
-                    flag = true;
-                }
-                p = p.children[word.charAt(j)-'a'];
-            }
-            return flag ? word.length()+1 : 0;
-        }
-    }
-    public int minimumLengthEncoding(String[] words) {
-        Trie trie = new Trie();
-        int count = 0;
-        Arrays.sort(words, (s1,s2) -> (s2.length()-s1.length()));
-        for (int i = 0; i < words.length; i++) {
-            count += trie.insert(words[i]);
-        }
-        return count;
-    }
+    
     public static void main(String[] args) {
         P820ShortEncodingOfWords p820 = new P820ShortEncodingOfWords();
         String[] words0 = {"time", "me", "bell"};
